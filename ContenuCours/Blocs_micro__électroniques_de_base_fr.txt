@@ -1,0 +1,1324 @@
+=== PAGE 1 ===
+GEL-4072/7072 -Bioinstrumentation et 
+microsystèmesbiomédicaux
+7 octobre2026
+Circuits 
+d’interfaceet 
+traitementde 
+signal 
+analogique
+
+=== PAGE 2 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+2
+Plan du cours
+•Amplificateursopérationnels(amplis-op)
+-Configurations de base en boucle fermée (linéaire / non 
+linéaire)
+-Applications
+-Réponse en fréquence
+-Filtres actifs
+•Imperfections et bruit (GEL-GIF uniquement)
+•Circuits MOSFET et CMOS (grad. uniquement)
+-Modes de fonctionnement
+-Modèle à petit signal
+-Blocs de construction CMOS de base
+=== PAGE 3 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+3
+Lectures / références
+•Amplisopérationnels
+Chapitre 3 : J. G. Webster, Application et conception 
+de l’instrumentation médicale, 4e édition. Hoboken, 
+NJ : Wiley, 2009
+•Chapitre 2 : A. S. Sedra et K. C. Smith, 
+Microelectronic Circuits, 6e éd., Oxford University 
+Press, États-Unis, 2009.
+•Microélectronique CMOS, etc. (2e,3e cycles)
+T. C. Carusone, D. A. Johns, K. W. Martin, 
+Conception de circuits intégrés analogiques, 2 
+éditions. Hoboken, NJ : Wiley, 2011.
+=== PAGE 4 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+4
+GEL-4072/7072 -Bioinstrumentation 
+et microsystèmesbiomédicaux
+Circuits d’interface de 
+capteur et traitement du 
+signal analogique
+=== PAGE 5 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+5
+GEL-4072/7072 -Bioinstrumentation 
+et microsystèmesbiomédicaux
+Signaux
+physiologiques
+Circuits et systèmes
+de bioinstrumentation
+Analyseet 
+interprétation
+=== PAGE 6 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+6
+GEL-4072/7072 -Bioinstrumentation 
+et microsystèmesbiomédicaux
+Amplificateurs 
+opérationnels 
+(amplis opérationnels)
+=== PAGE 7 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+7
+Amplificateurs opérationnels idéaux
+vo= A(v2-v1)
+1.A = ∞ (gain est infini)
+2.vo = 0, quand v1 = v2 (pas de 
+tension de décalage)
+3.Rd = ∞ (l’impédance d’entrée 
+est infinie)
+4.Ro = 0 (l’impédance de sortie 
+est de 0)
+5.Bande passante = ∞ (pas 
+d’imitation de la réponse en 
+fréquence)
+üUn court-circuit virtuel existe 
+entre v1 et v2 !
+üAucun courant ne circule dans 
+l’une ou l’autre des bornes de 
+l’amplificateur opérationnel
+Circuit équivalent à l’ampli
+Symbole du circuit de 
+l’amplificateur opérationnel
+=== PAGE 8 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+8
+Inverser les amplificateurs
+Analysede circuit:
+üUn court-circuit virtuel existe 
+entre v1 et v2 !
+üAucun courant ne circule dans 
+l’une ou l’autre des bornes de 
+l’amplificateur opérationnel
+üGain négatif et Rin = Ri
+
+=== PAGE 9 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+9
+Caractéristiques des entrées-sorties
+•L’excursion linéaire est limitée
+•Bien que les tensions 
+d’alimentation soient réglées à 
+±15V dans cet exemple, la 
+sortie sature lorsque vo dépasse 
+±13V
+•Une nouvelle augmentation de vi 
+ne produit aucun changement 
+dans la production
+•Comment déterminer l’excursion 
+maximale de tension de sortie ?
++L
+-L
+=== PAGE 10 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+10
+Amplificateur de sommation
+•L’amplificateur inverseur peut être 
+étendu pour former un circuit qui 
+produit une somme pondérée de 
+plusieurs tensions d’entrée
+•Ce circuit additionne l’entrée vi plus la 
+moitié de la tension d’équilibrage vb
+(a) (b)
+(c)
+(c)
+(b)
+(a)
+=== PAGE 11 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+Amplificateur de sommation
+Utilisez la 
+superposition !
+=== PAGE 12 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+12
+Amplificateur de sommation : exemple
+•CalculervO
+•Astuces: utiliserla superposition
+
+=== PAGE 13 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+13
+Amplificateurs non inverseurs
+•Suiveur (buffer de gain 
+unitaire)
+vo= vi
+•Ce circuit est très utile en tant 
+que buffer, pour éviter qu’une 
+résistance de source élevée ne 
+soit chargée par une charge à 
+faible résistance
+•Amplificateurnon inverseur
+•Le circuit suiveur peut être modifié 
+pour produire un gain
+•Gain positif et Rin = ∞ !!
+
+=== PAGE 14 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+14
+Amplificateur non inverseur
+•La caractéristique d’entrée-
+sortie indique que le circuit a 
+un gain d’amplificateur positif
+•Analogie du levier
+•La saturation est évidente si vi 
+dépasse une limite de tension
+
+=== PAGE 15 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+15
+Amplificateurs inversés/non inversés
+Évaluationsimple de vo/vi
+•Si Z1 = 1/sC et Z2 = R, vo = sRC, un circuit différenciateur...
+•Fonctionne également pour les configurations non inversées
+
+=== PAGE 16 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+16
+Intégrateurs
+Intégrateursimple
+•Réponsetransitoire
+•RC : constante de temps (τ)
+•vc : tension initiale en C à t=0
+•Le gain en dc est très élevé...
+•VO dérive vers la saturation à cause des 
+courants de polarisation
+•Phase:
+vO(t)=−1RCvI(t)dt−VC0
+t
+∫
+Vo(s)
+Vi(s)=−1sRC Vo(jω)Vi(jω)=−1jωRC
+Vo
+Vi
+=1ωRC
+φ=+90°
+=== PAGE 17 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+17
+Intégrateur de précision
+•vo égal à l’intégrale négative de 
+vi mise à l’échelle par le facteur 
+1/RC et ajoutée à vic, tension 
+initiale
+•vo = -vi après un temps 
+d’intégration égal à RC
+•Parce que tout intégrateur réel 
+dérive en saturation, il faut 
+prévoir un moyen de rétablir vo à 
+n’importe quelle condition 
+initiale (i.c.)
+•Pendant la phase de 
+réinitialisation, S1 est ouvert, S2 
+est fermé, ce qui entraîne vo=vic
+•Lors de l’intégration, S1 est 
+fermé, S2 est ouvert
+
+=== PAGE 18 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+18
+Amplificateur de charge
+•L’amplificateur de 
+charge transfère la 
+charge générée par un 
+capteur piézoélectrique 
+au condensateur de 
+rétroaction de 
+l’amplificateur 
+opérationnel C
+•VO est proportionnel à x 
+(la déviation)
+•Sensible jusqu’au 
+courant continu, mais 
+dérive lentement à 
+cause des courants de 
+polarisation
+•Solution : ajoutez une 
+grande résistance de 
+rétroaction pour qu’elle 
+se comporte comme un 
+filtre passe-bas
+Empêchela 
+saturation
+=== PAGE 19 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+19
+Différentiateurs
+•Un différenciateur suivi d’un 
+comparateur est utile pour 
+détecter un événement dont la 
+pente dépasse une valeur 
+donnée, par exemple : une onde 
+R dans un ECG
+•Phase: 
+φ=−90°
+Vo
+Vi
+=ωRC
+Compensation 
+=== PAGE 20 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+Exercice de conception 1
+•Donner le schéma d’un circuit d’interface d’électrode 
+ECG fournissant :
+1.Annulation de décalage
+2.Gain de 10
+3.Suivi complexe QRS (... utiliser une dérivée du 
+premier ordre)
+=== PAGE 21 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+21
+Tension d’entrée différentielle et mode 
+commun
+•Source différentielle : vid
+•Mode commun : vcm
+=== PAGE 22 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+22
+Amplificateurs différentiels
+•Amplificateur différentiel à ampli 
+opérationnel unique
+-Analyse par principe de superposition
+1.Diviseur de tension à v5
+2.Topologie non inversée
+v3
+v4
+i
+=== PAGE 23 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+23
+Amplificateurs différentiels (suite)
+•Si les deux entrées sont 
+connectées ensemble et 
+commandées par une source 
+commune, par rapport à la terre, 
+alors la tension de mode commun 
+est v3 = v4
+•Sortie idéale = 0, ainsi, le gain en 
+mode commun doit être Gc = 0
+•Si v3 ≠ v4, alors la tension 
+différentielle (v4-v3) produit un 
+gain différentiel amplificateur-
+circuit Gd égal à R4/R3
+•Le taux de réjection en mode 
+commun (TRMC) est défini
+v3
+v4
+Rid= 2R3
+TRMC
+=== PAGE 24 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+24
+Amplificateurs différentiels (suite)
+•Application : interfaçage avec une jauge de 
+contrainte
+
+=== PAGE 25 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+25
+Amplificateurs différentiels (suite)
+•Lecture d’une sonde dans une configuration de 
+pont de Wheatstone
+•Une impédance d’entrée élevée est nécessaire !
+
+=== PAGE 26 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+26
+Amplificateur d’instrumentation à 3 
+amplificateurs opérationnels
+•Deux exigences pour un 
+amplificateur 
+d’instrumentation :
+1.Entrée/gain différentiel
+2.Impédance d’entrée 
+élevée
+•Ajoutez des suiveurs de 
+tension à chaque entrée 
+pour fournir une mise en 
+mémoire tampon
+•Solution supérieure : 
+ajouter des amplificateurs 
+non inverseurs et éliminer 
+la connexion à la terre
+•Le signal de mode commun 
+n’est pas amplifié par le 
+premier étage
+•Largement utilisé pour 
+amplifier plusieurs types de 
+biopotentiels
+
+=== PAGE 27 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+27
+Amplificateurs d’instrumentation 
+(suite)
+•Lecture d’une sonde dans une configuration de 
+pont de Wheatstone
+•Exemple
+
+=== PAGE 28 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+28
+Amplificateursd’instrumentationà 2 
+amplisopérationnels
+•…
+
+=== PAGE 29 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+29
+Filtres actifs
+•Filtrepasse-bas :utile pour 
+atténuer le bruit à haute 
+fréquence
+•Filtrepasse-haut:utile pour 
+amplifier une petite tension 
+alternative qui chevauche une 
+grande tension continue, car Ci 
+bloque le courant continu
+Passe-bas
+Passe-haut
+=== PAGE 30 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+30
+Filtres actifs (suite)
+•Filtrepasse-bande: Combine les 
+deux filtres précédents. Utile pour 
+amplifier une certaine bande de 
+fréquences, telles que celles 
+requises pour l’enregistrement des 
+sons et des ondes cardiaques, ou 
+sEMG de 50 Hz à 500 Hz
+Vo(s)
+Vi(s)= a1ss2+s(ω0/Q)+ω20
+
+=== PAGE 31 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+31
+Filtres actifs (suite)
+•Fonction de transfert de filtre passe-
+bande
+ω0= 1RiRfCiCf Q=RiRfCiCfRiCi+RfCf
+Vo(s)
+Vi(s)= a1ss2+s(ω0/Q)+ω20
+Vo(s)
+Vi(s)=Rf||1/sCfRi+1/sCi
+Vo(s)
+Vi(s)= sRfCis2+sRiCi+RfCf
+RiRfCiCf
++ 1RiRfCiCf
+=== PAGE 32 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+32
+Filtres Sallen-key
+•Filtre passe-bas de second ordre 
+avec gain
+•N’utilise qu’un seul ampli 
+opérationnel
+•Utilisez C1 = C2
+T(s)= KG1G2/C2
+s2+sG1+G2(2−K)"# $%/C+G1G2/C2
+≡ a0
+s2+s(ω0/Q)+ω20
+ω20=G1G2/C2 ω0/Q=G1+G2(2−K)"# $%/C
+Q=G1G2/G1+G2(2−K)"# $%a0=Kω20
+=== PAGE 33 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+33
+Filtres Sallen-key (suite)
+•Avec R1 = R2 = R, on obtient Q = 1/(3-K) et
+−R = 1/ω0C 
+−K = 3-1/Q = 1+RB/RA, ainsi RB = (2-1/Q)RA
+•Étapes de conception :
+1.Poser R1 = R2 = RA = R
+2.Choisir K or Q
+3.Choisir C
+4.Calculer R1, R2 and RA
+utilisant R = 1/ω0C 
+5.Calculer RB = (2-1/Q)RA
+
+=== PAGE 34 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+34
+Filtres Sallen-key (suite)
+•Filtre passe-bas Sallen-key
+Sans 
+dépassement
+Q = 0,707
+T(s)= KG1G2/C2
+s2+sG1+G2(2−K)"# $%/C+G1G2/C2 ≡ a0s2+s(ω0/Q)+ω20
+=== PAGE 35 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+35
+Filtres Sallen-key (suite)
+Exemple de conception
+•Concevoir un filtre passe-bas S-K de f0 = 12,5 kHz 
+sans dépassement et de gain arbitraire
+Réponse:
+1.Q = 0.707 (sans dépassement)
+2.C = 0.01 µF
+3.R1 = R2 = RA = 1/ω0C 
+ = 1/(2π × 12.5 × 104 × 10-8) kΩ = 1.273 kΩ
+4.RB = (2-1/Q)RA = (2-1/0.707) × 1.273 kΩ = 746 Ω 
+5.K = 1+RB/RA = 1 + 746 Ω / 1.273 kΩ ≈ 1.6
+=== PAGE 36 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+36
+Filtres Sallen-key (suite)
+Exemple de conception
+•Filtre passe-bas S-K de f0 = 12,5 kHz sans 
+dépassement et de gain arbitraire
+
+=== PAGE 37 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+37
+FiltresSallen-key (suite)
+•Filtre passe-haut de second 
+ordre avec gain
+•N’utilisez qu’un seul amplificateur 
+opérationnel
+•Transformation RC-CR d’un filtre 
+passe-bas à un filtre passe-haut 
+SK
+•Les conductances Gi sont 
+remplacées par des capacités 
+sCi; capacités sCk avec 
+conductances Gk
+Tlp(s)= KG1G2
+s2C1C2+sC2(G1+G2)+C1G2(1−K)"# $%+G1G2
+Thp(s)= Ks2C1C2
+G1G2+sG2(C1+C2)+G1C2(1−K)"# $%+s2C1C2
+
+=== PAGE 38 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+38
+Filtres Sallen-key (suite)
+•Filtre passe-haut de second 
+ordre avec gain
+•Le gain n’est pas affecté : RA et 
+RB ne changent pas
+•Aussi,  
+•Les valeurs Gj et Ck sont des 
+valeurs normalisées par s/ω0
+•Ils doivent être dénormalisés :
+ω20=G1G2/(C1C2) Q=1/(3−K)
+Rj,hp= 1ω0Cj,lp Ck,hp= 1ω0Rk,lp
+=== PAGE 39 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+39
+Filtres Sallen-key (suite)
+•Filtre passe-bande du second ordre avec gain
+•Utilisation de filtres passe-bas et passe-haut SK en 
+cascade
+
+=== PAGE 40 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+40
+Amplificateur logarithmique
+•Si vi > 0, vo est proportionnel à ln(vi)
+vO=−VTlnvI
+ISR
+IR=vI
+R
+ID=ISe−vO/VT
+IR=ID
+IR
+ID
+Masse virtuel
+=== PAGE 41 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+41
+Amplificateur logarithmique (suite)
+•Peut être utilisé pour convertir la transmittance en 
+absorbance
+•Loi Beer-Lambert :
+vO=−VTlnvI
+ISR
+!!"#=!!"!!!(!)!"!
+vo∝λ
+Intensité lumineuse
+Amplificateur de 
+transimpédance (TIA)
+vI∝e-λ
+=== PAGE 42 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+42
+Amplificateur anti-log
+•Si vi > 0, vo est proportionnel à exp(vi)
+vO=−RISevI/VT
+=−RID
+ID=ISevI/VT
+IR=−vO
+R
+ID=IR
+Masse virtuel
+IR
+ID
+vI vO 
+=== PAGE 43 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+43
+Amplificateurs log/anti-log
+•Application: voltage multiplier
+ØDéterminez v3 par rapport à v1 et v2
+vx
+vO=−VTlnvI
+ISR
+vo1
+vo2
+=== PAGE 44 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+44
+Redresseur monophasé actif
+•Redresseur monophasé « idéal »
+•ou circuit «Super diode»
+vI > 0
+vO=vIvI < 0
+vO=0
+=== PAGE 45 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+45
+Redresseur actif monophasé avancé
+•Redresseurmonophaséamélioré
+•Avantages:
+•La boucle de rétroaction est toujours fermée
+•L’ampli-op ne peut saturer à L- grâce à D2
+
+=== PAGE 46 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+•Redresseur de précision: principe
+•Inverser la portion négative du signal et la redresser 
+avec un autre redresseur (diode)
+•Diriger les 2 redresseurs dans la même sortie 46
+Redresseur pleine onde de précision
+
+=== PAGE 47 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+47
+Redresseur pleine onde de précision
+•Les redresseurs simples à résistance-
+diode ne fonctionnent pas bien pour des 
+tensions inférieures à 0,7 V
+•Solution:Placement d’une diode dans la 
+boucle de rétroaction d’un amplificateur 
+opérationnel
+•Redresseur de précision pleine onde :
+vS ≥ 0
+vO=vI
+vS ≤ 0
+vO=-vI
+
+=== PAGE 48 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+48
+Redresseur de précision : application
+•Extracteur de valeur DC avec redresseur monophasé (filtre moyen)
+Valeur crête:Vp(R2/R1)
+ v2= -(Vp/π)(R2/R1)(R4/R3)
+vI= Vpsin(2πft)
+Tension redressée 
+demie alternance Valeurmoyenne->
+Tension dc
+=== PAGE 49 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+49
+Comparateurs
+•Un comparateur est un circuit 
+qui compare la tension d’entrée 
+avec une tension de référence
+•La sortie bascule d’une limite de 
+saturation à l’autre
+•Si vi est supérieur au niveau de 
+comparaison, vo = L-
+•Pour vi inférieur au niveau de 
+comparaison, vo = L+
+•Utilise un circuit bistable
+•La sortie est numérique
+•Même fonction qu’un 
+déclencheur de Schmitt avec 
+«offset» =vref
+•Les seuils peuvent être ajustés 
+avec R2 et R3 (β = R3/(R3+R2))
+VTH = βL+
+VTL = βL-
+L+
+L-
+(vi + vref)/2
+A(v+-v-)
+=== PAGE 50 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+Exercice de conception 2
+•Ajoutez les blocs de circuit suivants à votre schéma de 
+circuit d’interface d’électrode ECG de l’exercice 1 :
+1.Filtre (indiquez les fréquences de coupure)
+2.Un détecteur de pics composé de :
+•Un circuit à valeur absolue
+•Un filtre de calcul de la moyenne
+•Un comparateur
+•Comment choisir le seuil de détection ?
+=== PAGE 51 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+51
+Imperfections de l’ampli opérationnel 
+(GEL-GIF uniquement)
+•Imperfections AC
+-Réponse en fréquence
+-Produit gain-bande passante
+-Vitesse de balayage
+•Imperfections DC
+-Tension de décalage
+-Dériver
+-Courant de polarisation
+•Bruit
+
+=== PAGE 52 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+52
+Réponse en fréquence : Compensation
+•La compensation avec de gros RC déplace le f-3dB à une fréquence très 
+basse, et une réponse de 1er ordre avec un déphasage maximal de -90° 
+est obtenue
+Avec compensation
+Sans compensation
+Pôle haute fréquence
+Pôle basse 
+fréquence
+=== PAGE 53 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+53
+Réponse en fréquence
+•Un amplificateur opérationnel 
+comprend plusieurs étages, 
+chacun incluant une capacité 
+parasite ou de jonction qui limite 
+la réponse en haute fréquence
+•Gain en boucle ouverte : si le gain 
+est supérieur à 1 lorsque le 
+déphasage est égal à -180°, il y a 
+des oscillations...
+•Compensation : L’ajout d’un 
+condensateur externe aux bornes 
+indiquées sur la fiche technique 
+déplace le f-3dB à une fréquence 
+très basse
+•Cela compense l’ampli 
+opérationnel en donnant une 
+réponse de 1er ordre avec un 
+déphasage maximal de -90
+A(s)= Ao
+1+s/ω−3dB
+=== PAGE 54 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+54
+Produitgain-bandepassante
+•Produit gain-bande passante: 
+égal au produit du gain et de la 
+largeur de bande à une 
+fréquence donnée
+•Modèlede 1er ordre:
+•Si ω >> ω-3dB
+•Produitgain-bandepassante:
+A(s)= Ao
+1+s/ω−3dB
+Gain en
+boucle 
+ouverte
+Gain en 
+boucle 
+ferméeA(jω)≅Aoω−3dB
+jω
+A(jω)≅Aoω−3dB
+ω
+A(s)≅Aoω−3dB
+s
+A(jω)=1=Aoω−3dB
+ω
+ωt=Aoω−3dB
+ω−3dB
+Ao
+
+=== PAGE 55 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+55
+Slew rate
+•Limitation du signal important
+•Lorsque des changements 
+rapides de sortie sont exigés, 
+le condensateur ajouté pour la 
+compensation doit être chargé 
+à partir d’une source interne 
+qui a une capacité de courant 
+limitée Imax
+•La variation de tension aux 
+bornes du condensateur est 
+limitée
+SR=dvO
+dtmax
+=Imax
+Cc
+Imax
+Courant maximal absorbé à l’intérieur 
+de l’ampli opérationnel
+A(s)= Ao
+1+s/ω−3dB
+
+=== PAGE 56 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+56
+Slew rate (cont’d) 
+•Si la Slew Rate est dépassée d’une onde 
+sinusoïdale haute fréquence de grande 
+amplitude, une distorsion se produit
+•Réponsepleinepuissance (full signal 
+bandwidth):
+•Si un suiveur a en entrée une onde 
+sinusoïdale:
+•Le taux de variation de l’entrée est:
+•La valeur maximale de la dérivée est:
+•Ainsi, nous devons avoir:
+•Limitation de la tension de sortie :
+vI=ˆVisinωt
+dvI
+dt=ωˆVicosωt
+ωˆVi
+ωˆVi≤SR
+fM≤ SR2πVomax
+=== PAGE 57 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+57
+Tension de décalage
+•Lorsque vi est de l’ordre du millivolt et en dessous, comme 
+lors de l’amplification de la sortie des bio-électrodes, la 
+tension de décalage doit être prise en compte
+Vos
+=== PAGE 58 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+58
+Tension de décalage (suite)
+•Sortie pour amplificateur 
+opérationnel inversé et non inversé
+•Solution : utilisez un amplificateur 
+couplé AC pour éliminer le courant 
+continu
+•Il s’agit d’un filtre passe-haut dont 
+la fréquence de coupure est ωo = 
+1/CR1
+
+=== PAGE 59 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+59
+Tension de décalage (suite)
+•VO dérive vers la saturation 
+en raison de la tension de 
+décalage
+•Solution : utilisez une 
+grande résistance de 
+rétroaction afin qu’elle 
+implémente un intégrateur 
+avec perte avec gain fini en 
+courant continu
+•Un 1er ordre est obtenu à 
+la place d’un intégrateur
+A(s)=Aoω−3dB
+s ⇒ Ao1+s/ω−3dB
+VO=VOS1+Rf
+R
+!
+"
+##
+$
+%
+&&
+=== PAGE 60 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+60
+Courant de polarisation
+•Le courant de polarisation est souvent 
+nécessaire pour polariser correctement 
+les transistors d’entrée
+•Courant de polarisation d’entrée :
+•Courant de décalaged’entrée:
+•Valeurs typiques :
+IB = 100 nA, IOS = 10 nA
+IB=IB1+IB2
+2
+IOS=IB1−IB2
+Attention: il faut 
+s’assurer qu’un chemin 
+DC exsiste dans le circuit
+
+=== PAGE 61 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+61
+Courant de polarisation (suite)
+•Courants de polarisation 
+dans les amplificateurs 
+inverseurs et non 
+inverseurs
+•Solution : l’effet peut être 
+réduit en ajoutant R3
+VO=−IB2R3+R2IB1−IB2R3
+R1
+"
+#
+$$
+%
+&
+''
+Si IB1= IB2, Vo = 0, if R3 = R1//R2
+Or IB1et IB2sontdifférents…
+=== PAGE 62 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+62
+Courant de polarisation (suite)
+•Pour plus de précision...
+VO=−IB2R3+IB1R2
+VO=IOSR2Alors
+=== PAGE 63 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+63
+Bruit dans les amplificateurs
+•Sources de bruit multiples
+•Bruit RMS
+•Puissance de bruit
+=Vn2(f)BW
+=== PAGE 64 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+64
+Bruit dans les amplificateurs (suite)
+•Toutes les jonctions semi-
+conductrices génèrent du bruit, ce 
+qui limite la détection de petits 
+signaux
+•Principalement des bruits 1/f et 
+Johnson 
+•Les amplificateurs opérationnels ont 
+des transistors d’entrée qui 
+génèrent à la fois des sources de 
+tension de bruit et des sources de 
+courant de bruit
+•Les puissances de bruits peuvent être 
+additionnées
+Noise power densities
+rmsnoise
+Noise current density (A/sqrt(Hz))
+=== PAGE 65 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+65
+Résistance d’entrée et de sortie
+Résistanced’entrée:
+•Pour un suiveur,
+Rai≅ARd
+•Pour un amplificateur
+inverseur:
+ Rai≅ vi / i = Ri
+Résistancede sortie:
+Rao≅Ro / A
+-Environ 10 à 40 Ω
+
+=== PAGE 66 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+66
+GEL-4072/7072 -Bioinstrumentation 
+et microsystèmesbiomédicaux
+Circuits MOSFET et CMOS 
+(Étudiants des cycles 
+supérieurs seulement)
+=== PAGE 67 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+67
+Transistors NMOS
+Structure physique et 
+paramètres de 
+conception
+•L: Longueur du canal
+•W : largeur du canal
+•µn : mobilité porteuse
+•Cox : capacité d’oxyde 
+par unité de surface
+•tox : épaisseur de 
+l’oxyde
+•Kox : permitivité 
+relative de SiO2
+Cox=Koxεo
+tox
+ou
+D
+S
+G B
+=== PAGE 68 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+68
+Modes de fonctionnement
+1.Pour VGS = 0, rien… 
+(cutoff)
+2.Pour VGS >> 0, Une 
+région 
+d’appauvrissement 
+existe et un courant 
+peut passer dans le 
+canal
+3.Pour VGS >> 0 et 
+0 > VDS << VGS - Vtn
+4.Pour VGS >> 0 et 
+VDS >> VGS - Vtn
+
+=== PAGE 69 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+69
+Modes de fonctionnement (suite)
+•Courant de drain (ID) en fonction de la tension de drain (VDS)
+1
+rds
+=gds=∂ID
+∂VDS
+=µnCox
+W
+L
+"
+#$
+%
+&'VGS−Vtn−VDS( )
+=== PAGE 70 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+70
+Modes de fonctionnement (suite)
+•Pour VGS >> 0
+VGS1
+VGS2…
+=== PAGE 71 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+71
+Symboles MOSFET
+•NMOS
+•PMOS
+
+=== PAGE 72 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+72
+MOSFET à canal P
+•Ces équations peuvent également être utilisées pour le 
+PMOS si un signe - est placé devant chaque variable de 
+tension
+•Par exemple, VGS devient VSG, VDS devient VSD, Vth 
+devient –Vtp, etc
+•La condition requise pour la conduction : VSG > |Vtp|
+•La condition requise pour qu’un PMOS se trouve dans la 
+région active : VSD>VSG-|Vtp|où Vtp est négatif
+•ID : même format que pour le NMOS
+ID=µnCox
+2
+W
+LVSG−|Vtp|( )2
+=== PAGE 73 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+73
+Circuits CMOS
+•Les circuits CMOS utilisent les deux types de 
+transistors. Ex. : un inverseur CMOS
+
+=== PAGE 74 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+74
+Modèle à petit signal
+gm=∂ID
+∂VGS
+=µnCox
+W
+L
+"
+#$
+%
+&'VGS−Vtn( )
+•id = gmvgs-gsvsb + (vd-vs)/rds
+Effet de 
+substrat 
+(provoque un 
+changement 
+de Vtn)
+=== PAGE 75 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+75
+Modèle à petit signal (suite)
+1
+rds
+=gds=∂ID∂VDS=λµnCox2#$% &'(WL#$% &'(VGS−Vtn( )2=λID−sat≅λID
+rds≅1λID λ= kds2LVDS−Veff+Φ0 kds=2Ksε0qNA
+Tension intégrée d’une jonction pn en circuit 
+ouvert
+=== PAGE 76 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+76
+Amplificateur de source commune idéal
+Zs=∞
+¨ Résumé
+§ Rin = ∞
+§ Ro = ro
+§ Avo = -gmro
+− gm = kn(VGS-Vt) ou [2knID]1/2
+ou gm = 2ID/|Vov|
+− ro = VA/ID ou ro = 1/λID
+− Où kn = 𝜇nCox(W/L) et 
+Vov = Veff=VGS-Vtn
+Gain max
+=== PAGE 77 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+77
+Limites d’oscillation de sortie
+Vo≥VGS2−Vtn
+≥Vov2
+Ro≡ΔVo
+ΔIo
+=ro=VA2
+Io
+GS1
+D1
+VDS1
+
+=== PAGE 78 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+78
+Miroir de courant
+•Iin: Source de 
+courant idéale 
+•Iout = Iin
+•Zin = 0
+•Zout = ∞
+•Si VGS1=VGS2
+•Alors, VDS1=VDS2
+Iout
+Iin
+=(W/L)2
+(W/L)1
+=== PAGE 79 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+79
+Miroirde courant (suite)
+•Modèle à petit signal pour trouver Zin et Zout
+
+=== PAGE 80 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+80
+Miroirde courant (suite)
+Résumé
+•Résistance d’entrée: rin = 1/gm1
+•Résistance de sortie: rout = rds2
+•Oscillation de sortie: VD2 ≥ Veff2
+•Nous voulons rin petit et rout grand
+
+=== PAGE 81 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+81
+Miroirde courant (suite)
+Sink
+Source
+•Application: circuits de 
+polarisation dans une 
+puce CMOS
+=== PAGE 82 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+82
+Amplificateur de source commune
+•Amplificateur de tension 
+à gain élevé et infini rin
+•Une charge active de 
+type p est utilisée 
+(miroir de courant 
+formé par Q3 et Q2)
+=== PAGE 83 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+83
+Amplificateur de source commune 
+(suite)
+•Modèle à petit signal
+•rin = ∞
+•rout = rds1∥rsd2
+•vout/vin = −gm1(rds1∥rsd2)
+•Configuration répandue car 
+rin = ∞
+•L’utilisation d’une charge 
+active fournit une 
+résistance de sortie élevée 
+pour une petite zone 
+d’intégration et une faible 
+chute de tension
+=== PAGE 84 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+84
+Amplificateur de drain commun
+•Modèle à petit signal
+•Suiveur de tension
+•Avec une charge 
+active de type n
+=== PAGE 85 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+85
+Amplificateur de drain commun (suite)
+•Modèle à petit signal
+•Rin = ∞
+•Av ???
+=== PAGE 86 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+86
+Amplificateur de drain commun (suite)
+•Rs1 = 1/gs1∥rds1∥rsd2
+•Résistance d’entrée: rin = ∞
+•Gain ≅ unitaire
+•Gain: Av = 
+vout/vin = 
+gm1(1/gm1∥1/gs1∥rds1∥rsd2)
+•Résistance de sortie :
+rout ≅ 1/gm1
+=== PAGE 87 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+87
+Paire différentielle
+•Q1 et Q2 sont 
+identiques
+(ID1=ID2, VG1=VG2)
+•Ibias est le courant de 
+polarisation
+•Ibias = ID1+ID2
+
+=== PAGE 88 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+88
+Paire différentielle avec charge active
+•Entrée différentielle / 
+sortie asymétrique
+•Paire différentielle de 
+type N / charge active de 
+type P
+•Résistance de sortie :
+rout = rds2∥rds4
+•Gain: Av = gm1rout, ainsi 
+gm1(rds2∥rds4)
+•CMRR* …
+Acm≈− 12gm3Rss
+CMRR=|Ad||Acm|=gm(ro2||ro4)!" #$(2gm3Rss)
+Rss
+*CMRR : TRMC (taux de rejet du mode commun en français)
+=== PAGE 89 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+89
+Amplificateur opérationnel CMOS 
+complet à 2 étages
+Current source
+Current mirrors
+Common 
+source 
+amplifier
+Diff pair
+Compensation
+
+=== PAGE 90 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+90
+Références
+•A. S. Sedra and K. C. Smith, Microelectronic 
+Circuits, 6th ed. Oxford University Press, USA, 
+2009.
+•T. C. Carusone, D. A. Johns, K. W. Martin, Analog 
+Integrated Circuit Design, 2 edition. Hoboken, NJ: 
+Wiley, 2011.
+•J. G. Webster, Bioinstrumentation. Hoboken, NJ: 
+John Wiley & Sons, 2004.
+•J. G. Webster, Medical Instrumentation 
+Application and Design, 4 edition. Hoboken, NJ: 
+Wiley, 2009.

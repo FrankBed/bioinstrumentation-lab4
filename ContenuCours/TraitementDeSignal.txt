@@ -1,0 +1,729 @@
+=== PAGE 1 ===
+GEL-4072/7072 - Bioinstrumentation et 
+microsystèmes biomédicaux
+23 septembre 2026
+Traitement
+numérique
+des signaux
+biologiques
+Gabriel Gagnon-Turcotte, ing. , PhD
+=== PAGE 2 ===
+©Gabriel Gagnon-Turcotte, 2026
+2
+Plan du cours
+• Filtrage numérique des signaux biologiques
+• Détection numérique de potentiels biologique
+-Seuillage
+-Opérateur d’énergie
+-Etc.
+• Compression numérique de potentiel biologique
+-Compressed Sensing
+-Ondelettes
+-Etc.
+• Classement numérique des potentiels biologiques
+=== PAGE 3 ===
+©Gabriel Gagnon-Turcotte, 2026
+3
+GEL-4072/7072 - Bioinstrumentation 
+et microsystèmes biomédicaux
+Filtrage numérique
+embarqué
+=== PAGE 4 ===
+©Gabriel Gagnon-Turcotte, 2026
+Postulat: Les signaux biologiques sont souvent filtrés avec des filtres analogiques 
+simples avant d’être numérisés, généralement des filtres du 1er ou 2e ordre.
+Une stratégie souvent employé pour éviter tout recouvrement spectral du à la piètre 
+qualité des filtres analogiques consiste à suréchantillonner le signal, et à ensuite filtrer 
+le signal numériquement
+Filtrage numérique des signaux biologiques
+Ex: signal ECG 
+échantilloné à 1 kHz 
+filtré analogiquement 
+avec une fréquence de 
+coupure passe-bas de 
+100 Hz
+=== PAGE 5 ===
+©Gabriel Gagnon-Turcotte, 2026
+Même signal que précédemment, mais filtré avec simple filtre moyenneur
+Filtrage numérique des signaux biologiques (suite)
+Signal filtré passe-bas 
+à ~30 Hz
+
+=== PAGE 6 ===
+©Gabriel Gagnon-Turcotte, 2026
+Même signal que précédemment, mais filtré avec simple filtre moyenneur et sous-
+échantillonné d’un facteur 10. Taux d’échantillonnage final de 100 Hz
+Filtrage numérique des signaux biologiques (suite)
+
+=== PAGE 7 ===
+©Gabriel Gagnon-Turcotte, 2026
+Filtrage numérique des signaux biologiques (suite)
+Original sur-
+échantilloné
+Filtré/sur-échantilloné
+Filtré/décimé
+=== PAGE 8 ===
+©Gabriel Gagnon-Turcotte, 2026
+Filtrage numérique des signaux biologiques (suite)
+Lors de la collecte de signaux biologiques avec un système embarqué, il est souvent 
+plus commode, voire souhaitable, de filtrer les signaux directement dans le système 
+embarqué pour plusieurs raisons:
+1. Suite au filtrage numérique il est facile de décimer le signal avant de 
+transmettre les données, ce qui réduit la quantité de données à transmettre
+2. Si les signaux ne sont pas filtrés et transmis sur un lien sans fil, alors s’il y a 
+des pertes de données lors de la transmission ça va créer des «glitchs» sur le 
+signal filtré
+3. Permet de faire du traitement embarqué sur des signaux propres, comme 
+détecter la fréquence cardiaque, ou des arythmie cardiaques par exemple
+Perte de données
+« Glitch » après filtrage
+=== PAGE 9 ===
+©Gabriel Gagnon-Turcotte, 2026
+Filtrage numérique des signaux biologiques (suite)
+Attention, une erreur classique lors du filtrage numérique avec des filtres FIR est de 
+filtrer sur des fenêtres temporelles, sans tenir compte des effets transitoires au début et à 
+la fin de la fenêtre
+Accumulation 
+d’échantillons dans des 
+«buffers» (entre les 
+pointillés oranges) 
+avant d’appliquer un 
+filtre FIR
+«Glitch» à chaque 
+début et fin de la 
+fenêtre
+Orange: FIR 
+appliqué sur 
+tout le signal
+Bleu, FIR 
+appliqué sur 
+les fenêtres
+=== PAGE 10 ===
+©Gabriel Gagnon-Turcotte, 2026
+Filtrage numérique des signaux biologiques (suite)
+Lors de l’application d’un filtre FIR sur des fenêtres de signal, mieux vaux avoir un 
+« buffer» plus gros pour stocker les n – 1 résultats supplémentaires produits par la 
+convolution, où n est le nombre de coefficients du filtre
+Pour que le signal filtré soit filtré parfaitement, il faut ensuite additionner les n – 1 
+éléments filtrés de la fenêtre précédente aux n – 1 premiers éléments de la nouvelle 
+fenêtre qui vient d’être convoluée
+n- 1 elemsn- 1 elems Taille de la fenêtre – 2*(n-1)
+Fenêtre convoluée (x-1)
+n- 1 elems
+=
+Taille de la fenêtre – 2*(n-1)
++
+n- 1 elemsn- 1 elems Signal correctement reconstruit
+Fenêtre convoluée (x)
+n- 1 elems
+=== PAGE 11 ===
+©Gabriel Gagnon-Turcotte, 2026
+Filtrage numérique des signaux biologiques (suite)
+Les filtres FIR sont intéressant car ils ont une phase linéaire et on peut générer des 
+ordre élevés. Par contre, effectuer des convolutions et gérer les parties transitoires fait 
+augmenter la complexité
+➢ Problématique dans les systèmes embarqués en bioinstrumentation, où la 
+consommation énergétique est un critère important
+Une technique alternative consiste à utiliser des filtres IIR. Par exemple, un filtre 
+réalisant une moyenne mobile permet de réaliser un filtre passe-bas très simplement:
+𝑦(𝑛) = (𝑦 𝑛 − 1 ∗ 𝑁 + 𝑥 𝑛 − 𝑥(𝑛 − 𝑁))/𝑁
+Où N est le nombre de points sur lequel est calculé le filtre
+Diagramme de Bode de la magnitude du filtre avec N = 8
+=== PAGE 12 ===
+©Gabriel Gagnon-Turcotte, 2026
+Filtrage numérique des signaux biologiques (suite)
+Un autre filtre IIR couramment utilisé et simple a implémenter dans un système embarqué est le 
+filtre Notch DC
+𝑦 𝑛 = 𝑥 𝑛  − 𝑥 𝑛 − 1 + 𝑅 ∗ 𝑦(𝑛 − 1)
+Où R est un paramètre entre 0 et 1 qui permet de régler la constante de temps du filtre, ainsi que 
+sa réponse en fréquence
+La fonction de transfert de ce Notch DC est la suivante:
+𝐻 𝑧 = (1 − 𝑧−1)/(1 − 𝑅𝑧−1)
+On a un zéro au DC (z = 1) et un pôle proche du DC à z = R
+H(1) = 0
+H(0) = 1
+H(R) = (1 − 𝑅−1)/(1 − 𝑅𝑧−1) = 1
+Attention avec ce filtre, la phase n’est pas linéaire proche du DC
+Diagramme de Bode de la magnitude du filtre avec R = 
+0.985
+=== PAGE 13 ===
+©Gabriel Gagnon-Turcotte, 2026
+Filtrage numérique des signaux biologiques (suite)
+Filtrer DC c’est bien, mais souvent c’est insuffisant. Par exemple quoi faire pour retirer le 60 Hz 
+présent dans vos signaux biologiques?
+V ous pouvez utiliser les meilleures pratiques de design de circuit, mais malheureusement le 60 
+Hz  peut toujours perturber la qualité des signaux que vous enregistrez
+Heureusement, un filtre IIR Notch peut être conçu pour éliminer une fréquence spécifique, sans 
+trop perturber le contenu fréquentiel de vos signaux aux autre fréquences
+La forme générale d’un filtre IIR du 2e ordre peut être écrite comme suit:
+𝐻 𝑧 = (1 − 𝐴𝑧−1)(1 − 𝐵𝑧−1)(1 − 𝐶𝑧−1)(1 − 𝐷𝑧−1)
+=== PAGE 14 ===
+©Gabriel Gagnon-Turcotte, 2026
+Filtrage numérique des signaux biologiques (suite)
+Si l’on veut bloquer une fréquence spécifique, nommé wn, il suffit d’égaler le numérateur à 0 à 
+cette fréquence. Nommément, on veut:
+𝑁𝑢𝑚é𝑟𝑎𝑡𝑒𝑢𝑟 𝑤𝑛 = 1 − 𝐴𝑧−1 1 − 𝐵𝑧−1 = 0
+Donc:
+𝑁𝑢𝑚é𝑟𝑎𝑡𝑒𝑢𝑟 𝑒𝑗𝑤𝑛 = 1 − 𝐴𝑒−𝑗𝑤𝑛 1 − 𝐵𝑒−𝑗𝑤𝑛 = 0
+Il suffit de prendre 𝐴 =  𝑒𝑗𝑤𝑛 pour que la relation ci-dessus soit respectée. Pour éviter d’obtenir 
+des nombres complexes au final, on prend B égal au congugé de A, soit B =  𝑒−𝑗𝑤𝑛
+Finalement, le numérateur devient:
+𝑁𝑢𝑚é𝑟𝑎𝑡𝑒𝑢𝑟 𝑧 = 1 − 𝑒𝑗𝑤𝑛𝑧−1 1 − 𝑒−𝑗𝑤𝑛𝑧−1
+𝑁𝑢𝑚é𝑟𝑎𝑡𝑒𝑢𝑟 𝑧 = 1 − 𝑒−𝑗𝑤𝑛𝑧−1 − 𝑒𝑗𝑤𝑛𝑧−1 + 𝑧−2
+Merci à la formule d’Euler
+𝑁𝑢𝑚é𝑟𝑎𝑡𝑒𝑢𝑟 𝑧 = 1 − 2cos(𝑤𝑛)𝑧−1 + 𝑧−2
+=== PAGE 15 ===
+©Gabriel Gagnon-Turcotte, 2026
+Filtrage numérique des signaux biologiques (suite)
+Pour le dénominateur, il faut choisir C et D pour que H(w) égale ~1 pour toutes les fréquences 
+autre que wn
+On a que:
+𝐻 𝑧 = 1 − 𝑒𝑗𝑤𝑛𝑧−1 1 − 𝑒−𝑗𝑤𝑛𝑧−1
+(1 − 𝐶𝑧−1)(1 − 𝐷𝑧−1) ⇒ 𝐻 𝑒𝑗𝑤 = 1 − 𝑒𝑗(𝑤𝑛−𝑤) 1 − 𝑒−𝑗(𝑤𝑛+𝑤)(1 − 𝐶𝑒−𝑗𝑤)(1 − 𝐷𝑒−𝑗𝑤)
+Il suffit de prendre C = R*A et D = R*B avec R très proche de 1
+Dans ce cas, on obtiens le numérateur qui vaut (1-R)(1-R) pour w = wn, donc aucune division par 
+0, et H(𝑒𝑗𝑤) = ~1  pour les autre fréquences
+Mis au long, le dénominateur devient: 
+𝐷é𝑛𝑜𝑚𝑖𝑛𝑎𝑡𝑒𝑢𝑟 𝑧 = 1 − 2Rcos(𝑤𝑛)𝑧−1 + 𝑅2𝑧−2
+=== PAGE 16 ===
+©Gabriel Gagnon-Turcotte, 2026
+Filtrage numérique des signaux biologiques (suite)
+Enfin, la fonction de transfert du filtre Notch se réécrit:
+𝐻 𝑧 = 1 − 2cos(𝑤𝑛)𝑧−1 + 𝑧−2
+1 − 2Rcos(𝑤𝑛)𝑧−1 + 𝑅2𝑧−2
+Concrètement dans un système embarqué, vous allez réaliser l’opération suivante:
+𝑦 𝑛 = 𝑥 𝑛 − 2cos(𝑤𝑛)*x(n-1) + x(n-2) + 2Rcos(𝑤𝑛)*y(n-1) - 𝑅2y(n-2)
+Diagramme de Bode de la magnitude du 
+filtre avec R = 0.98 et wn = pi/2
+=== PAGE 17 ===
+©Gabriel Gagnon-Turcotte, 2026
+17
+GEL-4072/7072 - Bioinstrumentation 
+et microsystèmes biomédicaux
+Détection numérique de 
+potentiels biologiques
+=== PAGE 18 ===
+©Gabriel Gagnon-Turcotte, 2026
+1. Réduction de la quantité de données à transmettre
+2. Détection d’évènement
+ physiologique
+3. Rétroaction (étape souvent requise)
+Détection de potentiels biologiques: utilité
+Ex: détection d’arythmie 
+cardiaque1
+Ex: potentiels
+d’action (PA) 
+1%- 20% du 
+temps
+Signal 
+original
+PA 
+détectés
+1 Figure tirée de la fédération française de cardiologie
+Détection
+Ex: Contrôle 
+de prothèse 
+via sEMG
+
+=== PAGE 19 ===
+©Gabriel Gagnon-Turcotte, 2026
+• 3 algorithmes usuels pour détecter des signaux:
+➢ Seuillage:
+✓ Positif/Negatif
+✓ Valeur absolue 
+➢ Énergie
+✓ NEO: NEO(n) = x(n)²-x(n-1)×x(n+1)
+✓ MTEO: MTEO(n) = x(n)²-x(n-k)×x(n+k)
+➢ Filtre
+✓ Convolution du signal avec une banque de filtre
+✓ Convolution de l’amplitude du signal avec une banque de filtre
+✓ Convolution de NEO avec une banque de filtre
+19
+Détection de potentiels biologiques: stratégies
+Complexité
+2 multiplications et une 
+soustraction 
+Simple
+Convolution, 
+complexe
+Ex: PAs à 
+détecter
+=== PAGE 20 ===
+©Gabriel Gagnon-Turcotte, 2026
+20
+Détection de potentiels biologiques: seuillage
+positif, négatif, valeur absolue
+Seuillage positif
+Seuillage négatif
+Seuillage en valeur 
+absolue (|X|)
+Beaucoup plus robuste
+Les performances dépendent 
+du type de signal
+=== PAGE 21 ===
+©Gabriel Gagnon-Turcotte, 2026
+21
+Détection de potentiels biologiques (énergie: NEO, 
+MTEO)
+Rends les potentiels 
+biologiques plus 
+faciles à détecter 
+au prix d’une plus 
+grande complexité
+Seuillage positif
+NEO(n) = x(n)²-x(n-1)×x(n+1)
+=== PAGE 22 ===
+©Gabriel Gagnon-Turcotte, 2026
+22
+Détection de potentiels biologiques (Filtres: 
+convolution, Wavelet, etc.)
+Ex: cross-convolution avec une banque de filtre (convolution avec le conjugé flippé)
+Seuillage 
+positif
+Templates
+Signal bruité
+
+=== PAGE 23 ===
+©Gabriel Gagnon-Turcotte, 2026
+23
+Détection de potentiels biologiques (algorithmes de 
+seuillage automatique: médiane, RMS, écart-type)
+• Comment calculer un seuil de détection optimal (algo de seuillage)?
+L’opérateur MAD génère une 
+approximation de l’écart-type du 
+bruit dans le signal (σ)
+Calculer la valeur RMS 
+sur une fenêtre de n 
+échantillons
+Le seuil peut être déterminé comme un multiple de δ 
+(l’estimation de σ) ou de la valeur XRMS
+ APs détecté
+Concept
+=== PAGE 24 ===
+©Gabriel Gagnon-Turcotte, 2026
+Détection de potentiels biologiques (algorithmes de 
+seuillage automatique: médiane, RMS, écart-type)
+• Comment calculer un seuil optimal avec les algorithmes NEO ou MTEO?
+Calculer la valeur moyenne de 
+NEO sur une fenêtre de n 
+échantillons
+Calculer l’opérateur MAD de la valeur NEO, 
+génère une approximation de l’écart-type 
+(σ) du bruit contenu dans la sortie de NEO
+Le seuil peut être déterminé comme un multiple de σ ou de la valeur moyenne
+Problème critique: la complexité
+=== PAGE 25 ===
+©Gabriel Gagnon-Turcotte, 2026
+Détection de potentiels biologiques (algorithmes de 
+seuillage automatique: médiane, RMS, écart-type)
+• Stratégie plus efficace1 pour estimer l’σ du bruit
+Estime σ via une 
+boucle de contrôle 
+qui converge vers 
+le nombre 
+d’échantillons 
+dont l’amplitude 
+est supérieure à σ 
+La probabilité que 
+l’amplitude du bruit 
+excède σ est de 
+31.7% (distribution 
+semi-normale)
+1G. Gagnon-Turcotte et al., “A Wireless Headstage for Combined Optogenetics and Multichannel Electrophysiological Recording”, IEEE TBioCAS, 2017
+=== PAGE 26 ===
+©Gabriel Gagnon-Turcotte, 2026
+Détection de potentiels biologiques (algorithmes de 
+seuillage automatique: médiane, RMS, écart-type)
+• Ne nécessite aucune opération complexe (additions & «bit shifting»)
+Implémentation logicielle1
+ Implémentation hardware2
+1G. Gagnon-Turcotte et al., “An Optimized Adaptive Spike Detector for Behavioural Experiments”, IEEE ISCAS, 2016
+2G. Gagnon-Turcotte et al., “A Wireless Electro-Optic Headstage with a 0.13-μm CMOS Custom Integrated DWT Neural Signal Decoder 
+for Closed-loop Optogenetics”, TBioCAS, 2019 
+=== PAGE 27 ===
+©Gabriel Gagnon-Turcotte, 2026
+Détection de potentiels biologiques (algorithmes de seuillage automatique: 
+médiane, RMS, écart-type)
+Synthetic neural signal with varying SNR
+Block diagram: automatic spike detector
+1G. Gagnon-Turcotte et al., “A Wireless Electro-Optic Headstage with a 0.13-μm CMOS Custom Integrated DWT Neural Signal Decoder 
+for Closed-loop Optogenetics”, TBioCAS, 2019 
+• Implémentation hardware1
+=== PAGE 28 ===
+©Gabriel Gagnon-Turcotte, 2026
+Comparaison NEO vs Seuillage absolu
+Receiver Operating Characteristics (ROC): vrai positifs vs faux positifs selon le gain sur le seuil
+NEO génère légèrement de 
+meilleurs résultats
+En tenant compte de la complexité, le seuillage absolu 
+est meilleur (w1,2,3,4 = 1,1,0.025,0.025)
+
+=== PAGE 29 ===
+©Gabriel Gagnon-Turcotte, 2026
+29
+GEL-4072/7072 - Bioinstrumentation 
+et microsystèmes biomédicaux
+Compression numérique des 
+potentiels biologiques
+=== PAGE 30 ===
+©Gabriel Gagnon-Turcotte, 2026
+30
+Compression des signaux biologiques 
+(utilité)
+•Lien Bluetooth, ~1 Mbps effectif. Acquisition de PA ~ 320 kbps/canal. Problème?
+•Concept:
+Compression
+Decompression
+01100100 … 1101
+Biopotentiel 
+original 
+(M bits)
+Biopotentiel 
+compressé 
+(N bits)
+Biopotentiel 
+décompressé
+(M bits)
+Taux de compression: M/N
+=== PAGE 31 ===
+©Gabriel Gagnon-Turcotte, 2026
+31
+Compression des signaux biologiques 
+(Quantification)
+•Technique la plus simple pour compresser les données: réduire le nombre de bits!
+➢Taux de compression (TC) M/N, ou M est le nombre de bits initial et N le 
+nombre de bits compressés
+8 bits 5 bits
+TC = 8/5 = 1.6
+Beaucoup d’information perdue, non efficace!
+=== PAGE 32 ===
+©Gabriel Gagnon-Turcotte, 2026
+32
+Compression des signaux biologiques 
+(Encodage Delta)
+•Une autre technique simple consiste à diminuer la quantification de la différence entre 
+deux échantillons successifs
+•Permet de bien compresser les signaux basse fréquence, car leur dérivée est petite
+8 bits
+ 5 bits
+Signal reconstruitTC = 8/5 = 1.6
+Requiers l’échantillon de départ. Les résultats 
+sont meilleurs si le signal est normalisé
+
+=== PAGE 33 ===
+©Gabriel Gagnon-Turcotte, 2026
+33
+Compression des signaux biologiques 
+(Compressed sensing ou CS)
+Compressed sensing (CS), deux concepts clés: «Sparcity» et échantillonnage incohérent
+Signal «sparce»
+Matrice de parcimonie 
+optimale
+Matrice aléatoire (garde seulement M éléments)
+Signal compressé
+Compression Reconstruction
+, avec
+Minimise la 
+norme  L1 
+Ensuite,
+Nécessite un entraînement & mauvaise 
+reconstruction si une forme d’onde 
+n’est pas dans l’entraînement
+Nécessite un 
+entraînement pour 
+trouver la matrice 
+de parcimonie 
+optimale
+Signal original 
+(N éléments)
+Principalement: 
+MAC avec 
+une matrice 
+aléatoire Φ
+=== PAGE 34 ===
+©Gabriel Gagnon-Turcotte, 2026
+Compression des signaux biologiques 
+(Compressed sensing ou CS, suite)
+Exemple:
+Côté transmetteur
+Côté récepteur
++
+On connaît la matrice aléatoire utilisée 
+pour compresser
+Matrice de parcimonie optimale 
+trouvée par entraînement 
+KSVD
+=== PAGE 35 ===
+©Gabriel Gagnon-Turcotte, 2026
+Compression des signaux biologiques 
+(Compressed sensing ou CS, suite)
+Côté récepteur
+Minimise la norme  L1 
+En gros, itère sur l’équation 
+afin de minimiser l’erreur sur y
+Au final, on multiplie  par la 
+matrice de parcimonie optimale
+V oir: https://github.com/gpeyre/matlab-
+toolboxes/blob/master/toolbox_sparsity/toolbox/l1eq_pd.m
+=== PAGE 36 ===
+©Gabriel Gagnon-Turcotte, 2026
+36
+Compression des signaux biologiques 
+(ondelettes)
+• Stratégie introduite dans 1 basée sur une DWT de type Symmlet-2 de 4 niveaux
+Passe-haut
+Équivalent d’une 
+corrélation croisée avec:
+Génère un signal 
+parcimonieux
+L1 L2 L3 L4
+Passe-bas
+1G. Gagnon-Turcotte et al., “A Wireless Headstage for Combined Optogenetics and Multichannel 
+Electrophysiological Recording”, IEEE TBioCAS, 2017
+=== PAGE 37 ===
+©Gabriel Gagnon-Turcotte, 2026
+Compression des signaux biologiques 
+(ondelettes)
+AP dans le domaine 
+des ondelettes
+Sym-2 DWT
+Sélection dyn. des coefs.
+Compression
+Coefficients 
+compressés
+1
+-1
+111111111100100111010000000000001011100000000000
+«Bottleneck»
+Meilleure 
+robustesse vs CS, 
+Delta, etc.
+Normalise sur Q-bits & 
+conserve le coefficient 
+maximal sur 16-bits
+Conserve N coefficients avec l’amplitude maximale
+• Compression: les coefficients avec le plus d’énergie 
+sont conservés et re-quantifiés dynamiquement
+=== PAGE 38 ===
+©Gabriel Gagnon-Turcotte, 2026
+Compression des signaux biologiques 
+(ondelettes)
+• Optimisation CMOS1: 3 pipelined stages  DWT->Arbre de tri->Compression
+• Arbre de tri en hardware O(n·log(n))
+1G. Gagnon-Turcotte et al., “A Wireless Electro-Optic Headstage with a 0.13-μm CMOS Custom Integrated DWT Neural Signal Decoder 
+for Closed-loop Optogenetics”, TBioCAS, 2019 (pending)
+=== PAGE 39 ===
+©Gabriel Gagnon-Turcotte, 2026
+Compression des signaux biologiques 
+(ondelettes)
+• Métrique importante afin de comparer des algorithmes de compression:
+le « signal-to-noise and distortion ratio»
+Norme  L2 (Euclidienne)
+Signal compressé Signal non compressé
+=== PAGE 40 ===
+©Gabriel Gagnon-Turcotte, 2026
+Compression des signaux biologiques 
+(ondelettes)
+SNDR moyen et variabilité du SNDR
+Beaucoup plus robuste & aucun 
+entraînement requis!
+Original
+Décompressé
+SNDR = 
+22.3 dB
+50 µV
+AP typique 
+(CR de 4.2)
+=== PAGE 41 ===
+©Gabriel Gagnon-Turcotte, 2026
+Compression des signaux biologiques 
+(ondelettes)
+T op
+Bottom
+1G. Gagnon-Turcotte et al., “A Wireless Headstage for Combined Optogenetics and Multichannel Electrophysiological Recording”, IEEE TBioCAS, 2017
+2G. Gagnon-Turcotte et al., “A Wireless Electro-Optic Headstage with a 0.13-μm CMOS Custom Integrated DWT Neural Signal Decoder for Closed-loop 
+Optogenetics”, TBioCAS, 2019
+ASIC2
+FPGA1
+
+=== PAGE 42 ===
+©Gabriel Gagnon-Turcotte, 2026
+42
+GEL-4072/7072 - Bioinstrumentation 
+et microsystèmes biomédicaux
+Classement numérique des 
+potentiels biologiques
+=== PAGE 43 ===
+©Gabriel Gagnon-Turcotte, 2026
+43
+Classement des signaux biologiques
+•Le classement des formes d’onde nécessite presque toujours 2 étapes:
+➢Réduction de la dimensionnalité
+➢Regroupement
+Réduction de la dimensionnalité: exprime les formes d’onde dans une 
+base qui met en valeur les différences
+Plusieurs potentiels superposés Représentés avec 2 composantes principales
+4-5 groupes visuellement identifiables
+=== PAGE 44 ===
+©Gabriel Gagnon-Turcotte, 2026
+44
+Classement des signaux biologiques
+Regroupement: classe les composantes similaires entre elles
+Plusieurs potentiels superposés Représentés avec 2 composantes principales
+4-5 groupes visuellement identifiables
+=== PAGE 45 ===
+©Gabriel Gagnon-Turcotte, 2026
+Classement des signaux biologiques
+•Un des algorithmes de réduction de la dimensionnalité le plus connus:
+«Principal component analysis» (PCA)
+•PCA: algorithme sans supervision qui cherche la base optimale permettant de 
+représenter les coefficients avec le plus de variabilité
+•Suite à la PCA, les coefficients sont classés en ordre décroissant de variabilité et on 
+garde seulement les premiers, c.-à-d. ceux qui ont le plus de variabilité
+•Heureusement la PCA est implémenté de base dans Matlab
+=== PAGE 46 ===
+©Gabriel Gagnon-Turcotte, 2026
+Classement des signaux biologiques
+•Une autre technique consiste à utiliser une transformée en Ondelettes!
+•Chacun des niveaux de la transformée effectue une réduction de la dimensionnalité 
+avec 2x moins de points
+•Ex: Pour une DWT de 3 niveaux on obtient un vecteur de 6 éléments (48 éléments au 
+départ)
+•Les vecteurs pointent dans la même direction pour des formes d’ondes similaires
+
+=== PAGE 47 ===
+©Gabriel Gagnon-Turcotte, 2026
+Classement des signaux biologiques
+•Pour regrouper les coefficients entre eux plusieurs algorithmes existent, tels que k-
+means. Essentiellement, k-means tente classer les données en X groupes en minimisant 
+une fonction (souvent la distance entre les vecteurs et le centre des groupes)
+•Point faible de k-means: le nombre de groupe doit être connu a priori, et toutes les 
+données doivent être disponibles (pas de temps réel)
+Ex: minimisation du 
+carré de la norme 
+Euclidienne
+=== PAGE 48 ===
+©Gabriel Gagnon-Turcotte, 2026
+Classement des signaux biologiques
+•Pour avoir du classement temps réel, une stratégie intéressante est proposée dans1
+•Stratégie: considérer le signal de dimension réduite comme un vecteur
+➢ Vecteur moyen (VM) créé pour chaque «cluster»
+➢ Vecteurs associés au VM le plus près
+➢ Mise à jour des VM en temps réel
+➢ Non supervisée, nombre de clusters a priori non requis
+➢ Converge vers un nombre approprié de «clusters»
+1G. Gagnon-Turcotte et al., “A Wireless Electro-Optic Headstage with a 0.13-μm CMOS Custom 
+Integrated DWT Neural Signal Decoder for Closed-loop Optogenetics”, TBioCAS, 2019
+=== PAGE 49 ===
+©Gabriel Gagnon-Turcotte, 2026
+Classement des signaux biologiques
+1G. Gagnon-Turcotte et al., “A Wireless Electro-Optic Headstage with a 0.13-μm CMOS Custom Integrated DWT Neural Signal Decoder for Closed-loop Optogenetics”, TBioCAS, 2019
+
+=== PAGE 50 ===
+©Gabriel Gagnon-Turcotte, 2026
+Classement des signaux biologiques
+•Exemple avec des vecteurs à 2 dimensions
+1G. Gagnon-Turcotte et al., “A Wireless Electro-Optic Headstage with a 0.13-μm CMOS Custom Integrated DWT Neural Signal Decoder for Closed-loop 
+Optogenetics”, TBioCAS, 2019
+VM1
+VM2
+=== PAGE 51 ===
+©Gabriel Gagnon-Turcotte, 2026
+Classement des signaux biologiques
+•Exemple avec des vecteurs à 2 dimensions
+1G. Gagnon-Turcotte et al., “A Wireless Electro-Optic Headstage with a 0.13-μm CMOS Custom Integrated DWT Neural Signal Decoder for Closed-loop 
+Optogenetics”, TBioCAS, 2019
+VM1
+VM2
+
+=== PAGE 52 ===
+©Gabriel Gagnon-Turcotte, 2026
+Classement des signaux biologiques
+•Exemple avec des vecteurs à 2 dimensions
+1G. Gagnon-Turcotte et al., “A Wireless Electro-Optic Headstage with a 0.13-μm CMOS Custom Integrated DWT Neural Signal Decoder for Closed-loop 
+Optogenetics”, TBioCAS, 2019
+VM1
+VM2
+
+=== PAGE 53 ===
+©Gabriel Gagnon-Turcotte, 2026
+Classement des signaux biologiques
+•Exemple avec des vecteurs à 2 dimensions
+1G. Gagnon-Turcotte et al., “A Wireless Electro-Optic Headstage with a 0.13-μm CMOS Custom Integrated DWT Neural Signal Decoder for Closed-loop 
+Optogenetics”, TBioCAS, 2019
+VM1
+VM2
+=== PAGE 54 ===
+©Gabriel Gagnon-Turcotte, 2026
+Classement des signaux biologiques
+•Exemple avec des vecteurs à 2 dimensions
+1G. Gagnon-Turcotte et al., “A Wireless Electro-Optic Headstage with a 0.13-μm CMOS Custom Integrated DWT Neural Signal Decoder for Closed-loop 
+Optogenetics”, TBioCAS, 2019
+VM1
+VM2
+=== PAGE 55 ===
+©Gabriel Gagnon-Turcotte, 2026
+Classement des signaux biologiques
+•Exemple avec des vecteurs à 2 dimensions
+1G. Gagnon-Turcotte et al., “A Wireless Electro-Optic Headstage with a 0.13-μm CMOS Custom Integrated DWT Neural Signal Decoder for Closed-loop 
+Optogenetics”, TBioCAS, 2019
+VM1
+VM2
+=== PAGE 56 ===
+©Gabriel Gagnon-Turcotte, 2026
+Classement des signaux biologiques
+•Exemple avec des vecteurs à 2 dimensions
+1G. Gagnon-Turcotte et al., “A Wireless Electro-Optic Headstage with a 0.13-μm CMOS Custom Integrated DWT Neural Signal Decoder for Closed-loop 
+Optogenetics”, TBioCAS, 2019
+VM1
+VM2
+=== PAGE 57 ===
+©Gabriel Gagnon-Turcotte, 2026
+Classement des signaux biologiques
+•Exemple avec des vecteurs à 2 dimensions
+1G. Gagnon-Turcotte et al., “A Wireless Electro-Optic Headstage with a 0.13-μm CMOS Custom Integrated DWT Neural Signal Decoder for Closed-loop 
+Optogenetics”, TBioCAS, 2019
+VM1
+VM2
+
+=== PAGE 58 ===
+©Gabriel Gagnon-Turcotte, 2026
+Classement des signaux biologiques
+•Exemple avec des vecteurs à 2 dimensions
+1G. Gagnon-Turcotte et al., “A Wireless Electro-Optic Headstage with a 0.13-μm CMOS Custom Integrated DWT Neural Signal Decoder for Closed-loop 
+Optogenetics”, TBioCAS, 2019
+VM1
+VM2
+Trop éloigné des 
+VMs
+=== PAGE 59 ===
+©Gabriel Gagnon-Turcotte, 2026
+Classement des signaux biologiques
+•Exemple avec des vecteurs à 2 dimensions
+1G. Gagnon-Turcotte et al., “A Wireless Electro-Optic Headstage with a 0.13-μm CMOS Custom Integrated DWT Neural Signal Decoder for Closed-loop 
+Optogenetics”, TBioCAS, 2019
+VM1
+VM2
+VM3
+=== PAGE 60 ===
+©Gabriel Gagnon-Turcotte, 2026
+Classement des signaux biologiques
+•Exemple de système complet avec détection, compression et classement
+•Système dédié à l’étude du cerveau chez la souris
+1G. Gagnon-Turcotte et al., “A Wireless Electro-Optic Headstage with a 0.13-μm CMOS Custom Integrated DWT Neural Signal Decoder for Closed-loop Optogenetics”, TBioCAS, 2019
+NDIC
+Système léger (1.05 g sans) 
+et compact (1.12 cm³)
+SoC d’acquisition 
+et de stimulation
+=== PAGE 61 ===
+©Gabriel Gagnon-Turcotte, 2026
+Classement des signaux biologiques
+•Testé in vivo
+1G. Gagnon-Turcotte et al., “A Wireless Electro-Optic Headstage with a 0.13-μm CMOS Custom Integrated DWT Neural Signal Decoder for Closed-loop Optogenetics”, TBioCAS, 2019
+=== PAGE 62 ===
+©Gabriel Gagnon-Turcotte, 2026
+Classement des signaux biologiques
+•Vidéo du système en action
+1G. Gagnon-Turcotte et al., “A Wireless Electro-Optic Headstage with a 0.13-μm CMOS Custom Integrated DWT Neural Signal Decoder for Closed-loop Optogenetics”, TBioCAS, 2019
+

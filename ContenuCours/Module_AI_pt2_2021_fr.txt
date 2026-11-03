@@ -1,0 +1,305 @@
+=== PAGE 1 ===
+GEL-4072/7072 -Bioinstrumentation et 
+microsystèmesbiomédicaux
+Introduction 
+à l’IA en 
+génie 
+électrique et 
+biomédical 
+– Partie 2
+
+=== PAGE 2 ===
+www.ulaval.ca
+©Benoit Gosselin, 2019
+2
+Plan du cours
+•Définitions
+•Introduction à l’IA, concepts de base et 
+applications
+•Comment structurer un problème de machine 
+learning
+•Algorithmeset exemples
+=== PAGE 3 ===
+www.ulaval.ca
+©Benoit Gosselin, 2019
+3
+Plan
+•Approche traditionnelle avec des features
+-Prétraitement
+-Extraction de caractéristiques
+-Domaine temporel
+-Domaine fréquentiel
+-Domaine temps-fréquence
+-Classification
+=== PAGE 4 ===
+www.ulaval.ca
+©Benoit Gosselin, 2019
+4
+EMG et systèmes de contrôle
+Biosignaux
+Prétraitement
+Extraction de features
+Classification
+Contrôleur
+Interface homme-machine
+=== PAGE 5 ===
+www.ulaval.ca
+©Benoit Gosselin, 2019
+Biosignaux
+•Électrodes
+•Matériel
+•Quantité
+•Positionnement
+•Interface analogique
+•Conditionnement du signal et filtres
+•Conversion analogique-numérique
+5
+=== PAGE 6 ===
+www.ulaval.ca
+©Benoit Gosselin, 2019
+Prétraitement
+•Filtres numériques
+•Artefacts (ECG, mouvement)
+•Passe-bande
+•Notch (60 Hz)
+•Segmentation
+•Fenêtrage
+•Adjacent
+•Chevauchant
+•Longueur de la fenêtre (échantillons)
+6
+=== PAGE 7 ===
+www.ulaval.ca
+©Benoit Gosselin, 2019
+Prétraitement
+7
+•Jeu de données:
+•X: Vecteurs de caractéristiques
+•y: Étiquettes de classe
+=== PAGE 8 ===
+www.ulaval.ca
+©Benoit Gosselin, 2019
+Extraction de Features
+•Les biosignaux tels que le signal EMG ne sont 
+pas stationnaires
+•Les propriétés du processus génératif 
+évoluent au fil du temps
+•Transformer le biosignal en vecteurs 
+caractéristiques
+•Jeu de données
+8
+=== PAGE 9 ===
+www.ulaval.ca
+©Benoit Gosselin, 2019
+Extraction de Features
+•3 catégories
+•Domaine temporel
+•Amplitude
+•Faible complexité
+•Domaine fréquentiel
+•Densité du spectre de puissance
+•Domaine temps-fréquence
+•Variation du contenu fréquentiel dans le 
+temps
+9
+=== PAGE 10 ===
+www.ulaval.ca
+©Benoit Gosselin, 2019
+Extraction de Features
+10
+N. Nazmi, M. Abdul Rahman, S.-I. Yamamoto, S. Ahmad, H. Zamzuri, and S. Mazlan, “A Review of Classification Techniques of EMG Signals during Isotonic and Isometric 
+Contractions,” Sensors, vol. 16, no. 8, p. 1304, Aug. 2016.
+•Fonctionnalités du domaine temporel
+•Valeur absolue moyenne (MAV)
+•RMS
+•Variance
+•Écart type
+•Amplitude max.
+•Changement de panneau de pente*
+•Passage à zéro*
+* Informations sur le contenu en fréquence
+=== PAGE 11 ===
+www.ulaval.ca
+©Benoit Gosselin, 2019
+Extraction de Features
+11
+N. Nazmi, M. Abdul Rahman, S.-I. Yamamoto, S. Ahmad, H. Zamzuri, and S. Mazlan, “A Review of Classification Techniques of EMG Signals during Isotonic and Isometric 
+Contractions,” Sensors, vol. 16, no. 8, p. 1304, Aug. 2016.
+•Caractéristiques du domaine fréquentiel
+•Fréquence moyenne
+•Fréquence médiane
+•Caractéristiques du domaine temps-
+fréquence
+•Transformée en ondelettes
+
+=== PAGE 12 ===
+www.ulaval.ca
+©Benoit Gosselin, 2019
+Extraction de Features
+•Apprentissage automatique (prétraitement)
+•Mise à l’échelle / normalisation / normalisation
+•Réduction de la dimensionnalité
+•Méthodes de sélection des caractéristiques
+•Filtre (indépendant de l’algorithme)
+•Sélection du meilleur sous-ensemble de fonctionnalités 
+(évaluation des statistiques)
+•Wrapper (évaluation des sous-ensembles avec des 
+itérations d’entraînement algo)
+•Sélection avant (ajout progressif de fonctionnalités 
+d’amélioration)
+•Élimination en amont (suppression progressive des 
+caractéristiques les moins significatives)
+12
+=== PAGE 13 ===
+www.ulaval.ca
+©Benoit Gosselin, 2019
+Extraction de Features
+•Apprentissage automatique (prétraitement)
+•Mise à l’échelle / normalisation / normalisation
+•Réduction de la dimensionnalité
+•Méthodes de sélection des caractéristiques
+•Filtre (indépendant de l’algorithme)
+•…
+•Wrapper (évaluation des sous-ensembles avec des 
+itérations d’entraînement algo)
+•…
+•Embarqué (sélection intégrée à l’algorithme 
+d’entraînement)
+•Critères : variance, corrélation des caractéristiques, 
+erreur empirique
+13
+=== PAGE 14 ===
+www.ulaval.ca
+©Benoit Gosselin, 2019
+Extraction de Features
+•Apprentissage automatique (prétraitement)
+•Mise à l’échelle / normalisation / normalisation
+•Réduction de la dimensionnalité
+•Sélection des fonctionnalités
+•...
+•Projection de caractéristiques
+•Analyse en composantes principales (ACP)
+•Projection linéaire dans un sous-espace de dimension 
+inférieure
+•Non supervisé
+•Composantes : directions orthogonales de la variance 
+maximale
+14
+=== PAGE 15 ===
+www.ulaval.ca
+©Benoit Gosselin, 2019
+Extraction de Features
+•Analyse en composantes principales 
+(ACP)
+15
+Source: E. Alpaydin, Introduction to Machine Learning, 2nd edition, MIT Press, 2010.
+=== PAGE 16 ===
+www.ulaval.ca
+©Benoit Gosselin, 2019
+Classification
+•Fractionnement d’ensemble de données 
+d’entraînement / de test
+16
+•Rappel : apprentissagesupervisé
+•Entrée X, sortie Y
+•Apprendre le mappage de l’entrée à la sortie
+•Valeurs correctes fournies par un 
+superviseur
+y = g(x|θ)
+   
+ où g est le modèle et θ ses paramètres
+=== PAGE 17 ===
+www.ulaval.ca
+©Benoit Gosselin, 2019
+17
+Source: https://medium.com/@venkatachalamramalingam/6-jars-perspective-of-machine-learning-35ace2c9442f
+Classification
+=== PAGE 18 ===
+www.ulaval.ca
+©Benoit Gosselin, 2019
+Classification
+•Algorithmes d’apprentissage automatique pour 
+la classification
+•Analyse discriminante linéaire (LDA)
+•Machine à vecteurs de support (SVM)
+•k-Voisins les plus proches (KNN)
+•Réseau de neurones artificiels (RNA)
+18
+=== PAGE 19 ===
+www.ulaval.ca
+©Benoit Gosselin, 2019
+Classification
+•Analyse discriminante linéaire (LDA)
+•Projection vers un nouvel espace 
+maximisant la séparation des classes :
+•Minimiser les écarts
+•Maximiser la distance entre les moyens
+19
+Source:https://towardsdatascience.com/linear-discriminant-analysis-in-python-76b8b17817c2
+=== PAGE 20 ===
+www.ulaval.ca
+©Benoit Gosselin, 2019
+Classification
+•Machine à vecteurs de support (SVM)
+•Discriminant linéaire
+•Maximiser la marge séparant les classes
+•Estimation uniquement des limites, pas de 
+la densité totale
+20
+Source:https://scikit-learn.org/stable/auto_examples/svm/plot_svm_margin.html#sphx-glr-auto-examples-svm-plot-svm-margin-py
+=== PAGE 21 ===
+www.ulaval.ca
+©Benoit Gosselin, 2019
+Classification
+•Machine à vecteurs de support (SVM)
+•Problème non linéaire :
+•Kernel trick
+•Transformation non linéaire
+•Cartographier le problème dans un nouvel espace
+•Le modèle linéaire dans le nouvel espace 
+correspond à un modèle non linéaire dans l’espace 
+d’origine
+21
+Source: https://medium.com/@zxr.nju/what-is-the-kernel-trick-why-is-it-important-98a98db0961d
+=== PAGE 22 ===
+www.ulaval.ca
+©Benoit Gosselin, 2019
+Classification
+•k-Voisins les plus proches (KNN)
+•Discriminant non linéaire
+•Attribution de l’étiquette majoritaire parmi 
+les k plus proches voisins
+22
+Source:https://scikit-learn.org/stable/auto_examples/neighbors/plot_classification.html#sphx-glr-auto-examples-neighbors-plot-classification-py
+=== PAGE 23 ===
+www.ulaval.ca
+©Benoit Gosselin, 2019
+Classification
+•Réseaux de neurones artificiels (RNA)
+•Neurone : discriminant linéaire
+y = f(W x+ w )
+•Outil interactif: 
+https://playground.tensorflow.org/
+23
+T
+      0
+Source:http://vision.gel.ulaval.ca/~cgagne/enseignement/apprentissage/A2018/presentation
+s/iam-sem07-pmc.pdf
+=== PAGE 24 ===
+www.ulaval.ca
+©Benoit Gosselin, 2019
+Contrôleur
+•Traduire la classe de sortie en une 
+combinaison de commandes 
+actionneur/moteur
+•Activation des fonctionnalités
+•Régulateur PI / PID pour moteurs
+24
+=== PAGE 25 ===
+www.ulaval.ca
+©Benoit Gosselin, 2019
+Interface homme-machine
+•Prothèse
+•Robotique d’assistance
+25
+

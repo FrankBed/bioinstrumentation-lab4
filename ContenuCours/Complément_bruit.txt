@@ -1,0 +1,67 @@
+=== PAGE 1 ===
+GEL-4072/7072 -Bioinstrumentation et 
+microsystèmesbiomédicaux
+Complément:
+Bruit 
+d’électrode
+
+=== PAGE 2 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+Complément: bruit d’électrode-Modèle
+•On considère le modèle de l’électrode comme suit:
+2
+Ve
+Rd Cd
+Rs
+•On peut représenter le bruit dans le modèle de 
+l’électrode :
+*Vn2 = 4kTRd
+Rd
+=> Densité spectrale de bruit      
+(en V2/Hz ou W/Hz)
+=== PAGE 3 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+Complémentde bruit electrode –Bande passante
+•Si on veut le bruit total pour un système, on doit 
+considérer la bande passante dans le calcul de bruit 
+comme suit :
+3
+𝑣!"=𝑣!"∗Δ𝑓=4𝑘𝑇𝑅#Δ𝑓
+Où Δ𝑓 est la bande passante de bruit (dépend du circuit)
+f1 f2
+f
+vnf2-f1
+=== PAGE 4 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+Complémentde bruit electrode –Puissance totale
+•Pour avoir le bruit total sur la 
+bande passante, on fait l’intégrale 
+du bruit sur celle-ci:
+4
+f1 f2
+f
+vn
+𝑣!"𝑓=*$!
+$"
+𝑣!"𝑓𝑑𝑓=𝑣!"𝑓∗Δ𝑓
+•Si on veut la valeur en Vrms :
+𝑣!	&’(=𝑣!"𝑓=𝑣!𝑓∗Δ𝑓
+=== PAGE 5 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+Complémentbruit electrode –Impédancedu modèle
+•Si on veut maintenant la formule de l’impédance du modèle 
+électrique de l’électrode:
+5
+Ve
+Rd Cd
+Rs
+Zs=𝑅(+𝑅#	)(*# =𝑅(+ )!$#+!%&#	
+Zs=𝑅(+ 𝑅#𝑠𝑅#𝐶#+1	
+En sachant que la forme générique d’un filtre passe-
+bas du 1er order est la suivante:
+Hs= 𝐾⁄𝑠ω+1	Où ω=2π𝑓
+On a donc dans le cas de l’électrode que : ω,=)-#*# 

@@ -1,0 +1,110 @@
+=== PAGE 1 ===
+GEL-4072/7072 -Bioinstrumentation et 
+microsystèmesbiomédicaux
+Exemple: 
+Bruit 
+d’électrodes
+
+=== PAGE 2 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+2
+Electrode noise characteristics
+Exemple:  
+•Les potentielsd’actionextracellulairesontuneamplitude 
+comprise entre 50 et 500µV ⇒Signauxd’entréetrès faibles
+•Bruit d’entréede l’amplificateur= 5 µVrms
+•Le SNR doit être> -3 dB
+•Bande de fréquencesdes potentielsd’action: 100Hz-10kHz, et 
+T = 37°C
+•Le bruit total référéà l’entréedu systèmedoit être< 10 µVrms
+•Question : Quelle estl’impédancemaximaled’électrode
+permise?
+=== PAGE 3 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+3
+Electrode noise characteristics
+Bruit du systèmed’enregistrement= Bruit d’électrode+ Bruit de 
+préamplificateur
+•La principalesource de bruit d’électrodeestle bruit thermique: 
+•RN= résistanceau bruit (partieréellede la magnitude de 
+l’impédancede la sonde)
+•Δf = bandepassanted’enregistrement
+•Vne= puissance moyennede bruit
+•k = Constante de Boltzmann : 1,3806488 ×10-23m2kg s-2K-1
+•T = Température
+(enWatt. Utilisezles Vrms!)
+=== PAGE 4 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+4
+Electrode behavior and circuit model
+•Les caractéristiquescourant-tension des électrodessontnon 
+linéaires
+•Elles sontsensiblesau courant qui traverse l’électrodeet 
+dépendentde la formed’onde(dépendantde la densitédu 
+courant et de la fréquence).
+•
+•Circuit équivalentd’électrodes
+Cd: Capacitéde l’interfaceélectrode-électrolyte
+Rd: Résistancede l’interfaceélectrode-électrolyte
+Rs: Résistancedu fil d’électrode
+Ehc: Potentielde demi-cellule pour l’électrode.
+=== PAGE 5 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+Electrode noise characteristics example -solution
+•On a en plus les équations suivantes qui décrivent le bruit 
+de ce système :
+5
+**~
+ 
++-Vs Ve Rd
+Cd
+Rs Ven2 VAn2
+A(s) Vno2
+Ven2
+VAn2
+: Puissance moyenne de bruit de l’électrode
+: Puissance moyenne de bruit de l’amplificateur
+Vni2 : bruit référé à l’entrée
+Vni2 = VAn2 + Ven2
+Vno2 = A2*Vni2
+(1)
+=== PAGE 6 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+Electrode noise characteristics example -solution
+Signal d’entrée : 
+6
+50μV < Vs < 500μV
+Pire cas, on utilise cette valeur dans notre 
+calcul de SNR
+On doit convertir le signal en valeur ‘peak to peak’ en valeur de 
+puissance moyenne pour comparer avec le bruit :
+(Vpp)
+Vs pp = 7 * Vs rms
+𝑉!"= #𝑉!	$$7"
+~
+=== PAGE 7 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+Electrode noise characteristics example -solution
+Or, il faut :
+7
+On trouve que:
+𝑆𝑁𝑅≻−3𝑑𝐵Donc :−3𝑑𝐵<20log 50	µ𝑉!!
+𝑉"#	%&’∗7
+𝑉!"	$%&<10	µ𝑉$%&
+Or, 𝑉!"	$%&<𝑉!"’
+On remplace dans (1) :10	µ𝑉%&’(≥𝑉)"(+5	µ𝑉%&’(
+⇒𝑉)"	%&’≤8.66	µ𝑉%&’
+La puissance moyenne de bruit de l’électrode :
+=== PAGE 8 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+Electrode noise characteristics example -solution
+On peut donc trouver la valeur de l’électrode avec:
+𝑅(≤)!"#*+,-.⇒𝑅(≤ /.11	)$%&#*∗3.4/∗35’#(∗4356∗775589 
+⇒𝑅(≤442.7	𝑘Ω 

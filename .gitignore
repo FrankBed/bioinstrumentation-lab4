@@ -1,7 +1,3 @@
-# Cours et fichiers lourds de reference
-ContenuCours/
-bioamp_text.txt
-
 # Binaires locaux et outils portables
 mingit/
 gh_cli/
@@ -23,3 +19,4 @@ __pycache__/
 # System & OS
 .DS_Store
 Thumbs.db
+

@@ -1,0 +1,1585 @@
+=== PAGE 1 ===
+GEL-4072/7072 -Bioinstrumentation et 
+microsystèmesbiomédicaux
+2 septembre2026
+Introduction
+
+=== PAGE 2 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+2
+Bioinstrumentation et microsystèmes
+biomédicaux
+Benoit Gosselin PhD, ing.
+•Professeurtitulaire
+•Directeur, Laboratoirede recherche sur les 
+microsystems biomédicaux(LMBio-UL)
+http://www.biomicrosystems.ca/
+•Chairede recherche du Canada enMicrosystèmes
+biomédicauxintelligents
+•Expertise: microélectronique, géniebiomédical, 
+neurosciences, bioélectronique
+•Bureau PLT-2114, Teams
+•Disponibilité: Mercredi de 13h30 à 16h20.
+
+=== PAGE 3 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+3
+Laboratoirede recherchesurles 
+microsystèmesbiomédicaux
+Intérêts
+de recherche / 
+Expertise
+•
+Conception de circuits intégrés en 
+mode 
+mixte/analogique/numérique
+•
+Instrumentation biomédicale
+•
+Conception de circuits intégrés RF
+•
+Intégration de microsystèmes 3D
+•
+Intégration de microsystèmes 
+multi
+-
+technologies 
+(MEMS/CMOS/Photonique)
+•
+Techniques de récupération 
+d’énergie
+Apperçu
+• Intégration et encapsulation de 
+microsystèmes avancés
+• Personnel : 25 étudiants aux cycles 
+supérieurs, 2 associés de recherche, 1 
+technicien
+=== PAGE 4 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+4
+Laboratoirede recherchesurles 
+microsystèmesbiomédicaux
+S. Tam, et al., IEEE Trans. on Biomed. Circ. and Syst., 2019
+=== PAGE 5 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+Laboratoirede recherchesurles 
+microsystèmesbiomédicaux
+
+=== PAGE 6 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+Laboratoirede recherchesurles 
+microsystèmesbiomédicaux
+Smart Multimodal Wireless Neuroelectronic Platforms
+G. Gagnon-Turcotte, et al., IEEE BIOCAS 2023
+=== PAGE 7 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+7
+Laboratoirede recherchesurles 
+microsystèmesbiomédicaux
+Microsystème multi-capteurs ultra-petit pour la mesure des 
+signes vitaux
+Signes vitaux :
+• SpO2 (saturation en 
+oxygène), 
+• température 
+• Tension artérielle 
+• fréquence cardiaque, 
+• fréquence 
+respiratoire
+• taux de glucose
+• poids
+=== PAGE 8 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+8
+Laboratoirede recherchesurles 
+microsystèmesbiomédicaux
+SifiLabs, une start-up de l’Université Laval
+Le biopoint : Électromyographie, Photopléthysmographie, SpO2, Fréquence 
+respiratoire, Fréquence cardiaque, ECG, Température, BLE activé 
+(SifiLabs.com)
+Membres fondateurs: Gabriel Gagnon-Turcotte, 
+Ulysse Côté Allard, Benoit Gosselin
+=== PAGE 9 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+9
+Le genie biomedical et les nouvelles
+technologies médicales
+Mission et opportunités
+=== PAGE 10 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+10
+Augmentation des coûts des soins de 
+santé
+US Congressional Budget Office
+Dépenses nationales de santé des États-Unis en pourcentage 
+du produit intérieur brut
+Année
+=== PAGE 11 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+11
+Économie des soins de santé
+A. Wong, ISSCC 2008
+=== PAGE 12 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+12
+Applications de santé intelligentes 
+portables et implantables
+Smart 
+wireless 
+sensors
+5G, 4G, 
+3G,
+Wi-fi, 
+Bluetooth
+Chronic
+Wearables
+Signes vitaux : température corporelle, pression 
+artérielle, pouls (fréquence cardiaque) et fréquence 
+respiratoire (fréquence respiratoire)
+L. Huang et al., JDCTA: International Journal of Digital 
+Content Technology and its Applications, 2009.
+=== PAGE 13 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+13
+Applications avancées en biologie et en 
+sciences de la vie, in vitro et in-vivo
+Micro-array chip, 
+A. Mason,IEEE
+JSSC 2009
+G. Gagnon-Turcotte, and B. Gosselin, IEEE TBioCAS2016
+BioChip-D: 2 electric bio-
+impedance sensors, 2 pH 
+sensors, 1 amperometric
+sensor and 1 temperature 
+sensor
+D. Weiss, IEEE EMBC 2013
+
+=== PAGE 14 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+Conception de systèmes biomédicaux
+•Science des matériaux
+•Miniaturisation, emballage
+•Conception micro-électromécanique
+•Conception électronique 
+(analogique/numérique/signal mixte)
+•Logiciels embarqués et traitement du signal
+•Télécommunication
+•Apprentissage automatique et science des 
+données
+-Ingénierie
+-Physique
+-Médicine
+-Chimie
+-Biologie
+Bio-interface 
+(capteurs/
+Actionneurs)
+Sans fil
+Communicati
+on (accès à 
+Internet)
+Analyse et 
+stockage des 
+données
+Traitement 
+du signal et 
+numérisation
+Biologie:
+•Tissu
+•Organes
+•Etc.
+End users:
+•Patient
+•Prof. de 
+santé
+=== PAGE 15 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+15
+GEL-4072/7072 -Bioinstrumentation 
+et microsystèmesbiomédicaux
+Organisation et 
+déroulement du cours
+=== PAGE 16 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+16
+Courssurles microsystèmesàl’UL
+GEL-3000/ GIF-2000 
+Électronique des 
+composants intégrés
+•Circuits intégrés et applications de base
+•Circuits électroniques utilisant des CI
+•Applications des CI analogiques et
+•numériques
+GEL-4069/7069 
+Microélectronique 
+analogique et mixte
+•Microélectronique CMOS
+•Fonctions analogiques avancées
+•Convertisseurs de données
+•Systèmes radio-fréquence
+GIF-4201/GEL-7016 
+Microélectronique 
+numérique
+•Circuits intégrés numériques CMOS
+•Flot de conception numérique
+•Fonctions numériques avancées
+GEL-4072/7072 
+Bioinstrumentation 
+et microsystèmes 
+biomédicaux
+•Blocs microélectroniques spécialisés
+•Instrumentation biomédicale
+•Systèmes micro-électromécaniques
+•Bio-capteurs / bio-actuateurs
+=== PAGE 17 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+17
+GEL-4072/7072 -Bioinstrumentation 
+et microsystèmesbiomédicaux
+Contenu du cours
+- Introduction : Évolution des technologies et principales applications.
+- Principes de bioélectricité : La cellule nerveuse, organisation du 
+système nerveux central, électrophysiologie : électroneurogramme (ENG), 
+électromyogramme, (EMG) électrocardiogramme (ECG), 
+électrorétinogramme (ERG), électroencéphalogramme (EEG), 
+électrocorticogramme (ECoG).
+- Bioélectrodes : Interface électrode-électrolyte, matériaux et 
+polarisation, modélisation et circuits équivalents, types d’électrodes et 
+fabrication (surface, microélectrode, etc.).
+- Traitement numérique des biosignaux : Signaux et extraction de 
+features, Traitement du signal – Ex. : traitement par ondelettes, 
+Algorithmes de classifications, Étude de cas.
+- Applications de l’IA en génie biomédical : Algorithmes de 
+classifications, Algorithmes non supervisés, Algorithmes supervisés, 
+Éléments de réseaux de neurones et deep learning, Étude de cas. 
+- Blocs microélectroniques de base : Éléments passifs et actifs, 
+miroirs de courants, amplificateurs simples, amplificateurs opérationnels.
+=== PAGE 18 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+18
+GEL-4072/7072 -Bioinstrumentation 
+et microsystèmesbiomédicaux
+Contenu du cours (Suite)
+- Amplificateurs de biopotentiels : Spécifications et caractéristiques, types de 
+mesures (surfaces, extracellulaires, intracellulaires), topologies d’amplificateurs et 
+applications, circuits de protection, exemples d’amplificateurs de biopotentiels, 
+autres blocs de traitement du signal (filtres, détecteurs, etc.).
+- Biocapteurs/bioactionneurs et circuits d’interface : Types de 
+capteurs/actionneurs (résistifs, inductifs, capacitifs, piezoélectriques, charge, 
+optique, etc.), mesure de déplacement, mesure de température, mesure 
+d’impédance, laboratoires sur puces, diélectrophorèse, circuits de mesure 
+électrochimique, microanalyse totale, systèmes microfluidiques, mesure et 
+détection de particules et de neurotransmetteurs, bio-photonique. 
+- Procédés de micro/nanofabrication : Microélectronique CMOS, MEMS, 
+BioMEMS, matériaux biocompatibles.
+- Télémétrie et systèmes écoénergétiques : Normes et spectre 
+électromagnétique, transmission d’énergie et de données sans fil, systèmes à 
+champ proche (liens inductifs), systèmes à champs lointain, topologies de 
+récepteurs/transmetteurs radio fréquence, exemple de systèmes sans fil externes 
+et implantables.
+- Sécurité électrique et normes : Pratiques de conception biomédicale 
+sécuritaires, classes d’appareils, catégories de fautes, valeurs limites.
+=== PAGE 19 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+19
+GEL-4072/7072 -Bioinstrumentation 
+et microsystèmesbiomédicaux
+•Horaireet déroulement
+Activité Horaire Local
+Capsules vidéoLibre En ligne
+Cours Mercredi 13h30 PLT-2500
+Labos Mardi 13h30 à 16h20 PLT-3103
+=== PAGE 20 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+20
+Évaluations
+Examen partiel (21 octobre) 25%
+Examen final (16 décembre) 26%
+Activités (11 sujets) 22%
+Labos (5 rapports) 22%
+Projet 5%
+Total100%
+=== PAGE 21 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+21
+Échelledes cotes GEL-4072/GEL-7072
+
+=== PAGE 22 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+GEL-4072/7072 -Bioinstrumentation 
+et microsystèmesbiomédicaux
+•Laboratoires:
+1.Labo 1 : Électrodeset biosignaux: 4%
+2.Labo 2: Numérisation, traitementnumérique des 
+biosignaux: 4%
+3.Labo 3: Intelligence artificielleappliquéeaux 
+systèmesbiomédicaux: 4%
+4.Labo 4: Bioélectronique, filtrageet interfaces : 5%
+5.Labo 5: Intégrationde systèmesbiomédicauxet 
+Internet des objets: 5%
+=== PAGE 23 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+23
+GEL-4072/7072 -Bioinstrumentation 
+et microsystèmesbiomédicaux
+•Labos1 et 4: Bioélectrodes, circuits d’interfaces
+et bioélectronique
+-Ex.: Conception et réalisationd’un bio-
+amplificateur
+=== PAGE 24 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+24
+GEL-4072/7072 -Bioinstrumentation 
+et microsystèmesbiomédicaux
+•Labos2et5:DAQ,traitementnum.,IoTetintégration
+-Ex.:Conceptionetréalisationd’unréseaudecapteurs
+sansfilcorporel
+Microcontrôleuravec Bluetooth Low 
+Energy : BLE653µ(nRF52833) 
+•MCU: 64 MHz 32-bit Arm Cortex-M4 with 
+FPU, 512 KB Flash, 128 KB RAM, Bluetooth 
+Low Energy.
+•A-D interfaces: NFC-A, ADC, Full-speed 12 
+Mbps USB 2.0, High-speed 32 MHz SPI, 
+UART/SPI/TWI, PWM, I2S and PDM
+•1.7 V to 5.5 V supply voltage range 
+(enables powering the device from 
+rechargeable batteries or over USB).
+=== PAGE 25 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+25
+GEL-4072/7072 -Bioinstrumentation 
+et microsystèmesbiomédicaux
+•Labos2et5:DAQ,traitementnum.,IoTetintégration
+-PlateformeBioBLU:
+=== PAGE 26 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+26
+GEL-4072/7072 -Bioinstrumentation 
+et microsystèmesbiomédicaux
+•Labo3: Intelligence artificielleenGBM
+-Ex.: Détection et classification de signaux (ex.: 
+EMG ou ECG) en temps réel sur système 
+embarqué
+Réseaude neuronesàconvolution Classes de données
+=== PAGE 27 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+GEL-4072/7072 -Bioinstrumentation 
+et microsystèmesbiomédicaux
+Bioinstrumentation 
+Plateform
+Électrocardiogramme (ECG) 
+27
+Programmation
+Données
+=== PAGE 28 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+28
+GEL-4072/7072 -Bioinstrumentation 
+et microsystèmesbiomédicaux
+•Projet
+§à venir
+=== PAGE 29 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+GEL-4072/7072 -Bioinstrumentation 
+et microsystèmesbiomédicaux
+•Kitsélectroniques
+•KitGEL-4072/7072
+•Kit“horsprogramme”
+•LesAchatssefontaumagasind'électronique(PLT-3109)
+•Ouenlignedirectementchezlesdistributeurscomme
+digikey,Mouser,etc.
+•Digikey.com,Mouser.com,etc.
+=== PAGE 30 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+30
+Déroulementdu cours
+
+=== PAGE 31 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+31
+Déroulementdu cours
+
+=== PAGE 32 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+32
+Documents du cours
+•Livres de reference: Webster
+•Site web : monPortail
+oPlan de cours
+oProgrammedu cours
+oNotes de courset exemples
+oCapsules vidéo(1 par cours)
+oActivités
+oÉnoncésde laboset projet
+oDidacticielsdes outilsde design/simulation
+=== PAGE 33 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+33
+Bibliographie
+Obligatoire!
+J. G. Webster, Medical 
+Instrumentation Application and 
+Design, 4 edition. Hoboken, NJ: 
+Wiley, 2009.
+En réserve
+Optionnel
+J. G. Webster, Bioinstrumentation. 
+Hoboken, NJ: John Wiley & Sons, 
+2004.
+En réserve
+
+=== PAGE 34 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+34
+Bibliographie
+Optionnel
+A. S. Sedra, Smith, T. C. Carusone, 
+and V. Gaudet, Microelectronic 
+Circuits, 8th ed. edition. Oxford 
+University Press, USA, 2019.
+En réserve
+Optionnel
+E. Meng, Biomedical microsystems. 
+Boca Raton: CRC, 2011.
+En réserve
+
+=== PAGE 35 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+35
+Bibliographie
+Optionnel
+H. Lee, D. Ham, and R. M. 
+Westervelt, CMOS Biotechnology, 1st 
+ed. Springer, 2007.
+Format électronique! 
+😊
+J. D. Enderle, Bioinstrumentation, 1 
+edition. San Rafael, Calif.: Morgan 
+and Claypool Publishers, 2006.
+Format électronique! 
+😊
+
+=== PAGE 36 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+36
+Bibliographie
+Optionnel
+K. Iniewski, VLSI Circuit Design for 
+Biomedical Applications, 1st ed. 
+Artech House Publishers, 2008.
+
+=== PAGE 37 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+37
+Conception et simulation AO de circuits
+
+=== PAGE 38 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+38
+Conception et simulation AO de circuits 
+imprimés
+
+=== PAGE 39 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+39
+Conception et simulation AO de ASIC
+
+=== PAGE 40 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+Opportunitésde projetset bourses
+•An Optical Spinal Implant to relieve pain 
+
+=== PAGE 41 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+Opportunitésde projetset bourses
+•An Optical Spinal Implant to relieve pain 
+=== PAGE 42 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+Opportunitésde projetset bourses
+•Ephys Recording (Wireless Spinal Headstage)
+
+=== PAGE 43 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+Opportunitésde projetset bourses
+•Bourses d’excellence MSc et PhD
+§Fonds de recherche du Québec (FRQ): dates limites – début 
+octobre
+§Conseil de recherches en sciences naturelles et en génie du 
+Canada (CRSNG): dates limites - après
+
+=== PAGE 44 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+44
+GEL-4072/7072 -Bioinstrumentation 
+et microsystems biomédicaux
+Applications principalesdes nouvelles
+technologies biomédicales
+- Dispositifs portables, ingérables, 
+injectables et implantables / 
+biomicrosystèmes
+=== PAGE 45 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+45
+Dispositifs médicaux et dispositifs de 
+diagnostic au point de soins (point of care)
+Source: Medium.comsource: MIT
+Dispositifs implantables Appareils portables
+=== PAGE 46 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+46
+Suivi de la condition physique et de la 
+santé/activité
+•Apple WatchMesure 
+toutes les façons dont 
+vous bougez.
+•FitbitGPS, la fréquence 
+cardiaque continue, les 
+statistiques d’activité tout 
+au long de la journée et le 
+sommeil
+•JawboneTracker de 
+fitness
+Ils sont basés sur des 
+microcapteurs 
+(inertiel, 
+accéléro/gyroscope, 
+magnétique, pression, 
+etc.)
+
+=== PAGE 47 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+200µm
+500µmMagnetometer
+Gyroscope
+20µm Accelerometer
+EffetHall
+Mesurede contrainte
+Effet
+capacitif
+d
+Capteursde mouvementminiatures et 
+technologieMEMS
+=== PAGE 48 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+48
+Suivi de la condition physique et de la 
+santé/activité
+•Hexoskinmesures corporelles portables (ECG / fréquence 
+respiratoire)
+•Approche : Tissu conducteur / Pléthysmographie par 
+inductance respiratoire (RIP)
+
+=== PAGE 49 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+49
+Pléthysmographie par inductance 
+respiratoire
+https://twitter.com/BioRadio_GLNT
+•La PIR est la méthode de 
+pléthysmographie la plus 
+fréquemment utilisée, établie 
+et précise pour estimer le 
+volume pulmonaire à partir 
+des mouvements 
+respiratoires.
+•Au cours de l’inspiration, la 
+section transversale de la 
+cage thoracique et de 
+l’abdomen augmente, ce qui 
+modifie l’auto-inductance des 
+bobines et la fréquence de 
+leur oscillation, 
+l’augmentation de la section 
+transversale étant 
+proportionnelle aux volumes 
+pulmonaires. https://en.wikipedia.org/wiki/Respiratory_ind
+uctance_plethysmography
+=== PAGE 50 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+50
+Dispositifs implantables pour les 
+applications POC du diabète
+•(A) Un schéma 
+simplifié de la 
+surveillance du 
+glucose 
+implantable et de 
+l’injection 
+d’insuline
+•(B) Un schéma 
+d’un système POC 
+en boucle fermée
+https://www.medtronicdiabetes.com/products/enlite-sensor
+=== PAGE 51 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+51
+Montre-bracelet Glucomètre
+•Extraction de molécules de 
+glucose neutres à travers la 
+surface de l’épiderme par 
+passage de petits courants 
+électriques à travers la 
+peau
+•Mesure de la molécule de 
+glucose par des méthodes 
+ampérométriques
+•Méthode alternative : 
+Spectroscopie d’impédance 
+pour la surveillance 
+continue non invasive du 
+glucose
+Pkvitality
+http://www.pkvitality.com/ktrack-glucose/
+=== PAGE 52 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+La lentille contient: 
+•Un circuit intégré
+•Capteur de glucose
+•Émetteur-récepteur RFID
+•Récupération d’énergie sans fil
+•Une antenne
+•Télécommunication
+•Alimentation électrique
+Brian Otis et al., 2012
+Lentillesde contact intelligentes
+=== PAGE 53 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+53
+Moniteur ECG sans fil
+Un patch ECG autonome de l’IMEC pour 
+l’analyse de l’arythmie et la transmission 
+continue d’ECG sans fil
+
+=== PAGE 54 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+54
+Moniteur ECG sans fil/patch
+S Xu, JA Rogers et al., “Soft Microfluidic Assemblies of Sensors, 
+Circuits, and Radios for the Skin”, Science 2014, 344, 70–74.
+=== PAGE 55 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+55
+Électromyographie
+•Myo Gesture Control 
+Armbandlit les gestes et les 
+mouvements pour vous 
+permettre de contrôler en toute 
+transparence les logiciels de 
+présentation, etc. sans contact
+
+=== PAGE 56 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+Capteur et 
+acquisition de 
+données
+3 Contractions
+y=x2(t)
+y=x(t)
+< 1 mV
+Electromyography sensors
+=== PAGE 57 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+57
+Interfaces corps-machine pour la 
+technologie d’assistance et la 
+robotique de rééducation
+U. Côté-Allard, B. Gosselin, IEEE/RSJ IROS, 2016
+
+=== PAGE 58 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+58
+Interfaces corps-machine pour la 
+technologie d’assistance et la 
+robotique de rééducation
+C. L. Fall, and B. Gosselin, ISCAS’17
+•Interface corps-
+machine 
+multimodale basée 
+sur un réseau de 
+capteurs sans fil
+•Un réseau neuronal 
+convolutif (CNN) 
+pour le guidage de 
+bras robotique à 
+l’aide de 
+caractéristiques de 
+fréquence basées 
+sur 
+l’électromyographie 
+de surface (sEMG) et 
+les capteurs inertiels 
+(IMU)
+Wearable sEMG-
+patch sensor
+=== PAGE 59 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+59
+Interfaces corps-machine pour la 
+technologie d’assistance et la 
+robotique de rééducation
+C. L. Fall, and B. Gosselin, EMBC’15
+
+=== PAGE 60 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+60
+Interfaces cerveau-ordinateur
+portables (BCI)
+•Les personnes atteintes 
+d’un handicap modéré à 
+sévère bénéficient 
+d’interfaces biomédicales 
+avec le cerveau, le 
+mouvement musculaire, la 
+langue, la tête et l’œil pour 
+contrôler les actions de 
+l’ordinateur
+Processing EEG and forehead 
+EMG signals
+https://www.eurekalert.org/pub_releases/2017-
+08/uoa-spi083017.php
+Millan, Jose del R.. (2007). Error-related EEG potentials in 
+brain-computer interfaces. 
+=== PAGE 61 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+University of Minnesota
+imagerie motrice
+Interfaces cerveau-ordinateur 
+portables (BCI)
+Démonstrations de contrôle de 
+curseurs et guidage de robots 
+Avantages:
+•Non-invasif et simple 
+d’utilisation
+•Économique (< 100$)
+Défis: 
+•Longue période d’entrainement
+•Délai (vs fluidité pour le temps 
+réel)
+•Taux d’erreur important
+•Contrôle 2D/3D 
+à tâches complexes
+•Bruits
+=== PAGE 62 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+62
+Casque électroencéphalographique 
+(EEG) sans fil
+•Miniaturisés
+•Faible consommation
+•Sans fil
+•Électrodes sèches pour plus de confort
+Wireless EEG monitor by IMEC
+=== PAGE 63 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+63
+Surveillance de l’épilepsie et de l’EEG
+•Électrodes EEG pour identifier les foyers 
+épileptiques
+•Dispositifs médicaux pour le traitement de 
+l’épilepsie : Sous-durale
+•Les réseaux d’électrodes à grille sont utilisés dans 
+les hôpitaux et les cliniques de neurologie 
+pédiatrique.
+http://what-when-how.com/neuroscience/the-limbic-
+system-integrative-systems-part-4/
+=== PAGE 64 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+64
+Surveillance de l’épilepsie et de l’EEG
+Électrodes sur l’épilepsie et l’EEG
+a)Électrodes de profondeur
+b)Bande d’électrodes
+c)Grille d’électrodes.
+Les foyers épileptiques sont mieux 
+identifiés en combinant plusieurs 
+types d’électrodes.
+(a) (b)
+(c)
+=== PAGE 65 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+65
+Suivi oculaire
+Nécessite peu de capacités physiques
+Peut potentiellement interférer avec les 
+tâches visuelles de l’utilisateur
+L’utilisateur doit toujours être dans une 
+certaine position (basé sur la webcam)
+Sensible au bruit et aux interférences 
+(basé sur EOG)
+Les yeux sont évolués comme des 
+organes sensoriels et non comme des 
+organes manipulateurs
+Tracking corneal reflection or
+pupil position
+EagleEye: Processing
+Electrooculogram(EOG)
+=== PAGE 66 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+66
+Traqueur oculaire
+•Surveille les mouvements oculaires à l’aide de la caméra 
+et traduit les mouvements du curseur sur l’ordinateur
+•Aide aux patients atteints de SLA (Fr: Sclérose latérale 
+amyotrophique)
+www.eyewriter.org
+=== PAGE 67 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+67
+Système de contrôle par les 
+mouvements de la langue (TDS)
+Une série de capteurs magnétiques détecte les variations du champ 
+magnétique résultant des mouvements d’un petit traceur magnétique 
+attaché à la langue, et envoie sans fil ces informations à un ordinateur 
+portable où ces mouvements de la langue sont traduits en commandes 
+de l’utilisateur.
+=== PAGE 68 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+68
+H. Park, M. et al., IEEE TBCAS, 2012
+Système de contrôle par les 
+mouvements de la langue (TDS)
+=== PAGE 69 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+69
+H. Park, M. et al., IEEE TBCAS, 2012
+•Comprend un DAQ-SOC multicanal complet pour détecter la 
+position d’un aimant intra-oral
+•Un microcontrôleur à faible consommation d’énergie est 
+également utilisé
+Système de contrôle par les 
+mouvements de la langue (TDS)
+=== PAGE 70 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+70
+Biocapteurs ingérables
+•Une « pilule » microélectronique 
+pour l’étude in situ du tractus 
+gastro-intestinal.
+•Combine des microcapteurs et 
+des circuits intégrés.
+•Enregistrement à distance en 
+temps réel de la température, du 
+pH, de la conductivité, de 
+l’oxygène dissous et de la 
+fréquence cardiaque.
+•L’unité comprend une capsule 
+externe biocompatible 
+renfermant quatre 
+microcapteurs, un 
+microcontrôleur, un émetteur 
+radio à composants discrets et 
+une batterie.
+P. Nadeau et al., “Prolonged energy harvesting for ingestible 
+devices,” Nature Biomedical Engineering, vol. 1, no. 3, pp. 
+s41551-016-0022-016, Feb. 2017.
+=== PAGE 71 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+71
+Stimulateurs cardiaques et 
+défibrillateurs
+•Premier stimulateur cardiaque 
+implantable : 1959
+•Défibrillateur automatique 
+implantable (DCI)
+•Train d’impulsions de 0,5 ~ 8 V
+•Impulsions de choc 750 V
+•Puissance moyenne : 8 µW
+•Durée de vie de la batterie : 10 
+ans
+Medtronic Corporation
+=== PAGE 72 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+72
+Stimulateurs cardiaques et 
+défibrillateurs
+•On a recours au stimulateur cardiaque 
+pour traiter les arythmies (rythmes 
+cardiaques anormaux) : bradycardie (le 
+cœur bat trop lentement) ou tachycardie 
+(le cœur bat trop vite)
+•Les stimulateurs cardiaques modernes 
+sont programmables de l’extérieur et 
+permettent au cardiologue de 
+sélectionner les modes de stimulation 
+optimaux pour chaque patient.
+•Certains combinent un stimulateur 
+cardiaque et un défibrillateur dans un 
+seul dispositif implantable. D’autres ont 
+plusieurs électrodes stimulant différentes 
+positions dans le cœur pour améliorer la 
+synchronisation des cavités inférieures du 
+cœur.
+=== PAGE 73 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+73
+Neuromodulation (applications 
+cliniques)
+•3 milliards de dollars en 2008 ⇒ 
+4,5 milliards de dollars en 2011 
+~500 entreprises dans le monde
+•Signaux électriques générés par un 
+dispositif pour moduler les voies 
+neuronales dysfonctionnelles ou 
+transmettre des informations 
+sensorielles
+•Stimulateurs cérébraux profonds
+•Stimulateurs de la moelle épinière, 
+•Stimulateur du nerf sacré
+•Implants cochléaires
+•Système de stimulation du diaphragme
+•Stimulation sensorielle
+•Stimulateurs pour la réadaptation 
+post-AVC
+•Stimulation du nerf vague
+IEEE Spectrum
+=== PAGE 74 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+74
+Stimulateurs de la moelle épinière et 
+neuromusculaires
+•Gestion de la douleur
+•Stimulation neuromusculaire 
+fonctionnelle
+•Contrôle de la vessie pour 
+l’incontinence urinaire
+•Élimination de l’atrophie chez les 
+membres paralysés
+Advanced Bionics Inc.
+Advanced NeuromodulationSystems
+Electronic Design Magazine
+Alfred Mann Institute -USC
+=== PAGE 75 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+75
+BIONTM, Stimulateurinjectable 
+monocanal
+•La technologie BION a été développée par 
+G.E. Loeb et complétée par Advanced 
+Bionics et la Fondation Alfred Mann.
+•L’appareil se compose d’une batterie 
+rechargeable miniature ; un système de 
+gestion de batterie, qui est responsable de 
+la reprogrammation et de la recharge à 
+distance de la batterie ; et un 
+microstimulateur avancé.
+•La batterie au lithium rechargeable devrait 
+durer 10 ans.
+•Différents types de BION ont été 
+développés.
+Miniature rechargeable 
+battery for BIONTM
+Quallion, LLC
+Advanced Bionics
+Battery-powered BIONTMimplant
+G.E. Loeb et al.
+=== PAGE 76 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+76
+Stimulation électrique fonctionnelle 
+(SEF)
+•Un contrôleur externe envoie des commandes à un dispositif implanté 
+qui secoue les muscles du patient dans le bon ordre, lui permettant 
+de se lever de son fauteuil roulant.
+IEEE Spectrum
+=== PAGE 77 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+77
+Stimulation cérébrale profonde (SCP)
+•Contrôle du tremor essentiel 
+(TE)
+•Traitement de la maladie de 
+Parkinson (MP)
+•Traitement de la dépression
+•Traitement de l’épilepsie
+•Plusieurs types de réseaux 
+d’électrodes
+•Tiges d’électrode minces
+•Grille d’électrodes sous-durale
+ http://www.medtronic.com
+www.nature.com/clinicalpractice/neuro
+=== PAGE 78 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+78
+Stimulation cérébrale profonde (SCP)
+ONEYEARAFTERDBSSURGERY
+(https://www.youtube.com/watch?feature=player_detail
+page&list=PLHxEFoj3uu2BRJcPeJDQFk05fJ1etSypa&v=U
+ohp7luuwJI)
+“November13,2010wasmy
+one-yearanniversary.Ihadbi-
+lateralDBSatStanfordUniversity
+MedicalCenteronthisdatein
+2009.Withthestimulatorturned
+OFF,theParkinson'ssymptoms
+returnwithavengeance.Watch
+howafewmilliampsofcurrent
+canchangeaperson'slife”.
+=== PAGE 79 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+79
+Prothèses auditives et visuelles
+§Prothèsevisuelle:
+•Statistiques mondiales :
+•Profondément aveugle : 45 
+millions
+•Malvoyants : 180 millions
+•Statistiques aux États-Unis :
+•Profondément aveugle : 1,3 
+million
+•Malvoyants : 10 millions
+§Prothèseauditive:
+•10% de la population 
+mondiale a une qualité de vie 
+limitée en raison d’une 
+déficience auditive.
+•Statistiques aux États-Unis :
+•Sourds profonds : 0,4 million 
+•Malentendants : 20 millions
+
+=== PAGE 80 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+80
+Implants cochléaires
+•«La première et jusqu’à présent 
+la plus réussie des interfaces 
+cerveau-machine (IMC)»
+•On estime que 28 millions 
+d’Américains souffrent d’une 
+perte auditive importante
+•Disponible dans le commerce 
+depuis le début des années 80.
+•Plus de 200 000 enfants et 
+adultes utilisent des implants 
+cochléaires.
+•30 000 nerfs auditifs
+•Un minimum de 6 ~ 8 sites 
+stimulants nécessaires pour 
+converser au téléphone.
+Advanced Bionics (Harmony)
+http://www.bionicear.com/
+
+=== PAGE 81 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+81
+Implants cochléaires
+•Dispositifs neuroprothétiques stimulant les fibres nerveuses 
+auditives pour restaurer un certain degré d’audition chez les 
+personnes atteintes d’une perte auditive périphérique profonde.
+Cochlear (Contour)
+http://www.cochlear.com/
+•Les limitations incluent 
+près de l’absence de 
+détails spectraux, mais 
+les avantages 
+potentiels, y compris la 
+perception de la parole, 
+dépassent de loin la 
+fidélité limitée.
+•La recherche comprend 
+l’utilisation de 
+l’acoustique vocale pour 
+appliquer des entrées 
+codées dans le front-end 
+d’implants pour 
+améliorer la perception 
+de la parole.
+=== PAGE 82 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+82
+Implants cochléaires
+•Réduction de la 
+consommation et de 
+la taille en 
+minimisant les 
+étages numériques.
+•L’objectif était 
+d’offrir une 
+meilleure 
+esthétique, une 
+réduction des 
+limitations pratiques 
+et une meilleure 
+perception.
+•Techniques 
+avancées de 
+traitement du signal 
+et de circuits.
+Integrated circuit for a 
+cochlear implant, by Georgiou 
+& Toumazou
+=== PAGE 83 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+83
+Implants rétiniens
+•Actuellement en cours de développement.
+•Premier essai chronique sur l’homme en 2002.
+•Mars 2011 : l’Argus II est approuvé pour une 
+utilisation clinique et commerciale dans l’UE. 
+En février 2013, elle est devenue la première 
+prothèse visuelle commerciale à être 
+approuvée pour une utilisation aux États-Unis
+•1,2 million de nerfs optiques.
+•Un minimum de 800 ~ 1000 sites nécessaires 
+pour lire les grandes polices.
+University of Southern 
+California
+Argus II Retinal Prosthesis, Second Sight
+=== PAGE 84 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+84
+Implants rétiniens
+•Des percepts visuels géométriques 
+peuvent être générés en délivrant des 
+modèles multisites appropriés de 
+stimulation électrique qui, à leur tour, 
+peuvent conduire à la perception de 
+formes et d’images.
+•Cette stratégie est similaire à l’effet de 
+la visualisation d’un tableau d’affichage 
+électronique dans un stade
+The Boston Retinal Implant, MIT
+=== PAGE 85 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+85
+Prothèses visuelles (intracorticales)
+•Le cortex visuel a été stimulé à l’aide 
+d’un réseau d’électrodes de surface à 
+la fin des années 1960.
+•En stimulant directement le cortex 
+visuel, cette approche contourne la 
+rétine et le nerf optique.
+DobelleInstituteIllinois Institute of Tech. Utah array
+=== PAGE 86 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+86
+Défis majeurs dans le domaine des 
+prothèses visuelles
+•Nombrede sites stimulants
+Un minimum de 625 pixels est nécessaire 
+pour restaurer une sensation 
+fonctionnelle.
+•Stratégiede stimulation
+Offrez une flexibilité maximale pour 
+prendre en charge les futures stratégies 
+avancées.
+•Bande passanteélevée
+Transmission d’un volume de données 
+maximal avec un nombre minimal de 
+cycles de porteuse.
+•Faibleconsommationd’énergie
+Minimisez l’élévation de la température 
+de l’implant et l’exposition des tissus au 
+champ électromagnétique.
+•Taille, assemblage et emballage de 
+l’implant
+De la taille d’une boîte d’allumettes à un 
+bouton.
+•128x102 = 13,056 Pixels !
+•480x384 = 184,320 Pixels !
+=== PAGE 87 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+87
+Restauration de la mémoire
+•Dans un hippocampe sain, les signaux 
+voyagent de DG à CA3 à CA1. 
+•Si l’une de ces régions est endommagée, 
+les signaux pourraient être réacheminés à 
+travers une puce qui imite les tâches de 
+traitement de milliers de neurones, 
+complétant ainsi le circuit, qui est essentiel 
+à la mémoire.
+MIT Technology Review May 2003
+=== PAGE 88 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+88
+Prothèses à mémoire
+•Remplacer la partie endommagée 
+de l’hippocampe par une prothèse 
+cognitive pour restaurer la 
+mémoire
+Univ. of Southern California
+=== PAGE 89 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+89
+Interfaces cerveau-machine (ICM) 
+invasives
+Contrôler un bras robotique à l’aide 
+de nos pensées grâce à un ICM
+=== PAGE 90 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+90
+Interfaces cerveau-machine (ICM)
+Miguel A. L. 
+Nicolelis, Actions 
+from thoughts, 
+Nature 2001
+A.B. Schwartz Lab, 
+Univ. of Pittsburgh
+=== PAGE 91 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+91
+Interfaces cerveau-machine (ICM)
+Le cerveau d’un singe contrôle un bras robotique, 
+Université de Pittsburgh
+=== PAGE 92 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+92
+Interfaces cerveau-machine (ICM)
+•Neuronal signals recorded from the brain as input 
+cmmandsto control external environment
+Contrôle du bras robotique par l’enregistrement et le traitement 
+des signaux cérébraux à Contrôle des membres prothétiques 
+par les tétraplégiques
+=== PAGE 93 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+93
+Interfaces cerveau-machine (ICM)
+John P. Donoghue et al., Nature 2006
+•Activité neuronale enregistrée à partir d’un cortex moteur 
+primaire humain : le mouvement intentionnel de la main module 
+les schémas de pics corticaux 3 ans après une lésion médullaire.
+=== PAGE 94 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+94
+Interfaces cerveau-machine (ICM)
+BrainGatesystem, Brown University
+Contrôle 
+réfléchi de 
+bras 
+robotiques à 
+l’aide du 
+système 
+BrainGate
+(https://www.yout
+ube.com/watch?list
+=PLHxEFoj3uu2BR
+JcPeJDQFk05fJ1etS
+ypa&feature=playe
+r_detailpage&v=Q
+Rt8QCx3BCo)
+•Signaux neuronaux enregistrés à partir du cerveau 
+sous forme de commandes d’entrée pour contrôler 
+l’environnement externe
+
+=== PAGE 95 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+Ghovanlooet al.
+(GT) 32-ch PWM / TDM
+95
+Enregistrement électrophysiologique 
+implantable/sans fil
+•…
+Harrison et al. (Utah) 
+100-ch spike + 1-ch Digital
+Wise et al. (Michigan) 
+64-ch spike + 2-ch Digital
+Yin et al. (Brown) 
+100-ch Digital
+TBSI (Duke), 
+126-ch DigitalLiu et al. (U.C. Santa Cruz)
+128-ch Digital
+=== PAGE 96 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+•Recordingand
+microstimulation
+•32channels
+•2.0grams
+•Wirelineconnection
+•Photo-stimulationonly
+•4channels
+•4.5grams
+•Wirelessconnection
+•Recordingonly
+•32channels
+•5.9grams
+•Wirelessconnection
+•Photo-stimulation
+only
+•3channels
+•1.0gram
+•Wirelessconnection
+Études cérébrales/cellulaires/comportementales: 
+Systèmesde recherche pour les animauxvivants
+=== PAGE 97 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+97
+Systèmesd'enregistrementélectrophysiologique
+in-vivo (Ephys)/stimulateurs
+64-ch battery powered backpack system, T. A. 
+Szuts, et al., Nat. Neurosci., 2011
+• Pas de filset de câblesd'attache
+• Réductiondes effets
+psychologiques
+• Réduireles artefacts de mesure
+• Prévenirl'infectionet l'irritationde 
+la peau
+• Intégrationpour la miniaturisation
+• Minimiserles composantshors 
+puce
+• Compacitéet légèreté
+• Fonctionnementà faible
+consommationd'énergie
+• Batteries miniatures
+• Réductionde la production de 
+chaleur
+=== PAGE 98 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+§2006 : Première mention du terme optogénétique dans la 
+littérature (Karl Deisseroth) 
+§2011 : Méthode de l’année en Nature Methods
+Optogénétique synchronisée / Ephys : 
+Activation/Sonde des circuits neuronaux 
+in-vivo
+
+=== PAGE 99 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+Systèmes sans fil pour l’optogénétique et 
+l’électrophysiologie in vivo
+•Prototype de tête 
+optoélectronique sans fil
+•Développé avec des 
+composants prêts à l’emploi
+
+=== PAGE 100 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+Systèmes sans fil pour l’optogénétique et 
+l’électrophysiologie in vivo
+•
+Bande passante limitée 
+des systèmes radio de 
+type «
+Bluetooth
+»
+•
+Électronique basse 
+consommation 
+•
+Taille de la batterie
+
+=== PAGE 101 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+101
+•Détecteur de pointes et compression de données à l’intérieur 
+d’une plate-forme sans fil Ephys/Optogenetic à 32 canaux
+•La plate-forme est entièrement construite à l’aide de 
+composants prêts à l’emploi
+•Le détecteur de pointes multicanaux fonctionne à l’intérieur 
+d’un FPGA Spartan-6 basse consommation
+Folded
+1-Demo board 2-Lightweight foldable PCB3-Complete system
+Top 
+view
+Bottom 
+view
+MicroblazesoftcoreMCU2.4-GHz nRF24L01 TX/RX RHD2132 Neural interface
+101
+Systèmes sans fil pour l’optogénétique et 
+l’électrophysiologie in vivo (suite)
+=== PAGE 102 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+Systèmes sans fil pour l’optogénétique 
+et l’électrophysiologie in vivo (suite)
+102
+Version améliorée du 
+système COTS à 32 
+canaux.
+=== PAGE 103 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+Optrodes pour l’optogénétique et 
+l’électrophysiologie in-vivo
+103
+Module implantable : une LED couplée à 
+une fibre optique implantable 
+conditionnée dans un tube en polyimide 
+avec 8 microélectrodes d’enregistrement 
+en tungstène, une microélectrode de 
+référence et un fil de terre.
+Signal Ephy collecté par 1 
+microélectrode
+=== PAGE 104 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+Prochaines étapes / Puce DAQ 
+multicanal utilisée dans un headstage 
+sans fil
+=== PAGE 105 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+Systèmes intelligents de cage 
+domestique
+105
+•Système de transmission 
+d’énergie sans fil
+-RX coil diameter: 1 cm x 1 cm
+-Power delivered: 15 mW to 60 mW 
+-Efficiency: 15%
+Repeter 
+coils
+Power TX 
+coils
+
+=== PAGE 106 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+Systèmes intelligents de cage 
+domestique
+106
+•Surveillance ininterrompue 
+24h/24 et 7j/7
+•Éviter le stress des 
+animaux
+•Pas d’attache de câble
+•Testez directement à 
+l’intérieur de 
+l’établissement de soins 
+aux animaux
+•Efficace et rentable
+Implanted or attached wireless 
+sensors (O2, CO2, pH, temp., blood, 
+EEG, etc.)
+=== PAGE 107 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+Imagerie par fluorescence
+S. B. Hofer, et al., Nat Neurosci, Aug. 2011.
+•Indique le calcium 
+(Ca2+) de la cellule
+•Utilise des indicateurs 
+calciques : des 
+molécules 
+fluorescentes qui 
+peuvent répondre à la 
+liaison des ions Ca2+ 
+en modifiant leurs 
+propriétés de 
+fluorescence
+•2 grandes classes 
+d’indicateurs Ca2+ : 
+les indicateurs 
+chimiques et les 
+indicateurs 
+génétiquement codés
+Miniature in-vivo 
+microscope
+=== PAGE 108 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+§Objectif : développer une solution 
+intégrée compacte et peu coûteuse 
+permettant la détection du Ca2+ chez 
+les animaux en mouvement libre.
+§Signal de fluorescence : la puissance 
+dépend de l’intensité d’excitation de la 
+source lumineuse et du type de source 
+lumineuse/photocapteur :Nécessite une 
+plage dynamique élevée/réglable.
+Ca2+ variation (50 Hz max.)
+Electrical
+Optical
+M.N. Khiaraket al., IEEE TBioCAS2018
+Ca2+ Sensing : biocapteur intégré 
+personnalisé pour la photométrie par 
+fibre

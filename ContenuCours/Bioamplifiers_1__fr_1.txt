@@ -1,0 +1,1066 @@
+=== PAGE 1 ===
+GEL-4072/7072 -Bioinstrumentation et 
+microsystèmesbiomédicaux
+Bio-
+amplificateurs1
+
+=== PAGE 2 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+2
+Program
+•Bioamplificateurs1 :
+oGEL-4072/GEL-7072
+•Bioamplificateurs 2 (optionnel) :
+oGEL-7072 uniquement(saufIFT)
+=== PAGE 3 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+3
+Plan du cours
+•Principe de mesure des biopotentiels
+•Métriques et glossaire
+•Exigences de base
+•Problèmes fréquemment rencontrés
+-Distorsion de fréquence
+-Distorsion de saturation
+-Boucles de ground (ground loops)
+-Bris de connexion d’entrée (circuit ouvert)
+-Artéfacts de grands transitoires électriques
+-Interférences des appareils électriques
+-Autres sources d’interférence
+•Exemplesde pucesde bioamplificateurs
+=== PAGE 4 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+4
+Principe de mesure des biopotentiels
+•Fonction d’un amplificateur de biopotentiel: Prendre un 
+signal biologique électrique faible, augmenter son amplitude et 
+l’extraire du bruit ambiant afin qu’il puisse être traité, enregistré 
+ou affiché.
+•Des bioamplificateurs sont également utilisés pour isoler la 
+charge de la source. Dans ce cas, l’amplificateur peut ne fournir 
+qu’un gain de courant pour piloter la charge, laissant l’amplitude 
+de tension du signal d’entrée inchangée (exemple : un suiveur 
+de tension).
+•La plupart des amplificateurs de biopotentiel sont des 
+amplificateurs de tension, mais le courant ou la puissance 
+peuvent également être amplifiés.
+•Les considérations de conception comprennent une 
+amplification et une bande passante appropriées, une 
+faible distorsion, une impédance d’entrée élevée, un faible 
+bruit intrinsèque, un rejet élevé des interférences, la 
+stabilité contre les fluctuations de température/tension 
+ambiante/processus et la sécurité.
+=== PAGE 5 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+5
+Principe de mesure des biopotentiels
+•Les biopotentiels ont de petites amplitudes (1 uV à 10 mV) et 
+des spectres de basses fréquences (0,1 Hz à 10 kHz)
+•Les mesures de biopotentiels peuvent être corrompues par des 
+sources d’interférences environnementales et biologiques
+•Un amplificateur de biopotentiel doit mettre en œuvre une 
+interface adaptée avec la biologie pour être utile
+•Qu’est-cequ’uneinterfaceadaptée?
+To digitizer
+=== PAGE 6 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+6
+Blocs fonctionnels de 
+l’électrocardiographe
+
+=== PAGE 7 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+7
+Caractéristiques des signaux de 
+biopotentiel
+AP
+Intracellular AP
+Extracellular AP
+ENG 
+(1 µV –20 µV)
+(From electrodes)
+LFP (0.1–10 Hz)
+Gain 
+(V/V)
+1
+10
+102
+103
+104
+105
+•Plages de tension et de fréquence de certains 
+signaux biopotentiels
+•Produit gain-bande passante 105 V/V∙104 Hz = 1 
+GHz au pire
+
+=== PAGE 8 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+8
+Métriques et glossaire importants pour 
+les bioamplificateurs
+•Bande passante (en Hz), gain et atténuation (en dB)
+•Bruit d’entrée (en W ou V/ √Hz ou Vrms) :
+Vni2= Vno2/ Gain2 ou Vni = Vno / Gain
+•Rapport signal/bruit (SNR endB) :
+SNR = 10 log (Vs2/Vn2) = 20 log (Vs_rms/Vn_rms) = 20 log (Vs/Vn)
+•Réjection du bruit - Taux de réjection en mode commun (TRMC en dB):
+TRMC = 20×log (Ad/Acm)
+•Plage dynamique (DR) et plage linéaire (en dB) - généralement 
+mesurée pour une distorsion de 1 % en Vsmax :
+DR = 10×log (Vsmax2/Vsmin2) = 20×log (Vsmax/Vsmin)
+=== PAGE 9 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+9
+Exigences de base
+•Impédanced’entréeélevée:
+Zin>> 10 MΩpour charger la source/électrode au minimum. 
+Généralement de l’ordre de1012Ω (TRMC ∝Zin);
+•Bande passante:
+Doit laisser le spectre du signal inchangé tout en optimisant le SNR 
+(SNR ∝ BW). Peut généralement varier de quelques Hz à quelques kHz;
+•Précision:
+Combien de bits cherchons-nous à obtenir à partir du numériseur ? La 
+linéarité doit correspondre à la précision requise (précision souhaitée vs 
+ENOB) ;
+•Linéarité:
+Ne doit pas introduire d’harmoniques et de comportement non linéaire 
+(THD : distorsion harmonique totale < 1%, ou dépend de la précision 
+et de l’ENOB) ;
+•Amplification:
+Un gain élevé est nécessaire pour amplifier le signal afin qu’il devienne 
+adapté à l’affichage et aux modules de traitement ultérieurs (produit 
+gain-bande passante) ;
+=== PAGE 10 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+10
+Exigences de base
+•Bruit intrinsèque:
+Doit être très faible pour fournir un SNR approprié (son bruit référencé 
+d’entrée doit être quelques fois plus petit que le signal d’entrée). 
+Idéalement, le SNR > 20 dB, généralement le SNR > 6 dB ;
+•Rejetélevédu bruit :
+Doit rejeter le bruit ambiant (y compris les incompatibilités et la dérive 
+de potentiel d’électrode) et les interférences. Nécessite une grande 
+TRMC généralement > 60 dB ;
+•Circuits d’entréede protection :
+La tension ou les courants qui fuient dans l’entrée peuvent affecter le 
+signal, endommager le circuit ou armer le corps du patient ;
+•Impédancede sortie :
+Il fournit une adaptation de l’impédance de la source pour s’adapter à 
+la charge; Tension de sortie : besoin d’un Zout faible, ou Sortie de 
+courant : besoin d’un Zout élevé.
+•Calibration:
+Une mesure précise et exacte des valeurs d’amplitude est exigée des 
+médecins. Nécessite des étapes supplémentaires.
+=== PAGE 11 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+11
+Bruit référencé d’entrée
+Bruit de Flicker (1/f)
+Bruit thermique de 
+fond (bruit blanc)
+Vpp_noise
+•Amplificateur bruit 
+instrinique
+•Bruit de l’instrumentation
+•Bruit thermique (bruit 
+blanc)
+•Bruit de flicker(1/f)
+•Densité de tension de 
+bruit
+•8*Vrms_noise≈ Vpp_noise
+=== PAGE 12 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+12
+Bruit et bande passante
+Bruit de Flicker (1/f)
+Bruit thermique de 
+fond (bruit blanc)
+Vnin V/(Hz)1/2Vn_rms
+•Vn: densité de tension de 
+bruit dansV/(Hz)1/2
+•Puissance de bruit : 
+V2n_av = Vn2*(fl –fh)
+•Vn_rms= (V2n_av)1/2
+= Vn*(fl –fh)1/2
+=== PAGE 13 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+13
+Bruit référencéà l’entrée
+•vo(t) +vno(t) = vi(t)∙A + vni(t)∙A
+•V2o+ V2no= V2i∙ |A|2 + V2ni∙ |A|2
+vni(t) vno(t)
+L+
+L-
+vi(t)
+A
+vi(t)+vni(t) vo(t)+vno(t)
+IRN : Bruit référencé à 
+l‘entrée
+=== PAGE 14 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+•Plage dynamique d’entrée/sortie s (pour une linéarité/distorsion 
+donnée)
+•DRi= 10log(Vi_max2/Vi_min2) = 10log(Vi_max2/Vni2) = 20log((L*|A(f)|-1)/Vni_pp) 
+•DRo= 10log(Vo_max2/Vo_min2) = 10log(Vo_max2/Vno2) = 10log(Vo_max2/|A(f)|2Vni2)
+= 20log(L/(|A(f)|*Vni_pp)
+•Comment 
+déterminer
+vi_maxet vo_max?
+14
+Performances de la plage dynamique
+vni(t) vno(t)
+L+
+L-
+vi(t)
+A(f)
+vi(t)+vni(t) vo(t)+vno(t)
+=== PAGE 15 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+15
+Performances de la plage dynamique
+•Plage dynamique (pour une 
+linéarité/distorsion donnée)
+•Comment mesurerla distorsion:
+oDistorsionharmoniquetotale
+oRapport signal/bruit et distorsion
+(SNDR) :
+THD=10logHD22+HD32+HD42+...
+HD12
+!
+"
+##
+$
+%
+&&
+SNDR=
+10log Vf2+...
+No+Vh22+Vh32+Vh42+...
+!
+"
+##
+$
+%
+&&
+Puissance moyennedu bruit
+=== PAGE 16 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+16
+Exemple : THD
+•Calculez la valeur THD d’un signal dans lequel la composante 
+fondamentale est à 1 kHz et a un niveau de 100 µVrms, et les 
+seules harmoniques significatives sont les trois premières au-
+dessus de la fondamentale. Ces harmoniques, à 2 kHz, 3 kHz et 
+4 kHz, sont mesurées pour avoir des niveaux de puissance de -
+53 dB, -50 dB et -56 dB, respectivement par rapport à la 
+fondamentale.
+THD=10logHD22+HD32+HD42+...
+HD12
+!
+"
+##
+$
+%
+&&
+=== PAGE 17 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+17
+Exemple : SNDR
+•Calculez la valeur SNDR d’un signal dans lequel la composante 
+fondamentale est de 1 mW, V2h3 = 20 uW, V2h5 = 5 uW et Vni = 
+50 nV/√Hz, pour un gain de 100 et une bande passante de 5 
+kHz
+•Quel est le nombre effectif de bits de ce système (ENOB*) ?
+*Voirle“Notescomplémentairessurlesconvertisseursdedonnées”pour plus de 
+détails sur l’ENOB.
+SNDR=
+10log Vf2+...
+No+Vh22+Vh32+Vh42+...
+!
+"
+##
+$
+%
+&&
+=== PAGE 18 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+18
+Problèmes fréquemment rencontrés
+•Distorsion de fréquence
+•Distorsion de saturation
+•Boucles de ground (ground loops)
+•Bris de connections d’entrée (circuit ouvert)
+•Artéfacts de grands transitoires électriques
+•Interférences des appareils électriques
+•Autres sources d’interférence
+=== PAGE 19 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+19
+Distorsionde fréquence
+•Le bioamplificateur ne répond pas aux 
+normes de réponse en fréquence
+•Ex : amplificateur ECG avec une 
+réponse en fréquence de 1 à 50 Hz
+•La distorsion à haute fréquence 
+arrondit les angles vifs des formes 
+d’onde et diminue l’amplitude du 
+complexe QRS
+•La distorsion basse fréquence supprime 
+la valeur moyenne ou DC
+
+=== PAGE 20 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+20
+Distorsion de fréquence
+
+=== PAGE 21 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+21
+Distorsion de saturation
+•Une tension de décalage élevée 
+au niveau des électrodes ou des 
+amplificateurs mal réglés peuvent 
+produire une distorsion de 
+saturation 
+•Causée par une combinaison 
+d’amplitude et de décalage du 
+signal d’entrée qui conduit 
+l’amplificateur à la saturation 
+pendant une partie de la forme 
+d’onde
+•Une partie du signal est écrêtée à 
+la sortie
+
+=== PAGE 22 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+22
+AmplificateurcoupléAC
+•Couplage AC pour 
+supprimer les composants 
+de signal DC et très basse 
+fréquence, tels que la 
+dérive
+•f-3dB= 1/(2πRC)
+•La mise en place d’une 
+coupure passe-haut très 
+basse peut être un 
+problème !
+•Impédanced’entrée≠ ∞
+•Zin= 2R
+
+=== PAGE 23 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+23
+Bouclesde ground
+•Les patients sont souvent connectés à plus 
+d’un appareil électrique qui a sa propre 
+connexion à la terre attachée à différents 
+points de terre dans la pièce
+•Une boucle de ground peut exister lorsque 
+deux machines sont connectées au patient
+•Si une connection au ground a un potentiel 
+légèrement plus élevé que l’autre connection 
+au ground, un courant provenant d’un des 
+grounds traverse le patient jusqu’à l’électrode 
+de ground du bioamplificateur et le long de 
+son fil conducteur jusqu’à l’autre ground
+•En plus des problèmes de sécurité actuels, 
+cela produit des tensions de mode commun 
+(VCM) qui augmentent les interférences
+VCMIgl
++
+-
+=== PAGE 24 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+24
+Boucles de masse (suite)
+•Deux circuits partagent un fil commun qui 
+les relie à la terre, qui a une résistance de 
+RG.
+•Idéalement, RG = 0, donc VG, devrait 
+être égal à zéro, en maintenant le point 
+auquel les circuits se connectent à un 
+potentiel de masse constant, en les isolant 
+les uns des autres. Dans ce cas, Vout = V2.
+•Cependant, si RG ≠ 0, il et R1 formeront 
+ensemble un diviseur de tension.
+•Par conséquent, si un courant, I1, traverse 
+RG, une chute de tension VG = I1RG se 
+produira et la connexion à la terre des 
+deux circuits ne sera plus au potentiel de 
+terre réel. Cette tension aux bornes du 
+conducteur de terre ajoutée à la sortie :
+•Ainsi, les deux circuits ne sont plus isolés 
+l’un de l’autre et le circuit 1 peut introduire 
+des interférences dans la sortie du circuit 2
+Signal d’intérêt
+=== PAGE 25 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+•Deux circuits partagent un fil commun qui 
+les relie à la terre, qui a une résistance de 
+RG.
+•Idéalement, RG = 0, donc VG, devrait 
+être égal à zéro, en maintenant le point 
+auquel les circuits se connectent à un 
+potentiel de masse constant, en les isolant 
+les uns des autres. Dans ce cas, Vout = V2.
+•Cependant, si RG ≠ 0, il et R1 formeront 
+ensemble un diviseur de tension.
+•Par conséquent, si un courant, I1, traverse 
+RG, une chute de tension VG = I1RG se 
+produira et la connexion à la terre des 
+deux circuits ne sera plus au potentiel de 
+terre réel. Cette tension aux bornes du 
+conducteur de terre ajoutée à la sortie :
+•Ainsi, les deux circuits ne sont plus isolés 
+l’un de l’autre et le circuit 1 peut introduire 
+des interférences dans la sortie du circuit 2
+25
+Boucles de masse (suite)
+Signal d’intérêt
+
+=== PAGE 26 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+26
+Boucles de masse : exemple
+•Un câble de signal S relie deux composants électroniques.
+•Le câble est doté d’un conducteur de terre ou de blindage qui est connecté à la terre 
+du châssis de chaque composant. L’amplificateur du pilote (à gauche) applique le 
+signal V1 entre le signal et les conducteurs de masse du câble (V1 – VG1 = VS1). À 
+l’extrémité de destination (à droite), le signal et les conducteurs de terre sont 
+connectés à un amplificateur différentiel. Cela produit l’entrée du signal vers le 
+composant 2 en soustrayant la tension de blindage de la tension du signal pour 
+éliminer le bruit de mode commun capté par le câble : V2 = VS2 – VG2
+•Si un courant I circule dans le conducteur de terre, la résistance R du conducteur crée 
+une chute de tension le long de la masse du câble IR, de sorte que l’extrémité de 
+destination du conducteur de terre aura un potentiel différent de l’extrémité de la 
+source : VG2 = VG1 – IR
+•Étant donné que l’amplificateur différentiel a une impédance élevée, peu de courant 
+circule dans le fil du signal, il n’y a donc pas de chute de tension à travers celui-ci : 
+VS2 = VS1. La tension de terre semble être en série avec la tension du signal V1 et y 
+ajoute : V2 = VS2 – VG2 = VS1 – (VG1 – IR), donc V2 = V1 + IR
+•Si I est un courant alternatif, cela peut entraîner l’ajout de bruit au chemin du signal 
+dans le composant 2.
+Doit être mis 
+à la terre au 
+même point
+=== PAGE 27 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+27
+Fils conducteursouverts
+•Fréquemment, l’un des fils reliant une électrode de 
+biopotentiel se déconnecte ou se brise
+•Des potentiels relativement élevés peuvent souvent 
+être induits dans le fil ouvert en raison du champ 
+électrique émanant de la ligne électrique ou d’autres 
+sources à proximité du bioamplificateur
+•Cela provoque généralement une large déviation de 
+crête à crête de la trace du côté de l’enregistreur, 
+ainsi qu’une perte de signal
+•Se produit également lorsqu’une électrode n’établit 
+pas un bon contact avec le patient
+•Il existe des circuits pour détecter un mauvais 
+contact des électrodes (voir MAX86140 fiche 
+technique)
+=== PAGE 28 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+28
+Artéfact de grands transitoires 
+électriques
+•Un potentiel transitoire peut être observé si une impulsion 
+électrique à haute tension et à courant élevé est appliquée sur 
+le corps du patient
+•Provoque la saturation des amplificateurs
+•L’amplificateur peut rester saturé pendant une période de 
+temps finie en suivant l’impulsion, puis revenir lentement à la 
+ligne de base d’origine avec une constante de temps
+•Causes : Stimulation électrique comme la défibrillation 
+cardiaque, le mouvement des électrodes, les décharges 
+électrostatiques à travers le corps
+Recovery time depends on the time 
+constant of the amplifier (𝛚-3dB)
+=== PAGE 29 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+•Les amplificateurs 
+peuvent être 
+endommagés par de 
+grandes tensions 
+transitoires d’entrée
+•Ils doivent être 
+conçus de manière à 
+ne pas être affectés 
+par de tels 
+transitoires
+•Des dispositifs de 
+limitation de tension 
+à deux bornes sont 
+connectés entre 
+chaque électrode 
+patient et la terre 
+électrique 29
+Protection contre les transitoires
+Limitation du courant
+Limitation 
+de tension
+=== PAGE 30 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+•Circuit de protection 
+électrique: 
+la résistance R limite le 
+courant, les diodes à 
+polarisation inverse D 
+limitent la tension d’entrée 
+et l’éclateur S protège 
+contre la panne liée à 
+l’impulsion de défibrillation 
+du transformateur 
+d’isolement T.
+•Des photocoupleurs ou des 
+isolateurs CMOS peuvent 
+également être utilisés pour 
+l’isolation électrique à la 
+place du transformateur T 30
+Amplificateur isolé
+
+=== PAGE 31 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+•Amplificateur d’isolement à l’aide de transformateurs ou 
+d’optocoupleurs
+31
+Amplificateur isolé (suite)
+• Amplificateur couplé à un transformateur 
+utilisant le transformateur T. Notez que 
+l’isolateur sépare le circuit commun du 
+côté de l’amplificateur de la terre de la 
+terre du côté de la sortie.
+• Isolation optique à l’aide de la 
+photodiode D et du photodétecteur P. Le 
+circuit commun est également isolé de la 
+terre dans ce cas.
+=== PAGE 32 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+32
+Interférences des appareils électriques
+•Une source majeure d’interférence est le système 
+d’alimentation électrique. Les lignes électriques 
+sont partout !
+•Le couplage du champ électrique entre les lignes 
+électriques et l’amplificateur/les fils est le résultat 
+du champ électrique entourant les prises des lignes 
+électriques
+•Ces champs se couplent dans le patient, les fils 
+conducteurs et l’amplificateur lui-même
+•ECG avec interférence de ligne électrique à 60 Hz :
+
+=== PAGE 33 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+33
+Autressources d’interference
+Il y a des sources 
+d’interférence électrique 
+situées dans le corps lui-
+même
+a)Modifications de la 
+ligne de base et 
+artefacts de 
+mouvement
+b)Interférence du signal 
+musculaire
+c)Interférences 
+électromagnétiques 
+(ligne électrique 60 Hz 
+et RF)
+d)Respiration
+
+=== PAGE 34 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+34
+Couplagedu champ électrique
+•C1, C2 sont des capacités de 
+couplage entre la ligne 
+d’alimentation et les fils
+•Cela provoque un déplacement des 
+courants id1, id2 à travers les 
+impédances de l’électrode cutanée 
+Z1, Z2, ZG et le patient à la terre
+•VoltageappearingbetweenAandB:
+•Considérer id1 ≅ id2 conduit à
+
+=== PAGE 35 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+35
+Couplage du champ électrique (suite)
+•Les valeurs mesurées pour des 
+câbles de 9 m montrent que id ≅ 6 
+nA et que l’impédance peau-
+électrode peut différer jusqu’à 20 kΩ
+•L’impédance du corps d’environ 500 
+Ω peut être négligée
+•Donc
+•Cela peut être minimisé en blindant 
+les fils et en mettant à la terre 
+chaque blindage sur le boîtier
+•Il est également utile de réduire 
+l’impédance des électrodes cutanées
+
+=== PAGE 36 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+•Un courant de déplacement idb 
+circule également de la ligne 
+électrique directement dans le corps 
+et l’impédance de terre ZG, créant 
+ainsi une tension de mode commun 
+vcm partout dans le corps :
+•La substitution de valeurs typiques 
+donne des résultats
+•Dans les environnements électriques 
+pauvres dans lesquels idb > 1 µA, vcm 
+peut être supérieur à 50 mV, ce qui 
+illustre l’importance d’avoir un CMRR 
+élevé dans l’amplificateur
+36
+Tension de mode commun (suite)
+
+=== PAGE 37 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+•Comme les amplificateurs pratiques 
+ont des impédances d’entrée finies
+Zin
+•vcm se transforme en vA-vB 
+supplémentaire en raison d’un 
+diviseur de tension des impédances 
+peau-électrode et Zin
+•ParcequeZ1,Z2<Zin,
+•La substitution de valeurs typiques 
+donne des résultats 37
+Tension de mode commun (suite)
+Increase Zin!
+=== PAGE 38 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+•vcmpeut être minimisé en abaissant l’impédance 
+de l’électrode cutanée et en augmentantZin
+•La différence entre les impédances peau-
+électrode est une considération importante dans 
+la conception d’un bioamplificateur
+•Un certain vcm est toujours présent, de sorte que 
+le déséquilibre d’entrée et le Zin élevé sont des 
+facteurs critiques déterminant le CMRR
+•L’induction magnétique : une autre source 
+d’interférence
+•Champs magnétiques établis par le courant dans 
+les lignes électriques ou les transformateurs
+•Lorsque ce champ passe à travers une bobine 
+monotour efficace (fils conducteurs), une tension 
+est induite dans cette boucle
+•Peut être réduit grâce à l’utilisation d’un blindage 
+magnétique et à la torsion des fils conducteurs
+38
+Tension de mode commun (suite)
+
+=== PAGE 39 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+•Circuit de jambe droite piloté 
+pour minimiser les interférences 
+de mode commun
+•Le circuit détecte la tension de mode 
+commun à partir d’une paire de 
+résistances de moyenne Ra 
+connectées à v3 et v4 dans l’IA
+•Cette tension détectée est inversée, 
+amplifiée et renvoyée au corps. 
+•Cette rétroaction négative conduit 
+vcm à une valeur faible.
+•La jambe droite n’est pas mise à la 
+terre mais est connectée à la sortie 
+de l’amplificateur opérationnel 
+auxiliaire.
+•Ro doit être choisi grand afin de 
+limiter le courant à des valeurs sûres
+39
+Circuit de réduction de mode commun
+Input stage of an 
+instrumentation 
+amplifier (IA)
+
+=== PAGE 40 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+•Circuit équivalent du système de 
+la jambe droite entraînée
+•RRLreprésente la résistance de 
+l’électrode de la jambe droite
+•En additionnant le courant à l’entrée 
+négative, nous obtenons
+•Having 
+•Le vcm résultant est ensuite dérivé...
+•En remplaçant la vo, on obtient :
+40
+Driven-right-leg circuit
+
+=== PAGE 41 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+•Notez que la résistance effective entre 
+la jambe droite et la terre est la 
+résistance de l’électrode de la jambe 
+droite divisée par (1 + le gain) de 
+l’amplificateur opérationnel en boucle 
+fermée
+•Rfet Rodoivent être grande pour 
+limiter le courant(≈5 MΩ)
+•Une valeur typique de Ra est de 25 kΩ 
+et une résistance d’électrode dans le 
+pire des cas serait RRL = 100 kΩ, 
+conduisant à une résistance effective 
+de
+•Pour id= 0.2 µA, 
+41
+Driven-right-leg circuit (con’t)
+Vcm/id=
+Par rapport à 
+5 mV sans DRL!
+=== PAGE 42 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+42
+Shield driver
+•Lorsque le blindage conduit la moyenne du signal d’entrée, la capacité 
+d’entrée pour vcm est extrêmement faible car il n’existe aucune 
+différence de potentiel entre le blindage et les fils intérieurs pour 
+créer des signaux.
+Shield driverDriven right leg circuit
+=== PAGE 43 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+43
+Filtre de rectification RFI
+•Les résistances R1a et R1b et les 
+condensateurs C1a et C1b sont 
+égaux. 
+•Si C2 est dix fois plus grand que 
+C1, cela permet de réduire de 
+20 fois les erreurs CMR dues à la 
+non-correspondance C1a/C1b
+•Le filtre RFI dispose de deux 
+bandes passantes différentes : 
+différentielle et en mode 
+commun R = R1a+R1b
+=== PAGE 44 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+Complément sur la gamme dynamique
+•Convertisseur A/N idéal:
+-Signal analogique è signal numérique
+
+=== PAGE 45 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+Convertisseur A/N idéal
+•Signal analogique è signal numérique
+Vref(b12−1+b22−2+...+bN2−N)=Vin±Vx
+−12VLSB≤Vx≤12VLSBoù VLSB=Vref2N
+1 LSB=1
+2N
+=== PAGE 46 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+Convertisseur A/N idéal
+Vref(b12−1+b22−2+...+bN2−N)=Vin±Vx
+−12VLSB≤Vx≤12VLSB
+
+=== PAGE 47 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+Bruit de quantification
+•Limité par le pas de quantification
+VQ(rms)=1T VQ2dt−T/2T/2∫#$% &'(1/2
+=VLSB
+12
+
+=== PAGE 48 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+Bruit de quantification
+•Fonction de densité de probabilité du bruit
+VQ(rms)= x2fQ(x)dx−∞∞∫$%& '()1/2=1VLSB( x2dx−VLSB/2VLSB/2∫$%& '()1/2=VLSB12
+=== PAGE 49 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+Bruit de quantification
+•Rapport signal à bruit de quantification
+SQNR=20logVin(rms)
+VQ(rms)
+!
+"
+##
+$
+%
+&&
+=20logVref/(22)
+VLSB/(12)
+!
+"
+#
+#
+$
+%
+&
+&
+=6.02N+1.76 dB
+On assume une
+tension sinusoïdale
+LeSQNRreprésentelemeilleurSNRqu’ilestpossibled’obtenir
+pourunnombredebitdonné,assumantunetensiond’entrée
+sinusoïdale
+•Il faut74 dB de gamme
+dynamiquepour bénéficier
+de 12 bits effectifs!
+•Gammedynamique= 
+20 log (Vmax/Vmin)
+=== PAGE 50 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+Nombre de bits effectifs (ENOB)
+•Le ENOB est souvent différent de n
+•On calcule le ENOB en fonction du SNR réel (mesuré ou 
+calculé) qui dépend des caractéristiques du canal et des 
+circuits électroniques
+SNR=6.02N+1.76 dB
+ENOB
+=== PAGE 51 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+51
+Métriques et glossaire importants pour 
+les bioamplificateurs
+•Précision : nombre de bits (N) et de bruit de quantification (SQNR) :
+SQNR = 6.02N + 1.76 dB (correspond à max SNR)
+•Nombreeffectifde bits :
+ENOB = (SNR+Distortion-1.76 dB)/6.02
+•Distorsion harmonique totale (THD en dB ou en pourcentage) et 
+distorsion harmonique d’ordre N-ième (ex. : HD3, HD5)
+•Rapport signal/bruit et distorsion(SNDR endB)
+•Distorsiond’intermodulation(IMD endB) et termesd’intermodulation
+d’ordreN (ex. : IMD2, IMD3, IMD5)
+•Figure de mérite : Utilisez plusieurs paramètres à la fois pour donner 
+une indication de la façon dont les compromis de conception sont 
+résolus dans un amplificateur. Ex. : Facteur d’efficacité sonore (NEF), 
+et autres FOM
+ Noise
+ Power
+Bandwidth
+=== PAGE 52 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+52
+Amplificateur de biopotentiel : Exemple 1
+•Le gain du premier étage 
+(amplificateurs A1 et A2) est de 
+1+2· R2/R1, le deuxième étage 
+(amplificateur A3) est R4/R3 et 
+le troisième étage (amplificateur 
+A4) est 1+R7/R6.
+•La fréquence du coin inférieur 
+(passe-haut) est de 1/(2 
+R5C1) et la fréquence du coin 
+supérieur (passe-bas) est de 
+1/(2 R7C2).
+•La résistance variable R4 est 
+ajustée pour maximiser le 
+CMRR. E1 et E2 sont les bornes 
+de l’électrode d’enregistrement 
+tandis que E3 est la borne de 
+référence ou la borne de 
+l’électrode de terre.
+vo
+vE1−vE2
+=R4R32R2+R1R1"#$ %&'
+vo
+=== PAGE 53 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+53
+Amplificateur de biopotentiel : Exemple 1
+Mise enœuvrepratique
+•Zin très élevé
+•Les étages couplés en courant 
+continu ont un gain de 
+seulement 25
+•Pas de condensateur à l’entrée 
+pour ne pas bloquer le courant 
+de polarisation
+•Pas de résistance à l’entrée 
+pour ne pas abaisser Zin
+•Couplage AC dans le 2ème 
+étage
+•L’amplificateur non inverseur a 
+un gain de 32
+•Gain total 25 x 32 = 800
+•Coupure haute à 0,05 Hz
+•Coupure basse à 106 Hz
+•Le TRMC peut être réglé à 
+l’aide d’un potentiomètre
+
+=== PAGE 54 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+54
+Amplificateur de biopotentiel : Exemple 2
+•16 canaux
+•Fréquence d’échantillonnage par canal : 32 ksps
+•Gains programmables de 60 dB à 100 dB
+•Faible bruit d’entrée (10 nV/Hz)
+•La bande passante est de 100 Hz à 10 kHz
+•CMRR élevé (85 dB)
+•Protection d’entrée (INA118)
+•Alimenté par batterie
+•Faible consommation d’énergie (75 mW)
+4thorder Bessel bandpass 
+filter: linear phase filter for 
+minimum distortion
+=== PAGE 55 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+55
+Amplificateur de biopotentiel : Exemple 2
+•IA de précision 
+monolithique à faible 
+consommation d’énergie
+•L’INA118 est un 
+amplificateur 
+d’instrumentation à usage 
+général de faible 
+consommation offrant une 
+excellente précision.
+•Sa conception polyvalente à 
+3 amplis opérationnels et sa 
+petite taille le rendent idéal 
+pour un large éventail 
+d’applications. 
+•L’INA118 est découpé au 
+laser pour une tension de 
+décalage très faible (50 
+mV), une dérive (0,5 V/°C) 
+et une réjection de mode 
+commun élevée (110 dB à G 
+= 1000).
+• FAIBLE BRUIT D’ENTRÉE : 10 nV/sqrt(Hz) 
+à 1 kHz
+• CMR ÉLEVÉ : 110dB min
+• FAIBLE TENSION DE DÉCALAGE : 50 V max
+• FAIBLE DÉRIVE : 0,5 mV/°C max
+• FAIBLE COURANT DE POLARISATION 
+D’ENTRÉE : 5nA max
+• ENTRÉES PROTÉGÉES JUSQU’À ±40V
+• LARGE PLAGE D’ALIMENTATION : ±1,35 à 
+±18V 
+• FAIBLE COURANT DE REPOS : 350mA
+
+=== PAGE 56 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+•À l’intérieur de l’INA118 : représentation simplifiée
+•Chaque entrée est protégée par deux transistors FET qui offrent une 
+faible résistance série dans des conditions de signal normales, 
+préservant ainsi d’excellentes performances sonores. Lorsqu’une 
+tension excessive est appliquée, ces transistors limitent le courant 
+d’entrée à environ 1,5 à 5 mA.
+56
+Amplificateur de biopotentiel : Exemple 2
+
+=== PAGE 57 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+57
+Amplificateur de biopotentiel : Exemple 2
+•Amplificateur 
+d’instrumentation couplé à 
+courant alternatif à haute 
+impédance d’entrée 
+(restauration de la ligne de 
+base)
+•Une fréquence de coupure 
+passe-haut est obtenue en 
+connectant un intégrateur 
+Miller de la sortie de 
+l’amplificateur à sa borne de 
+référence
+
+=== PAGE 58 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+58
+Amplificateur de biopotentiel : Exemple 3
+•Interface d’enregistrement de biopotentiel multicanal Intan
+G. Gagnon-Turcotte, B. Benoit et al. IEEE Transactions on Biomedical Circuits and Systems, 2016.
+=== PAGE 59 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+59
+Amplificateur de biopotentiel : Exemple 3
+•Interface 
+d’enregistreme
+nt de 
+biopotentiel 
+multicanal 
+Intan (suite)
+•Interface 
+d’enregistreme
+nt 32 canaux
+•Interface de 
+sortie SPI
+•Gain de 40 dB 
+/ précision de 
+16 bits
+
+=== PAGE 60 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+60
+Références
+•A. S. Sedra and K. C. Smith, Microelectronic 
+Circuits, 6th ed. Oxford University Press, USA, 
+2009.
+•J. G. Webster, Bioinstrumentation. Hoboken, NJ: 
+John Wiley & Sons, 2004.
+•AN-671 Application note, “Reducing RFI 
+Rectification Errors in In-Amp Circuits”, Analog 
+Devices

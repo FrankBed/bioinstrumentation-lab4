@@ -1,0 +1,1335 @@
+=== PAGE 1 ===
+GEL-4072/7072 -Bioinstrumentation et 
+microsystèmesbiomédicaux
+9 septembre2026
+Principesde 
+bioélectricité
+
+=== PAGE 2 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+2
+Plan du cours
+•Origine des biopotentiels
+•Vue d’ensemble du système nerveux
+•Signaux bioélectriques
+-Électroneurogramme(ENG)
+-Électromyogramme(EMG)
+-Électrorétinogramme(ERG)
+-Électro-oculogramme(EOG)
+-Électroencéphalogramme(EEG)
+-Électrocorticographie(ECOG)
+-Électrocardiogramme(ECG)
+=== PAGE 3 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+3
+Lectures et matériel
+•Chap. 4, pp. 126-188 : J. G. Webster, Medical 
+Instrumentation Application and Design, 4 
+édition. Hoboken, NJ : Wiley, 2009.
+•+ exercice et problèmes, Chap. 4, Webster
+=== PAGE 4 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+4
+GEL-4072/7072 -Bioinstrumentation 
+et microsystèmesbiomédicaux
+Origine des biopotentiels
+=== PAGE 5 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+Électrophysiologie
+Petits 
+générateurs 
+bioélectriquesLes signaux bioélectriques du 
+corps peuvent être mesurés
+
+=== PAGE 6 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+Électrophysiologie
+•Conduction électrique 
+dans le corps
+•Générateurs 
+bioélectriques
+•Transfert ionique/
+propagation
+•Membrane 
+intelligente
+•Volume-
+Champs 
+conducteurs
+
+=== PAGE 7 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+7
+Activité électrique des cellules 
+excitables
+•Mesure du potentiel membranaire
+Décalage DC 
+-40 à -90 mV
+Latence due à la vitesse de conduction
++
+-
+Vout= A(V+-V-)Mode commun (bruit ambiant)
+=== PAGE 8 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+8
+Activité électrique des cellules 
+excitables
+•Potentiel membranaire
+•Le potentiel de repos est 
+déterminé par la proportion 
+relative des différents types de 
+canaux ioniques ouverts, ainsi 
+que par la valeur de leur 
+potentiel d’équilibre.
+•La membrane est sélective pour 
+les ions
+7-15 nm
+=== PAGE 9 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+9
+L’état de repos
+•Potentiel de repos de -
+40 mV à -90 mV par 
+rapport au milieu 
+externe
+•La membrane est 
+sélective. Il est 
+librement perméable à 
+K+ et Cl-, mais 
+seulement légèrement à 
+Na+ (PK >> PNa)
+•Au repos, le flux de K+ 
+et de Na+ est équilibré 
+par le pompage actif des 
+ions.
+•Le potentiel de la 
+membrane au repos est 
+principalement 
+déterminé par le flux de 
+K+ à l’extérieur de la 
+cellule, laissant un 
+excès de charge 
+négative à l’intérieur
+
+=== PAGE 10 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+10
+Resting potential (equilibrium 
+potential EK)
+•L’équation de Nernst permet de calculer le potentiel 
+membranaire (pour PK >> PNa) :
+À 37°C (température corporelle)
+•n : valence du K+
+•[K]i et [K]o : concentrations intra et extracellulaires de 
+K+ en mole par litre
+•R : constante universelle de gaz (8,314 J / mol. K)
+•T : température absolue en K (310°K)
+•F : Constante de Faraday (96 485.3329 s A/mol ou 
+C/mol)
+Le flux de K+ domine à 
+l’équilibre
+=== PAGE 11 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+11
+Exemple : Potentiel de repos
+Pour le muscle squelettique de la grenouille, les valeurs 
+typiques des concentrations intracellulaires et 
+extracellulaires des principales espèces ioniques (en 
+millimoles par litre) sont les suivantes.
+Donne -97,7 mV en utilisant l’équation de Nernst.
+=== PAGE 12 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+12
+Potentiel de repos
+•Expression plus précise qui tient compte des 
+autres espèces ioniques
+•La formulation de Goldman-Hodgkin-Katz (GHK)
+•E est le potentiel d’équilibre
+•PM est le coefficient de perméabilité de la 
+membrane pour une espèce ionique M particulière
+
+=== PAGE 13 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+13
+Exemple : Potentiel de repos
+Pour le muscle squelettique de la grenouille, les valeurs 
+typiques des concentrations intracellulaires et 
+extracellulaires des principales espèces ioniques (en 
+millimoles par litre) sont les suivantes.
+Calculez le potentiel de repos d’équilibre de cette 
+membrane à l’aide de l’équation GHK (=-85,3 mV).
+En règle générale, 
+à 20C:
+PNa = 2×10-18 cm/s
+PK = 2×10-6 cm/s
+PCl = 4×10-6 cm/s
+=== PAGE 14 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+14
+L’état de repos : résumé
+1.Il y a un gradient de diffusion entre l’intérieur et 
+l’extérieur de la cellule (vers l’extérieur)
+2.Le champ électrique est dirigé vers l’intérieur de la 
+cellule
+3.La membrane est perméable à certains ions
+4.K+ diffuse vers l’extérieur comme dicté par son gradient 
+de concentration. Les autres ions restent dans la cellule, 
+ce qui crée un deficit de charges positives à l’intérieur
+5.Il y a des pompes de transfert d’ions contre les 
+gradients électrochimiques établis
+6.Les charges (ions) séparés par cette membrane forment 
+le potentiel d’équilibre (resting potential)
+=== PAGE 15 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+15
+L’état actif
+•Les cellules excitables ont la capacité de conduire des potentiels 
+d’action lorsqu’elles sont stimulées de manière appropriée
+•La membrane est dépolarisée lorsque vm (potentiel 
+transmembranaire) est 20 mV plus positif que le potentiel de 
+repos
+•Lorsqu’il est dépolarisé : PNa ou gNa est augmenté : Na+ 
+s’engouffre dans la cellule
+Vm
+Dépolarisation : Potentiel d’action
+=== PAGE 16 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+16
+Rôle des canaux ioniques dans le 
+potentiel d’action : Résumé
+•The active state
+Depolarizing phase2
++ + + + + +       + + +
+- - - - - -       - - -
+K+
+Na+
+Undershoot phase4
++ + + + + +       + + +
+- - - - - -       - - -
+K+
+Na+
+Repolarizing phase3
++ + + + + +       + + +
+- - - - - -       - - -
+K+
+Na+
+Resting phase1
+Na+
+Outside cell
+Inside cell
+Plasma membrane
++ + + + + +       + + +
+- - - - - -       - - -
+K+
+=== PAGE 17 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+17
+Action potential: transmembrane
+potential
+t
+Membrane potential
+(mV)
++50
+0
+-50
+-100
+1
+2 3
+4
+(1)Phase de repos
+(2)Phase de dépolarisation
+(3)Phase de repolarisation
+(4)Déborder
+•Les potentiels d’action se déplacent de manière non 
+atténuée et à une vitesse de conduction constante le long 
+de la membrane
+•C’est une propriété du tout ou rien : le potentiel 
+membranaire entre dans un cycle très caractéristique
+=== PAGE 18 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+18
+Action potential: transmembrane
+potential
+1 2 3 4
+VM: Transmembrane 
+potentiel
+gNa: Conductance de 
+la membrane 
+au sodium
+gK: Conductance de la 
+membrane au 
+potassium
+ENa, EK: Nernst equili-
+potentielde 
+briumpour 
+Na+ et K+
+=== PAGE 19 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+19
+Potentiel d’action : étapes détaillées
+1.Potentielde repos : Canaux Na+ et K+ fermés. Un potentiel de 
+repos est mesuré à travers la membrane (Vm ≈ -70 mV)
+2.Dépolarisation: Les portes d’activation provoquent l’ouverture 
+des canaux Na+ (l’ARNg augmente rapidement). Les canaux K+ 
+s’ouvrent également après un délai, mais l’entrée de Na+ >> 
+l’écoulement de K+, ce qui entraîne un courant entrant. Ce 
+courant décharge la membrane et donne lieu à un processus de 
+régénération qui entraîne la membrane vers ENa, provoquant la 
+phase montante du potentiel d’action.
+3.Repolarisation:Les canaux Na+ sont fermés progressivement 
+(gNa diminue) et les canaux K+ s’ouvrent (le débit sortant K+ est 
+plus important). Un courant K+ sortant a tendance à repolariser la 
+membrane (gK augmente).
+4.Hyperpolarisation:une partie de l’écoulement de K+ se poursuit 
+après que Vm a retrouvé son potentiel de repos (gK revient 
+lentement à l’équilibre).
+Le potentiel de repos s’est rétabli après la fermeture des canaux K+.
+=== PAGE 20 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+20
+Circuit équivalent au réseau
+•Le comportement transitoire 
+de la membrane en réponse 
+aux changements de sa 
+perméabilité : modélisé par 
+un circuit électrique 
+équivalent (basé sur Hodgkin 
+& Huxley).
+•Le courant passif est équilibré 
+par des flux actifs Na+ et K+ 
+entraînés par des pompes 
+ioniques. 
+•Cm est la capacité électrique 
+de la membrane associée à la 
+couche lipidique, ro, ri sont la 
+résistance par unité de 
+longueur, ENa, EK sont les 
+potentiels d’égalisation de 
+Nernst pour Na+ et K+, 
+v=vo-vi est le potentiel 
+transmembranaire
+• Membrane axonale nerveuse entière 
+caractérisée de manière distribuée en utilisant 
+une structure itérative de cette même forme de 
+base
+HODGKIN AL, HUXLEY AF. A quantitative description of membrane 
+current and its application to conduction and excitation in nerve. J 
+Physiol. 1952;117(4):500-544. 
+doi:10.1113/jphysiol.1952.sp004764
+=== PAGE 21 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+21
+Propagation des potentiels d’action
+a)Distribution de charge 
+au voisinage de la 
+région active d’une 
+fibre non myélinisée 
+conductrice d’une 
+impulsion. 
+b)Flux de courant du 
+circuit local dans la 
+fibre nerveuse 
+myélinisée.
+c)La conduction des 
+fibres myélinisées se 
+fait par l’activation 
+rapide et séquentielle 
+du nœud de Ranvier
+
+=== PAGE 22 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+22
+Paramètres des fibres nerveuses
+
+=== PAGE 23 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+23
+GEL-4072/7072 -Bioinstrumentation 
+et microsystèmesbiomédicaux
+Vue d’ensemble du système 
+nerveux (SNC/PNS 101)
+=== PAGE 24 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+24
+Le système nerveux
+1.SNC (systèmenerveux
+central)
+•Cerveauet moelleépinière
+2.SNP (systèmenerveux
+périphérique)
+•Tissu neural à l’extérieur du SNC
+•La division afférente apporte des 
+informations sensorielles à partir 
+des récepteurs
+•La division efférente transmet 
+les commandes motrices aux 
+effecteurs
+•La division efférente comprend le 
+système nerveux somatique 
+(contrôle volontaire) et le 
+système nerveux autonome
+=== PAGE 25 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+25
+Division du système nerveux
+http://chw.spiritualeducation.org/phys/nervous-system
+=== PAGE 26 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+26
+Division du système nerveux
+https://byjus.com/biology/difference-between-sympathetic-and-parasympathetic/
+Le système sympathique 
+contrôle les réponses de « 
+combat ou de fuite ». En 
+d’autres termes, ce système 
+prépare le corps à une activité 
+physique intense. Les 
+événements que nous nous 
+attendrions à voir se produire 
+dans le corps pour permettre 
+que cela se produise se 
+produisent en fait. Le système 
+parasympathique régule les 
+fonctions de « repos et de 
+digestion ». - Google (en 
+anglais)
+=== PAGE 27 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+27
+Système nerveux central
+• Composé du cerveau et de la moelle 
+épinière
+• Le cerveau est organisé en systèmes 
+fonctionnels
+• Chaque système fonctionnel implique 
+plusieurs régions cérébrales qui effectuent 
+différents types de traitement
+• Des voies identifiables relient le composant 
+d’un système fonctionnel
+• Chaque partie du cerveau se projette de 
+manière ordonnée sur la suivante, créant 
+des cartes topographiques
+• Organisation hiérarchique des systèmes 
+fonctionnels
+• L’organisation controlatérale (un côté du 
+cerveau contrôle l’autre côté du corps)
+
+=== PAGE 28 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+28
+Système nerveux central
+Organisation controlatérale
+Organisation hiérarchique et 
+parcours
+=== PAGE 29 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+29
+Anatomie du cerveau
+•Le cerveau comprend 3 parties principales :
+1-Cerebrum (cerveau-télencéphale), 2-brainstem (tronc 
+cérébral) and 3-cerebellum (cervelet)
+Cerebrum Brainstem Cerebellum
+=== PAGE 30 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+30
+Le cortex cérébral
+•Concerné par le 
+fonctionnement cognitif 
+(Planification, exécution 
+d’actions, etc.)
+•Divisé en 4 lobes:
+•Lobe frontal (langage et 
+traitement émotionnel)
+•Lobe temporal (cortex 
+somatosensoriel et flux 
+dorsal du système visuel)
+•Lobe pariétal (cortex 
+auditif primaire)
+•Lobe occipital (cortex 
+visuel primaire)
+
+=== PAGE 31 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+31
+Le cortex cérébral
+
+=== PAGE 32 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+32
+L’étude du cerveau
+§Le cerveau: de 109 à 1012 neurones selon l’espèce
+§Le cerveau humain est de loin la la structure connue 
+la plus complexe avec 1014 synapses
+§On s’intéresse aux interactions 
+entre plusieurs neurones
+§Observer l’activité de
+centaines, voire de milliers 
+de neurones…
+§Bande passante: 
+§1000 × 10 bits × 
+20 kéch/s = 200 Mbit/s!!
+§1012 : 200 000 Tbits/s Souris Humain
+=== PAGE 33 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+33
+L’étudedu cerveau
+
+=== PAGE 34 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+34
+La connectomique
+•Un connectome est une carte complète des connexions 
+neuronales dans le cerveau
+•Résultats de l’application à haut débit de l’imagerie neuronale 
+et de la technique histologique
+Diffusion spectrum 
+imaging
+=== PAGE 35 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+35
+Couches corticales
+•Le cortex est organisé en couches cellulaires
+• Couche I : Moléculaire
+• Couche II : Granulaire externe
+•Petites cellules pyramidales 
+• Couche III : Pyramidaleextérieure
+•Cellules pyramidales moyennes
+• Couche IV : Granulaire interne
+• Couche V : Pyramidale intérieure
+•Grandes cellules pyramidales
+• Couche VI: Fusiforme
+•Ces couches organisent les entrées et les sorties
+• Neurones de projection et interneurones
+
+=== PAGE 36 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+36
+Anatomie d’un neurone
+•Un neurone se déclenche en 
+transmettant des signaux 
+électriques le long de son 
+axone. Lorsque les signaux 
+atteignent l’extrémité de 
+l’axone, ils déclenchent la 
+libération de 
+neurotransmetteurs qui sont 
+stockés dans des poches 
+appelées vésicules.
+•Les neurotransmetteurs se 
+lient aux molécules 
+réceptrices présentes à la 
+surface des neurones 
+adjacents. Le point de 
+contact virtuel est connu 
+sous le nom de synapse.
+
+=== PAGE 37 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+37
+Types de neurones et classification 
+fonctionnelle
+•Neuronessensoriels
+•Fournir des 
+informations à 
+partir 
+d’extérocepteurs, 
+d’intérocepteurs ou 
+de propriocepteurs
+•Interneurones
+•Entièrement situé 
+au sein de la CNS
+•Répartissez les 
+entrées sensorielles 
+et coordonnez les 
+sorties motrices.
+•Motoneurones
+•Former la division 
+efférente du SNP
+
+=== PAGE 38 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+38
+Moelle épinière et SNP
+
+=== PAGE 39 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+39
+Le système nerveux périphérique
+•Le SNP fournit au cerveau des 
+informations sensorielles sur 
+l’environnement
+•Le cerveau envoie des signaux à des 
+parties spécifiques du corps par 
+l’intermédiaire des nerfs périphériques
+•Divisé en divisions somatiques et 
+autonomes
+• Division somatique
+• Comprend les neurones sensoriels 
+qui inervent la peau, les muscles et 
+les articulations
+• Division autonome
+• Médie la sensation viscérale ainsi que 
+le contrôle moteur des viscères, des 
+muscles lisses et des glandes 
+exocrines.
+=== PAGE 40 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+40
+Structure d’une synapse
+Le potentiel d’action qui atteint les 
+terminaisons d’un neurone stimule la 
+libération d’un transmetteur chimique de 
+la cellule (signal de sortie) qui provoque 
+un potentiel dans la cellule postsynaptique
+=== PAGE 41 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+41
+Signalisation neuronale
+• Le 
+neurotransmette
+ur libéré 
+provoque un 
+potentiel dans la 
+cellule 
+postsynaptique.
+• Le fait que le 
+potentiel 
+synaptique ait 
+un effet 
+excitateur ou 
+inhibiteur 
+dépend du type 
+de récepteurs 
+dans la cellule 
+postsynaptique.
+=== PAGE 42 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+42
+GEL-4072/7072 -Bioinstrumentation 
+et microsystèmesbiomédicaux
+Signaux bioélectriques
+=== PAGE 43 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+43
+Champs de conducteurs de volume
+•Cellule ou nerf excitable immergé dans un conducteur de 
+volume (liquide corporel/liquide extracellulaire ou eau 
+salée)
+•vm(z) -(Distribution spatiale): potentiel de 
+champ/potentiel extracellulaire
+•Diminue de façon exponentielle avec l’augmentation de z 
+(distance axiale)
+•De nature triphasique (pour un potentiel d’action 
+monophasique)
+•Beaucoup plus petite en amplitude (gamme µV)
+vm(z)z
+vm(t)
+Fluide corporel
+/liquide 
+extracellulaire
+=== PAGE 44 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+44
+Biopotetiaux intracellulaires vs 
+intracellulaires
+•…
+•L’extracellulaire
+potentiel est un
+écho de l’intracellulaire
+potentiel
+Intracellulaire (patch clamp)
+Extracellulaire
+Monophasique
+Triphasique
+=== PAGE 45 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+45
+Potentiels de champ extracellulaire
+Composants 
+moteurs+sensoriels
+Composante sensorielle 
+uniquement
+Moteur
+Composant 
+uniquement
+•Enregistrements d’un nerf sciatique
+•Le potentiel de champ extracellulaire est 
+formé à partir des champs électriques 
+superposés de fibres actives individuelles 
+dans le tronc nerveux
+•Les potentiels extracellulaires sont 
+triphasiques, de gamme µV, et diminuent en 
+amplitude et en contenu à haute fréquence à 
+mesure que la distance d’enregistrement par 
+rapport au tronc augmente
+•Le conducteur de volume peut également 
+être un milieu multicouche non homogène
+=== PAGE 46 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+46
+Different biopotentialsignals
+•Potentiel d’action (AP - intra ou extracellulaire) : Mesure du potentiel 
+électrique résultant de la dépolarisation de la membrane cellulaire ;
+•Potentiel de champ local (LFP) : Somme de toute l’activité synaptique 
+dendritique dans un volume de tissu mesuré à l’aide d’une microélectrode à 
+faible impédance ;
+•Électroneurogramme (ENG) : Activité neuronale véhiculée par les nerfs 
+depuis ou vers des organes innervés (mélange de PA) ;
+•Électroencéphalogramme (EEG) : Mesuré sur le cuir chevelu. Ondes à basse 
+fréquence;
+•Électrocardiogramme (ECG) : Activité cardiaque mesurée sur la poitrine ;
+•Électromyogramme (EMG) : Activité musculaire mesurée sur la peau, ou 
+dans les muscles ;
+•Électrocorticogramme (ECoG) : Mesuré à l’aide d’électrodes placées 
+directement à la surface du cerveau (sous le crâne). L’ECoG est actuellement 
+considéré comme la « référence » pour la définition des zones épileptogènes 
+dans la pratique clinique ;
+•Électrooculogramme (EOG) : Potentiels électriques générés à la suite du 
+mouvement des globes oculaires mesurés sur ou hors de l’œil.
+•L’électrorétinographie (ERG) : mesure les réponses électriques individuelles 
+de divers types de cellules de la rétine, y compris les photorécepteurs, les 
+cellules internes de la rétine et les cellules ganglionnaires.
+=== PAGE 47 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+47
+Caractéristiques des signaux 
+biopotentiels
+•Plages de tension et de fréquence de certains signaux 
+biopotentiels
+AP
+Intracellular AP
+Extracellular AP
+ENG 
+(1 µV –20 µV)
+(From electrodes)
+LFP (0.1–10 Hz)
+=== PAGE 48 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+48
+Caractéristiques des signaux 
+biopotentiels (suite)
+Type of neural signals Distinguishing 
+features
+Amplifier design 
+consideration
+Additional features desired
+Intracellular APs 10 mV –80 mV, 100 
+Hz –10 kHz
+Gain > 40 dB Measured with a glass needle 
+microelectrode
+Extracellular APs (spikes) 10 µV –100 µV, 100 
+Hz –10 kHz
+Electrode DC potential 
+rejection, Gain > 60 dB
+Measured with thin 
+microelectrodes
+Local field potentials 
+(LFPs)
+0.1 Hz –100 Hz, 1 
+mV –10 mV
+Gain > 40 dB Sum of dentritic current 
+measured with a large 
+microelectrode tip
+ENG: mixture of APs 
+measured on nerve 
+bundles
+100 Hz –10 kHz, 1 
+µV–10 µV
+Gain > 80 dB, Very low-noise 
+and extremely high CMRR
+Measured on the nerve with a 
+cuff electrode
+=== PAGE 49 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+49
+L’électroneurogramme : Organisation 
+fonctionnelle du SNP
+•Réflexed’arc:
+1.Organe sensoriel : 
+récepteur sensoriel
+2.Nerf sensoriel : de 
+nombreuses fibres 
+individuelles qui 
+transmettent des 
+informations codées 
+sous forme de 
+fréquence AP
+3.CNS : intégration de la 
+station et de la décision 
+motrice
+4.Nerf moteur : lien 
+entre le SNC et les 
+muscles périphériques
+5.Organe effecteur : 
+Fibres musculaires 
+squelettiques qui se 
+contractent en réponse 
+à l’AP conduite par les 
+nerfs moteurs
+Schéma fonctionnel 
+d’un système de 
+commande équivalent
+=== PAGE 50 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+50
+L’électroneurogramme : Organisation 
+fonctionnelle du SNP
+•Électrodecuff
+World Precision Instruments
+=== PAGE 51 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+51
+L’électroneurogramme (ENG)
+•Comment mesurer la vitesse de conduction 
+dans une fibre nerveuse périphérique
+Électrodes concentriques à aiguille ou de 
+surface
+=== PAGE 52 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+52
+L’électroneurogramme (ENG)
+•Les ENG mesurés sont de l’ordre de 10 
+µV
+•Nécessite un amplificateur différentiel à gain 
+élevé et à impédance d’entrée élevée, doté 
+d’une bonne capacité de réjection en mode 
+commun et d’un faible bruit inhérent
+•Les interférences de courant porteur sont un 
+problème même avec de bonnes propriétés 
+de réjection de mode commun de 
+l’amplificateur
+•Les fils d’entrée doivent être correctement 
+torsadés et blindés
+•De plus, le sujet pourrait être placé dans une 
+pièce ou une cage protégée.
+•Le rapport signal/bruit peut être amélioré en 
+présence de bruit aléatoire (principalement 
+généré par l’amplificateur lui-même) en 
+utilisant la moyenne du signal
+Reflexlyevoked potentials
+Volume of conduction
+=== PAGE 53 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+53
+L’électromyogramme (EMG)
+•Single motor unit 
+(SMU):Fibre nerveuse 
+motrice unique et 
+faisceau de fibres 
+musculaires attachées
+•La SMU agit comme une 
+source distribuée dans un 
+conducteur de volume : 
+toutes les autres fibres, 
+vaisseaux sanguins et 
+tissus
+•Potentiel évoqué des 
+fibres actives : 
+triphasique, durée courte 
+(3 à 15 ms), amplitude de 
+20 à 2000 µV, en fonction 
+de la taille de l’UMM
+Muscle contraction
+=== PAGE 54 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+54
+L’électromyogramme (EMG)
+•Des électrodes de surface ou 
+pénétrantes sont utilisées : 
+compromis entre facilité 
+d’utilisation et précision
+•À un niveau d’effort élevé, de 
+nombreuses réponses SMU 
+superposées donnent lieu à 
+une réponse compliquée 
+(motif de brouillage) dans 
+laquelle les unités 
+individuelles ne peuvent plus 
+être distinguées
+•Lorsque les muscles se 
+contractent progressivement, 
+les SMU actives augmentent 
+leur taux de tir et de 
+nouvelles SMU sont recrutées
+
+=== PAGE 55 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+55
+L’électrorétinogramme (ERG)
+•Lorsque la rétine est stimulée 
+par la lumière, un potentiel 
+d’action se produit
+•Plusieurs pathologies peuvent 
+être détectées en mesurant la 
+réponse électrique de la rétine à 
+la lumière
+•La rétine a des propriétés 
+dipolaires électriques qui font 
+que la surface cornéenne est 
+électropositive par rapport à la 
+surface sclérale externe
+•L’enregistrement est effectué en 
+plaçant une électrode active sur 
+la cornée, généralement 
+intégrée dans une lentille de 
+contact
++
+-
+=== PAGE 56 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+L’électro-oculogramme (EOG)
+•Imec développe des lunettes de suivi oculaire sans fil 
+pour aider à la recherche sur les troubles 
+neurologiques
+https://www.medgadget.com/2018/05/imec-develops-
+wireless-eye-tracking-glasses-to-aid-in-research-of-
+neurological-disorders.html
+=== PAGE 57 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+57
+L’électro-oculogramme (EOG)
+•Le potentiel de repos de l’avant de la 
+rétine est électropositif par rapport à 
+l’arrière de la rétine
+•Cela rend la cornée positive par 
+rapport à l’arrière de l’œil
+•Si l’œil regarde vers la gauche, cette 
+cornée positive rend une électrode à 
+gauche de l’œil plus positive qu’une 
+électrode à droite de l’œil
+•Une tension différentielle d’environ 100 
+µV peut être mesurée entre les deux 
+électrodes pour déterminer la direction 
+verticale du regard
+ +
++
+++
++
++ +
+--
+--
+-
+=== PAGE 58 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+58
+L’électro-oculogramme (EOG)
+
+=== PAGE 59 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+59
+L’électroencéphalogramme (EEG)
+•EEG : Fluctuation potentielle enregistrée 
+par le cerveau. Introduit au 19ème 
+siècle par le neurologue allemand Hans 
+Berger
+•L’activité du cerveau peut être 
+enregistrée avec 3 types d’électrodes : 
+électrodes du cuir chevelu, corticales ou 
+de profondeur
+•Dans les 3 cas, les potentiels fluctuants 
+enregistrés représentent une 
+superposition du potentiel de champ 
+produit par une variété de générateurs 
+de courant neuronal actifs à l’intérieur 
+du conducteur de volume
+•Les sources bioélectriques sont des 
+agrégats d’éléments neuronaux avec 
+des interconnexions complexes
+
+=== PAGE 60 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+60
+Électrogenèse du potentiel du champ 
+cortical
+•À la surface corticale : mesure 
+du potentiel de champ intégré 
+à la limite d’un conducteur de 
+grand volume
+•Les potentiels d’action conduits 
+par les axones contribuent très 
+peu au potentiel de surface 
+intégré
+•La synchronicité des fibres 
+sous-jacentes et l’activité 
+des neurones corticaux 
+influencent largement 
+l’amplitude potentielle de 
+surface
+•Réponse synchrone : potentiel 
+évoqué (sont d’amplitude 
+relativement grande)
+A pyramidal neuron
+=== PAGE 61 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+61
+Anatomie et fonction du cerveau
+•Le SNC se compose 
+de la moelle 
+épinière et du 
+cerveau, qui 
+baignent tous deux 
+dans un liquide 
+extracellulaire 
+appelé liquide 
+céphalo-rachidien
+•Le cerveau 
+comprend 3 parties 
+principales : le 
+cerveau, le tronc 
+cérébral et le 
+cervelet
+
+=== PAGE 62 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+62
+Le cortex cérébral
+•Cortex : partie fonctionnelle du 
+cerveau
+•Couche relativement mince de 
+matière grise (1,5 à 4,0 mm
+•Comprend des circonvolutions 
+complexes
+•Différentes pièces: 
+-Néocortex(cortex)
+-Paléocortex
+•Comprend des couches 
+stratifiées contenant des corps 
+cellulaires et des faisceaux de 
+fibres (6 couches chez l’homme)
+•Deux types de neurones :
+-Pyramidal et non pyramidal
+
+=== PAGE 63 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+63
+Différents types d’ondes EEG
+•L’enregistrement électrique de la surface 
+exposée du cerveau ou de la surface 
+externe de la tête démontre une activité 
+électrique oscillante continue dans le 
+cerveau
+•On les appelle les ondes cérébrales 
+(signaux EEG)
+•Amplitude: 
+-à la surface du cerveau : 10 mV
+-Enregistré du cuir chevelu : 100 µV
+•Fréquence : plages de 0,5 à 100 Hz
+•Leur caractère dépend fortement du 
+degré d’activité du cortex cérébral
+•La plupart du temps, les ondes cérébrales 
+sont irrégulières
+•À d’autres moments, des motifs distincts 
+se produisent
+
+=== PAGE 64 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+64
+Différents types d’ondes EEG
+EEG 
+Waves
+FrequencyAmplitude Region Effect of mental 
+activity
+Alpha 8-13 Hz 20 –200 µV Occipital lobe Inhibited by
+Beta 14-30Hz, 
+50Hz
+- Parietal and 
+frontal regions
+-
+Beta I 14-30Hz - - Inhibited by
+Beta II Up to 50Hz - - Elicited by
+Theta 4-7 Hz - Parietaland 
+temporal regions
+Elicited by
+Delta < 3.5 Hz - - Occur in deep sleep
+or in serious 
+organic brain 
+disease
+=== PAGE 65 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+65
+Différents types d’ondes EEG
+•Alpha: 8-13 Hz, ils se 
+produisent chez toutes les 
+personnes normales 
+lorsqu’elles sont éveillées 
+dans un état de repos calme
+•Disparaître complètement 
+lorsque le sujet dort
+•Lorsque l’attention du sujet 
+est dirigée vers une activité 
+mentale spécifique, elles 
+sont remplacées par des 
+ondes asynchrones de 
+fréquence plus élevée mais 
+d’amplitude plus faible
+Alpha when patient 
+opens/closes eyes
+=== PAGE 66 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+66
+Different types of EEG waves
+•Beta I:14-30 Hz, ils sont affectés 
+par l’activité mentale de la même 
+manière que les ondes alpha
+•Beta II: jusqu’à 50 Hz, en 
+particulier lors d’une activité 
+mentale intense
+•Theta: 4 – 7 Hz, ils peuvent se 
+produire pendant un stress 
+émotionnel provoquant environ 20 
+s d’ondes thêta
+•Delta: > 3,5 Hz, ils ne peuvent se 
+produire qu’une fois toutes les 2 
+ou 3 s
+•Ils surviennent dans le sommeil 
+profond, la petite enfance et dans 
+les maladies cérébrales organiques 
+graves
+ Alpha lorsque le patient 
+ouvre/ferme les yeux
+=== PAGE 67 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+67
+Ondes EEG et épilepsie
+•Formes d’onde EEG 
+anormales dans différents 
+types d’épilepsie
+
+=== PAGE 68 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+68
+Le clinique (EEG)
+•Fédération internationale 
+des sociétés EEG : Système 
+international 10-20
+•Le « 10 » et le « 20 » font 
+référence au fait que les 
+distances réelles entre les 
+électrodes adjacentes sont 
+soit 10 %, soit 20 % de la 
+distance totale avant-
+arrière ou droite-gauche du 
+crâne.
+•Différents montages : 
+bipolaire, référentiel, 
+moyen, laplacien
+
+=== PAGE 69 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+69
+Le clinique (EEG) : les habitudes de 
+sommeil
+•Lorsqu’une personne dans 
+un état détendu et 
+inattentif devient 
+somnolente et s’endort, le 
+rythme alpha est remplacé 
+par des vagues plus lentes 
+et plus grandes
+•Dans le sommeil profond, 
+de très grandes ondes 
+delta quelque peu 
+irrégulières sont observées
+•Il y a des rafales d’ondes 
+alpha dans le sommeil 
+modérément profond
+Alpha(8-13 Hz)
+=== PAGE 70 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+Démonstrations de contrôle de 
+curseurs et guidage de robots 
+Avantages:
+•Non-invasif et simple 
+d’utilisation
+•Économique (< 100$)
+Défis:
+•Longue période d’entrainement
+•Délai (vs fluidité pour le temps 
+réel)
+•Taux d’erreur important
+•Contrôle 2D/3D 
+à tâches complexes
+•Bruits
+University of Minnesota
+imagerie motrice
+Application : Interfaces cerveau-
+ordinateur portables (BCI)
+=== PAGE 71 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+71
+L’électrocardiogramme (ECG)
+•Distribution des tissus conducteurs dans les 
+oreillettes et les ventricules, montrant le système 
+de formation d’impulsions et de conduction du 
+cœur
+
+=== PAGE 72 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+72
+L’électrocardiogramme (ECG)
+https://fr.wikipedia.org/wiki/C%C5%93ur (0.1–10 Hz)
+=== PAGE 73 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+73
+L’électrocardiogramme (ECG)
+•Activité 
+représentative 
+de diverses 
+régions du cœur
+•La trace 
+inférieure est un 
+ECG scalaire, qui 
+a une amplitude 
+QRS typique de 
+1 à 3 mV
+•Chaque cellule 
+myocardique 
+contient de 
+nombreuses 
+myofibrilles 
+contractiles
+Repolarisation 
+ventriculaire
+Retarder
+=== PAGE 74 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+74
+L’électrocardiogramme (ECG)
+•Système de conduction 
+électrique du cœur
+1.SA node (nœudsinusal) : 
+P wave
+2.AV node (nœudauriculo-
+ventriculaire): PR 
+segment –QRS 
+complex
+3. Bundle of His
+4. Septum
+https://en.wikipedia.org/wiki/Electrica
+l_conduction_system_of_the_heart
+Delay
+=== PAGE 75 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+75
+L’électrocardiogramme (ECG)
+•Lignes isochrones (excitées de synchronie) 
+d’activation ventriculaire du cœur humain
+SA node
+=== PAGE 76 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+76
+Potentiel de surface corporelle
+•Plusieurs configurations d’électrodes sont 
+utilisées
+•Jusqu’à 12 électrodes
+ Conducteur de volume thoracique
+=== PAGE 77 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+77
+Arrhytmias -Foyer ectopique
+•Le foyer ectopique est un groupe de cellules excitables qui 
+provoque un battement cardiaque prématuré à l’extérieur du 
+nœud SA fonctionnant normalement du cœur humain
+•Une partie du myocarde (ou du ganglion AV) devient parfois 
+irritable et s’écoule indépendamment
+•Ce site est appelé un focus ectopique 
+•Le rythme cardiaque est alors interrompu transitoirement
+
+=== PAGE 78 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+78
+Arrhytmias (suite)
+•Tachycardie (fréquence cardiaque supérieure à la 
+fréquence normale au repos) et fibrillation auriculaire* 
+(la fibrillation est la contraction rapide, irrégulière et non 
+synchronisée des fibres musculaires)
+*atrial fibrillation: fibrillation auriculaire
+=== PAGE 79 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+79
+Références
+•J. G. Webster, Bioinstrumentation. Hoboken, 
+NJ: John Wiley & Sons, 2004.
+•J. G. Webster, Medical Instrumentation 
+Application and Design, 4 edition. Hoboken, 
+NJ: Wiley, 2009.
+•E. R. Kandel, J. H. Schwartz, and T. M. Jessell, 
+Principles of Neural Science, 4th ed. McGraw-
+Hill Medical, 2000.

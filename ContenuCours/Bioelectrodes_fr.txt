@@ -1,0 +1,956 @@
+=== PAGE 1 ===
+GEL-4072/7072 -Bioinstrumentation et 
+microsystèmesbiomédicaux
+16 septembre2026
+Bioélectrodes
+
+=== PAGE 2 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+2
+GEL-4072/7072 -Bioinstrumentation 
+et microsystèmesbiomédicaux
+•Utilisation généralisée en GMB
+
+=== PAGE 3 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+3
+Plan du cours
+•Interface électrode/électrolyte
+-Double couche électrique
+-Potentiel de demi-cellule
+-Polarisation 
+-Circuits équivalents aux électrodes
+•Électrodesbiopotentielles
+-Électrodes de surface corporelle
+-Électrodes implantables/internes
+-Microélectrodes
+-Réseaux d’électrodes
+-Électrodes microfabriquées
+-Optrodes
+=== PAGE 4 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+4
+GEL-4072/7072 -Bioinstrumentation 
+et microsystèmesbiomédicaux
+Interface 
+électrode/électrolyte
+=== PAGE 5 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+5
+Introduction
+1.Les électrodes sont l’interface entre 
+le corps et l’appareil électronique
+2.Les électrodes biopotentielles sont 
+des transducteurs : elles 
+convertissent le courant ionique en 
+courant électronique afin que les 
+signaux biopotentiels puissent être 
+visualisés et/ou stockés
+3.Les différents types d’électrodes 
+comprennent les macroélectrodes 
+de surface, les macroélectrodes à 
+demeure et les microélectrodes 
+(brassard ou autres formes)
+4.La peau et les autres tissus du 
+corps agissent comme des solutions 
+électrolytiques !
+
+=== PAGE 6 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+6
+Interface électrode/électrolyte
+•Électrolyte : liquide corporel contenant 
+des ions
+•Courant net traversant l’interface :
+•Les électrons (e-) se déplaçant dans 
+la direction opposée à celle de I dans 
+l’électrode
+•Cation (C+) se déplaçant dans la 
+même direction que I
+•Les anions (A-) se déplaçant dans la 
+direction opposée à celle de I dans 
+l’électrolyte
+•Il n’y a pas d’électrons libres dans 
+l’électrolyte et pas de cations ou d’anions 
+libres dans l’électrode...
+•Ainsi, une réaction chimique qui 
+transfère les charges à travers 
+l’interface se produit
+C+: Cation, A-: Anion, e-: electron
+=== PAGE 7 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+7
+Interface électrode/électrolyte
+Équationsioniques
+•Si l’électrode est du même matériau que les 
+cations, alors ce matériau s’oxyde et pénètre 
+dans l’électrolyte en tant que cation et les 
+électrons restent à l’électrode et circulent 
+dans le circuit externe;
+•Transfert de charge à l’interface :
+où n et m sont les valences
+•Si l’anion peut être oxydé au niveau de 
+l’électrode pour former un atome neutre, un 
+ou deux électrons sont donnés à l’électrode.
+•La réaction dominante peut être déduite de ce qui suit : 
+•- Flux de courant de l’électrode à l’électrolyte : Oxydation (Perte d’e-)
+•- Flux de courant de l’électrolyte à l’électrode : Réduction (Gain de e-).
+C+: Cation, A-: Anion, e-: electron
+(Oxydation)
+(Réduction)
+=== PAGE 8 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+8
+Interface électrode/électrolyte
+Exemple
+Électrodes Ag/AgCl : 2 réactions impliquées
+C+: Cation, A-: Anion, e-: electron
+(Oxydation)
+Seulement peu soluble dans l’eau
+1.
+2.
+(Nernst)
+=== PAGE 9 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+9
+Interface électrode/électrolyte
+•Une différence de potentiel 
+caractéristique connue sous le nom 
+de potentiel de demi-cellule 
+établi par l’électrode et son 
+électrolyte environnant qui dépend 
+du métal, de la concentration des 
+ions dans la solution et de la 
+température.
+•Raison du potentiel de la demi-
+cellule : Séparation de charge à 
+l’interface : Les réactions 
+d’oxydation ou de réduction à 
+l’interface électrode-électrolyte 
+conduisent à une double couche 
+de charge, similaire à celle qui 
+existe le long des membranes 
+cellulaires biologiques 
+électriquement actives.
+Electric double layer
+Electrode
+Electrolyte
+=== PAGE 10 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+10
+Interface électrode/électrolyte
+1.Le potentiel de la demi-cellule
+•Résultats d’une séparation de charge à l’interface
+•Le potentiel d’une demi-cellule ne peut pas être mesuré 
+sans une deuxième électrode.... ? %%$?%$#$
+•Le potentiel d’une demi-cellule de l’électrode d’hydrogène 
+standard a été arbitrairement mis à zéro (comme 
+référence). 
+•Les autres potentiels de demi-cellule sont exprimés sous 
+forme de différence de potentiel avec cette électrode 
+spécifique.
+=== PAGE 11 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+11
+Le potentiel de la demi-cellule
+•Convention: L’électrode 
+d’hydrogène est définie 
+comme ayant un potentiel 
+de demi-cellule de zéro.
+•Les potentiels d’une demi-
+cellule de tous les autres 
+matériaux d’électrode sont 
+mesurés par rapport à 
+cette électrode 
+d’hydrogène.
+•Eo : Potentiel standard 
+demi-cellule.
+Électrode d’hydrogène standard
+Ag/Ag-Cl a un faible 
+potentiel de demi-cellule 
+et est également très 
+stable > donc utilisé dans 
+les électrodes ECG et EEG
+=== PAGE 12 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+12
+L’électrode d’hydrogène standard
+•Le SHE est constitué d’un fil 
+de platine qui est relié à une 
+surface Pt en contact avec 
+une solution aqueuse 
+contenant 1 M H+ en équilibre 
+avec le gaz H2 à une pression 
+de 1 atm. 
+•D’un point de vue 
+moléculaire, la surface Pt 
+catalyse l’oxydation des 
+molécules d’hydrogène en 
+protons ou la réduction des 
+protons en hydrogène gazeux. 
+(L’eau est omise pour plus de 
+clarté.) 
+•Le potentiel standard de la 
+SHE se voit attribuer 
+arbitrairement une valeur de 
+0 V.
+=== PAGE 13 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+13
+Polarisation
+•S’il y a un courant entre l’électrode et l’électrolyte, le potentiel 
+observé de la demi-cellule est souvent altéré en raison de la 
+polarisation, puis une surintensité se produit:
+•Il s’agit d’un mécanisme additif. 
+•Potentiel total (potentiel de polarisation) :
+Potentiel de demi-cellule
+(1)
+=== PAGE 14 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+14
+Polarisation
+•Lorsqu’une membrane semi-perméable sélective aux ions sépare 
+deux solutions ioniques aqueuses de concentration différente, un 
+potentiel électrique existe à travers cette membrane, par exemple :
+•Ce potentiel est donné par l’équation de Nernst :
+•où a1 et a2 sont les activités des ions de chaque côté de la 
+membrane (l’activité est approximativement égale à la 
+concentration ionique)
+•Le potentiel standard d’une demi-cellule est déterminé à l’activité 
+unitaire*. L’électrode est placée dans un électrolyte contenant des 
+cations du matériau de l’électrode ayant une activité unitaire. S’il 
+change de l’unité :
+•Nernst eq:
+E = potentiel de demi-cellule
+E0 = potentiel standard d’une demi-
+cellule
+n = valence du matériau de l’électrode
+can+=activité du cation Cn+
+0
+*En bonne approximation, les coefficients d’activité sont unitaires lorsque la force ionique est inférieure à 0,1 
+M. De plus, 1 mol = 6,02214076×10²³ ions.
+=== PAGE 15 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+15
+Le potentiel de la demi-cellule
+Exemple5.1
+•Une électrode composée d’un morceau de Zn avec un fil 
+attaché et une autre électrode composée d’un morceau 
+d’Ag recouvert d’une couche d’AgCl et d’un fil attaché sont 
+placées dans une solution de ZnCl2 de 1M (les activités de 
+Zn2+ et de Cl- sont approximativement unitaires) pour 
+former une cellule électrochimique maintenue à une 
+température de 25 °C.
+a)Quelles réactions chimiques pourriez-vous vous attendre à 
+voir au niveau de ces électrodes ?
+b)Si un voltmètre à très haute impédance d’entrée était 
+connecté entre ces électrodes, que lirait-il ?
+=== PAGE 16 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+16
+Polarisation
+•Réactiongénéraled’oxydo-réduction
+•L’équation générale de Nernst pour cette situation
+•où E0 et E sont des potentiels standard et demi-cellules, a : 
+Activité ionique des différents constituants (généralement la 
+même que la concentration), et n : Nombre d’électrons de 
+valence impliqués.
+•Activité ionique : disponibilité d’une espèce ionique en solution 
+pour entrer en réaction
++
+(oxydation)(réduction)
+(oxydation)
+(réduction)
+=== PAGE 17 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+17
+Électrodes polarisables et non 
+polarisables
+Deux types d’électrodes théoriques. Cette classification fait référence à 
+ce qui se passe lorsqu’un courant passe entre celui-ci et l’électrolyte
+1.Électrodesparfaitementpolarisables
+•Il s’agit d’électrodes dans lesquelles aucune charge réelle ne traverse 
+l’interface électrode-électrolyte lorsqu’un courant est appliqué. Le 
+courant aux bornes de l’interface est un courant de déplacement et 
+l’électrode se comporte comme un condensateur (il modifie la 
+distribution de la charge près de l’électrode).
+•Exemple : Électrode de platine (Métal noble)
+2.Électrodesparfaitementnon polarisables
+•Il s’agit d’électrodes où le courant passe librement à travers l’interface 
+électrode-électrolyte, ne nécessitant aucune énergie pour effectuer la 
+transition. Ces électrodes ne voient pas de surpotentiels.
+•Exemple : Électrode Ag/AgCl
+Exemple : Ag/AgCl est utilisé pour l’enregistrement des biopotentiels, 
+tandis que le Pt est utilisé pour l’électrostimulation et les applications à 
+long terme
+=== PAGE 18 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+18
+Électrodes parfaitement polarisables
+•Il s’agit d’électrodes dans lesquelles aucune charge réelle ne 
+traverse l’interface électrode-électrolyte lorsqu’un courant est 
+appliqué. Le courant aux bornes de l’interface est un courant de 
+déplacement et l’électrode se comporte comme un 
+condensateur.
+•Parce que le matériau de ces électrodes est relativement 
+inerte, il leur est difficile de s’oxyder et de se dissoudre
+•Exemple : Électrode de platine (Métal noble)
+•Utilisé pour la stimulation électrique / applications à long terme
+•Le courant passant entre l’électrode et l’électrolyte modifie 
+principalement la concentration des ions à l’interface, de sorte 
+qu’une majorité du surpotentiel observé de ce type 
+d’électrode est le résultat de Vc, le surpotentiel de 
+concentration.
+=== PAGE 19 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+19
+Électrodes parfaitement non 
+polarisables
+•Il s’agit d’électrodes où le courant passe 
+librement à travers l’interface électrode-
+électrolyte, ne nécessitant aucune énergie 
+pour effectuer la transition. Ces électrodes 
+ne voient pas de surpotentiels.
+•Exemple : Électrode Ag/AgCl
+•L’Ag/AgCl est une électrode pratique qui se 
+rapproche des caractéristiques d’une 
+électrode parfaitement non polarisable
+•Groupe d’électrode constitué d’un métal 
+recouvert d’une couche de composé ionique 
+légèrement soluble de ce métal avec un 
+anion approprié
+•Une base en métal argenté est recouverte 
+d’une couche de composé ionique AgCl qui 
+n’est que légèrement soluble dans l’eau et 
+reste donc stable
+
+=== PAGE 20 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+20
+Électrodes Ag/AgCl
+•Le comportement de l’électrode Ag/AgCl est régi par deux réactions 
+chimiques
+(1) Implique l’oxydation des atomes d’argent à la surface de 
+l’électrode en ions d’argent en solution à l’interface
+(2) La réduction se produit immédiatement après la formation des 
+ions Ag+. Ces ions se combinent avec les ions Cl- déjà en 
+solution pour former le composé ionique AgCl.
+L’AgCl n’est que légèrement soluble dans l’eau, de sorte que la 
+majeure partie de celle-ci précipite hors de la solution sur 
+l’électrode d’argent et contribue au taux de précipitation du dépôt 
+AgCl qui est une constante Ks (produit de solubilité) liée à 
+l’activité ionique
+  Sous équilibre :
+(1)
+(2)
+=== PAGE 21 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+21
+Électrodes parfaitement non 
+polarisables
+•La concentration de Cl- dans le liquide corporel est relativement 
+élevée.
+•Ks pour AgCl est de l’ordre de 10-10, ce qui signifie que lorsque 
+l’électrode est en contact avec un fluide biologique, l’activité de 
+l’Ag+ doit être très faible
+•Potentiel demi-cellule de l’électrode Ag/AgCl
+•Ou, de manière équivalente
+•L’activité du Cl- est relativement importante et n’est pas liée à 
+l’oxydation de l’Ag, de sorte que le potentiel de la demi-cellule est 
+assez stable lorsqu’il y a du Cl-
+•Par conséquent, les électrodes Ag/AgCl sont stables dans les 
+applications biologiques
+constants
+variable
+
+=== PAGE 22 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+22
+Exemple
+Example 5.2
+À faire…
+=== PAGE 23 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+23
+Comportement de l’électrode et modèle 
+de circuit
+•Les caractéristiques courant-tension des électrodes sont non 
+linéaires
+•Ils sont sensibles au courant traversant l’électrode et dépendent 
+de la forme d’onde (densité de courant et fréquence dépendantes)
+•Circuit équivalent à l’électrode
+•Cd : Capacité de l’interface électrode-électrolyte
+•Rd : Résistance de l’interface électrode-électrolyte
+•Rs : Résistance du fil conducteur de l’électrode
+•Ehc : Potentiel d’une demi-cellule pour l’électrode.
+=== PAGE 24 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+24
+Comportement de l’électrode et modèle 
+de circuit
+•L’impédance des électrodes Ag/AgCl varie 
+considérablement à des fréquences inférieures à 100 Hz
+
+=== PAGE 25 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+25
+Comportement de l’électrode et modèle 
+de circuit
+•L’impédance diminue avec la fréquence pour différents 
+matériaux d’électrode
+Rs+Rd
+Rs
+f=1/(2πRdCd)
+1/(2πCd)<<Rd1/(2πCd)>>Rd
+
+=== PAGE 26 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+26
+Comportement de l’électrode et modèle 
+de circuit
+Exemple 5.4
+Nous voulons développer un modèle électrique pour des 
+études d’électrodes biopotétielles spécifiques en laboratoire. 
+L’électrode se caractérise par le fait qu’elle est placée dans 
+un bain salin physiologique en laboratoire, avec une électrode 
+Ag/AgCl ayant une surface beaucoup plus grande et un 
+potentiel de demi-cellule connu de 0,233 V. La tension 
+continue entre les deux électrodes est mesurée à l’aide d’un 
+voltmètre à très haute impédance et s’avère être de 0,572 V 
+avec l’électrode de test négative. L’amplitude de l’impédance 
+entre les deux électrodes est mesurée en fonction de la 
+fréquence à des courants très faibles ; C’est celui qui a été 
+donné à la page précédente. À partir de ces données, 
+déterminez un modèle de circuit pour l’électrode.
+=== PAGE 27 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+27
+Caractéristiques du bruit des 
+électrodes
+•Bruit du système d’enregistrement = bruit de l’électrode + 
+bruit du préamplificateur
+•La principale source de bruit des électrodes est le bruit 
+thermique :
+•RN = résistance de bruit (partie réelle de l’amplitude 
+d’impédance de la sonde)
+•Δf = largeur de bande d’enregistrement
+•Vne = puissance moyenne du bruit
+•k = Constante de Boltzmann : 1,3806488 × 10-23 m2 kg s-2 K-1
+•T = Température
+(enW. Utilisezles Vrms!)
+=== PAGE 28 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+28
+Caractéristiques du bruit des 
+électrodes
+Exemple:
+•Les potentiels d’action extracellulaires ont une amplitude 
+comprise entre 50 et 500 µV ⇒ les signaux d’entrée de très bas 
+niveau
+•Bruit référé d’entrée de l’amplificateur = 5 µVrms
+•Le SNR doit être > -3 dB
+•Bande de fréquence du potentiel d’action : 100 Hz-10 kHz, et T 
+= 37 °C
+üLe bruit total à l’entrée du système doit être < 10 µVrms
+Question:Quelle est l’impédance maximale autorisée de 
+l’électrode ?
+=== PAGE 29 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+29
+Interface électrode-peau et artefact de 
+mouvement
+•Interface supplémentaire : entre 
+l’électrode-électrolyte et la peau
+•Une électrode de surface corporelle 
+est placée contre la peau, montrant 
+le circuit électrique équivalent total 
+obtenu dans cette situation
+•Chaque élément de circuit de droite 
+se trouve à peu près au même 
+niveau que le processus physique 
+qu’il représente dans le schéma de 
+gauche
+•Habituellement, un gel 
+électrolytique transparent contenant 
+du Cl- comme anion principal pour 
+maintenir un bon contact avec la 
+peau
+ Impédance de la peau pour 
+une surface de 1 cm2 : 
+200kΩ @1Hz - 200 Ω @ 
+1MHz
+=== PAGE 30 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+30
+Interface électrode-peau et artefact de 
+mouvement
+•Motion artifact:perturbation mécanique de la distribution de la 
+charge à l’interface électrode-électrolyte, qui entraîne une 
+variation momentanée du potentiel de la demi-cellule jusqu’à ce 
+que l’équilibre puisse être rétabli
+•Si une paire d’électrodes se trouve dans un électrolyte et que l’une 
+se déplace alors que l’autre ne le fait pas = une différence de 
+potentiel apparaît entre les deux électrodes pendant ce 
+mouvement
+•Le gel électrolytique peut augmenter l’artefact de mouvement
+•Les électrodes polarisables sont beaucoup plus affectées par les 
+artefacts de mouvement que les électrodes non polarisables
+•Peut causer de graves interférences dans la mesure des 
+biopotentiels
+•Les signaux d’artefact de mouvement sont à basse fréquence : les 
+biopotentiels comme EMG et les les potentiels d’action sont moins 
+affectés que les signaux ECG, EEG et EOG s’ils sont correctement 
+filtrés
+=== PAGE 31 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+31
+GEL-4072/7072 -Bioinstrumentation 
+et microsystèmesbiomédicaux
+Électrodesbiopotentielleset 
+applications
+=== PAGE 32 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+32
+Électrodes d’enregistrement de surface 
+du corps
+4 types d’électrodes de surface 
+corporelle
+•Plaque métallique ;
+•Succion;
+•Flottant;
+•Souple.
+Électrodesà plaque métallique
+•ECG: Ag/AgCl
+Utilisation de grande surface et de gel
+•EMG, EEG: Disque métallique en acier 
+inoxydable; Platine ou Or
+Diamètres plus petits
+Artefacts de mouvement
+•Coussinet en mousse jetable : bon 
+marché !
+(a) Metal-plate electrode used for application to limbs.
+(b) Metal-disk electrode applied with surgical tape.
+(c) Disposable foam-pad electrodes, often used with 
+ECG
+(nickel, silver)
+=== PAGE 33 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+33
+Électrodes d’enregistrement de surface 
+du corps
+Électrodeà plaque 
+métallique
+•Produitsd’électrochirurgie
+
+=== PAGE 34 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+34
+Électrodes d’enregistrement de surface 
+du corps
+Électroded’aspiration
+•Une électrode d’aspiration 
+métallique est souvent utilisée 
+comme électrode précordiale 
+sur les électrocardiographes 
+cliniques
+•Pas besoin de sangles ou 
+d’adhésif pour le maintien
+•Petites ampoules en 
+caoutchouc pour appareils 
+d’électrocardiogramme (ECG / 
+ECG)
+
+=== PAGE 35 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+35
+Électrodes d’enregistrement de surface 
+du corps
+Électrodesflottantes
+•Stabiliser
+mécaniquement
+l’interface
+a) Électrode encastrée à 
+structure chaude;
+b) Vue en coupe 
+transversale de 
+l’électrode a)
+c) Vue en coupe 
+transversale d’une autre 
+électrode jetable
+
+=== PAGE 36 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+36
+Électrodes d’enregistrement de surface 
+du corps
+Électrodesflexibles
+•Les contours du corps sont 
+souvent irréguliers
+•Les électrodes rigides de forme 
+régulière peuvent ne pas 
+toujours fonctionner
+•Cas particulier : bébés
+•Matériauxutilisés
+-Polymère ou nylon avec 
+argent
+-Caoutchouc de silicium 
+chargé de carbone (film 
+Mylar). (a) Carbon-filled silicone rubber electrode.
+(b) Flexible thin-film neonatal electrode.
+(c) Cross-sectional view of the thin-film electrode in (b)
+=== PAGE 37 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+37
+Électrodes implantables/internes
+Électrodes-aiguilles et fils-tiges 
+pour la mesure percutanée des 
+biopotentiels :
+a)Électrode aiguille isolée
+b)Électrode à aiguille coaxiale
+c)Électrode coaxiale bipolaire
+d)Électrode à fil fin reliée à une 
+aiguille hypodermique, avant 
+d’être insérée
+e)Vue en coupe transversale de 
+la peau et du muscle, montrant 
+une électrode à fil fin en place
+f)Vue en coupe transversale de 
+la peau et du muscle, montrant 
+une électrode à fil fin enroulée 
+en place (électrode hélicoïdale 
+extensible et fil conducteur)
+
+=== PAGE 38 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+38
+Implantable/interne
+Électrodes pour la détection de l’ECG fœtal (Utilisation d’aiguilles 
+intracutanées)
+a)Électrode d’aspiration
+b)Vue en coupe transversale de l’électrode d’aspiration en place
+c)Électrode hélicoïdale (par exemple, électrodes de stimulation 
+cardiaque – pour enrouler)
+=== PAGE 39 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+39
+Implantable/interne
+Électrodescuff
+•Enregistrement/stimulation de/sur 
+le nerf périphérique
+•Mesure ENG (3 contacts)
+•Stimulation (2 contacts)
+
+=== PAGE 40 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+40
+Microélectrodes
+Électrodesmicropipettes
+•Enregistrement 
+intracellulaire
+•Micropipette en verre 
+remplie d’une solution 
+électrolytique
+•Diamètre de la pointe de 
+l’ordre de 1 µm
+•Rempli d’une solution KCL
+•Un capuchon contenant une 
+électrode métallique est 
+ensuite scellé à la pipette
+•L’électrode métallique entre 
+en contact avec l’électrolyte
+•Des fils d’argent, de platine 
+ou d’acier inoxydable sont 
+utilisés
+K+Cl-
+Cl-
+Cl-
+Cl-
+Cl-
+=== PAGE 41 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+41
+Propriétés électriques des 
+microélectrodes
+Circuit équivalent de 
+micropipette en verre 
+microélectrode
+
+=== PAGE 42 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+42
+Microélectrodes
+Enregistrementdes potentiels
+extracellulaires
+•L’extrémité de l’électrode est 
+placée à proximité des neurones
+
+=== PAGE 43 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+43
+Microélectrodes
+Microélectrodesmétalliques
+•Aiguille fine d’un métal solide isolée à l’aide d’un isolant approprié
+•Doit avoir une pointe très fine (généralement réalisée par gravure 
+électrochimique)
+•Les métaux solides appropriés pour ces microélectrodes sont l’acier 
+inoxydable, l’alliage de platine-iridium et le tungstène
+
+=== PAGE 44 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+44
+Microélectrodes
+Microélectrodesmétalliquessupportées
+•Les propriétés de deux matériaux différents sont utilisées à 
+bon escient dans les microélectrodes métalliques supportées
+Structures of two supported metal microelectrodes
+(a) Metal-filled glass micropipet. 
+(b) Glass micropipetor probe, coated with metal film.
+=== PAGE 45 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+45
+Propriétés électriques des 
+microélectrodes
+Circuit équivalent de 
+microélectrode métallique
+
+=== PAGE 46 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+46
+Optrodes
+www.thomasrecording.com
+Y. LeChasseur, S. Dufour, G. Lavertu, C. Bories, M. 
+Deschênes, R. Vallée, and Y. De Koninck, “A 
+microprobe for parallel optical and electrical 
+recordings from single neurons in vivo,” Nat Meth, 
+vol. 8, no. 4, pp. 319–325, Apr. 2011.
+=== PAGE 47 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+47
+Réseaux d’électrodes
+Exemples de réseaux d’électrodes 
+microfabriqués :
+(a)Réseau d’électrodes plongeantes 
+unidimensionnelles
+(b)Tableau bidimensionnel, et
+(c)Réseau tridimensionnel.
+
+=== PAGE 48 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+48
+Réseaux d’électrodes
+http://www.neuronexus.com
+=== PAGE 49 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+49
+Réseaux d’électrodes
+Le réseau de microélectrodes de 
+l’Utah
+http://www.blackrockmicro.com/
+
+=== PAGE 50 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+50
+Réseaux d’électrodes
+Le réseau de microélectrodes de l’Utah
+http://prometheus.med.utah.edu/~bwjones/2009/08/bionic-implants/
+
+=== PAGE 51 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+51
+Réseaux d’électrodes
+Le réseau de microélectrodes de 
+l’Utah
+http://www.blackrockmicro.com/
+Interface neuronale chronique pour les 
+grands animaux tels que les primates 
+non humains et les félins
+Interface neuronale chronique 
+et stérilisée pour l’homme.
+Dispositif d’insertion à commande pneumatique 
+pour l’implantation de réseaux de microélectrodes 
+à haute densité dans le cerveau et les tissus 
+nerveux périphériques
+Interface neuronale chronique pour les 
+petits animaux tels que les rongeurs, les 
+poissons et les oiseaux
+=== PAGE 52 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+52
+Réseaux d’électrodes
+Microsystèmes implantables et sans fil 
+basés sur le réseau de microélectrodes 
+Utah
+ http://www.blackrockmicro.com/
+R.R.Harrison,P.T.Watkins,R.J.Kier,R.O.Lovejoy,D.J.Black,B.Greger,andF.
+Solzbacher,"ALow-PowerIntegratedCircuitforaWireless100-ElectrodeNeural
+RecordingSystem,"IEEEJournalofSolid-StateCircuits,vol.42,pp.123-133,2007.
+=== PAGE 53 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+53
+Réseaux d’électrodes
+•Divers dispositifs nano-microfabriqués sont 
+disponibles pour étudier le cerveau à l’échelle 
+microscopique
+•Électrophysiologie (unitaire/multi-unité)
+•Stimulation électrique
+•Stimulation optique (optogénétique)
+•Administration contrôlée de médicaments 
+•Biocapteurs (glucose, pH, imagerie de 
+fluorescence)
+http://www.blackrockmicro.com/
+=== PAGE 54 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+54
+Microélectrodes basées sur la 
+microélectronique
+a)Électrodes multiples 
+faisceau-plomb 
+d’après Wise, et al.
+b)Sonde en silicium 
+multiélectrode 
+d’après Drake et al.
+c)Électrode à chambres 
+multiples d’après 
+Prohaska et al.
+d)Électrode nerveuse 
+périphérique basée 
+sur la conception 
+d’Edell.
+
+=== PAGE 55 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+55
+Microélectrodes basées sur la 
+microélectronique
+Enregistrement à haute densité/à grande échelle de l’activité 
+unitaire dans le cortex somatosensoriel du rat
+(a)Placement d’une sonde 
+en silicium à huit tiges 
+dans la couche 5 (8 
+sites par sonde).
+(b)Une courte période 
+d’enregistrement brut, 
+illustrant à la fois 
+l’activité de terrain et 
+l’activité unitaire (1-5 
+kHz)
+(c)Vues bidimensionnelles 
+d’amas d’unités (sur 28 
+vues possibles d’une 
+sonde de huit sites) à 
+partir d’une tige.
+
+=== PAGE 56 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+56
+Microélectrodes basées sur la 
+microélectronique
+La sonde Michigan (gravure 
+ionique réactive profonde)
+Najafi, K. and Wise, K.D. and Mochizuki, T. A high-yield IC-compatible multichannel recording array 
+Electron Devices, IEEE Transactions on vol. 32, issue 7,  pp. 1206 -1211 (1985).
+=== PAGE 57 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+57
+Microélectrodes basées sur la 
+microélectronique
+La sonde Michigan / NeuroNexus.com
+•Plusieurs modèles de sonde différents sont illustrés au dos d’un sou 
+américain.
+
+=== PAGE 58 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+58
+Microélectrodes basées sur la 
+microélectronique
+La sonde Michigan
+A 64-site eight-channel stimulating probe with sites on 400 m centers and with CMOS electronics 
+for stimulus generation, recording, and self-test. Below, four such probes are mounted in a 
+micromachinedsilicon platform to form a 256-site 32-channel array. 
+
+=== PAGE 59 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+59
+Microélectrodes basées sur la 
+microélectronique
+La sonde Michigan
+YingYaoetcoll.,“AMicroassembledLow-ProfileThree-DimensionalMicroelectrodeArrayfor
+NeuralProsthesisApplications,”MicroelectromechanicalSystems,Journalof,vol.16,2007,pp.
+977-988.
+=== PAGE 60 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+60
+Microélectrodes basées sur la 
+microélectronique
+A. M. Sodagar, K. D. Wise, and K. Najafi, "A Wireless Implantable Microsystem for Multichannel Neural 
+Recording," IEEE Transactions on Microwave Theory and Techniques, vol. 57, pp. 2565-2573, 2009.
+La sonde Michigan
+=== PAGE 61 ===
+www.ulaval.ca
+©Benoit Gosselin, 2026
+61
+Références
+•J. G. Webster, Bioinstrumentation. Hoboken, 
+NJ: John Wiley & Sons, 2004.
+•J. G. Webster, Medical Instrumentation 
+Application and Design, 4 edition. Hoboken, 
+NJ: Wiley, 2009.

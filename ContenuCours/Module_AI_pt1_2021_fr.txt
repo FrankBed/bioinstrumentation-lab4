@@ -1,0 +1,484 @@
+=== PAGE 1 ===
+GEL-4072/7072 -Bioinstrumentation et 
+microsystèmesbiomédicaux
+Introduction 
+à l’IA en 
+génie 
+électrique et 
+biomedical
+–Partie1
+
+=== PAGE 2 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+2
+Plan du cours
+•Définitions
+•Introduction à l’IA, concepts de base et 
+applications
+•Comment structurer un problème de machine 
+learning
+•Algorithmeset exemples
+=== PAGE 3 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+Références
+3
+deeplearningbook.org
+mitpress.mit.edu
+=== PAGE 4 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+Définitions
+•Intelligence artificielle (IA)
+4
+•Machine Learning (ML)
+•Deep Learning (DL)
+•Automatisation
+•Apprentissage automatique
+•Neural Networks
+•Données / Science des données
+=== PAGE 5 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+Définitions
+•Intelligence artificielle (IA)
+•La capacité d’un système à apprendre et à 
+s’adapter dans un environnement 
+changeant
+•Pas besoin de fournir des solutions pour 
+toutes les situations possibles
+•À ne pas confondre avec l’intelligence 
+artificielle générale (AGI)
+•Conscience artificielle, tâches 
+intellectuelles semblables à celles de 
+l’homme
+5
+=== PAGE 6 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+Définitions
+•Machine learning (ML)
+•Programmer des ordinateurs pour optimiser 
+un critère de performance à l’aide 
+d’exemples de données ou d’expériences 
+passées
+•Modèle défini jusqu’à certains paramètres
+•L’apprentissage est l’exécution d’un 
+programme informatique pour optimiser les 
+paramètres du modèle à l’aide de données 
+d’entraînement ou d’expériences passées
+•Le modèle peut être prédictif, descriptif 
+ou les deux
+6
+=== PAGE 7 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+7
+Source: https://medium.com/@venkatachalamramalingam/6-jars-perspective-of-machine-learning-35ace2c9442f
+Définitions
+=== PAGE 8 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+Définitions
+•Deep learning (DL)
+•Une approche de l’IA
+•Sous-ensemble de l’apprentissage automatique
+•Réseaux de neurones artificiels d’inspiration 
+biologique
+•Défi de résoudre des tâches faciles, intuitives, 
+automatiques pour les gens, mais difficiles à 
+décrire formellement
+•Reconnaissance vocale, reconnaissance faciale
+•Grande puissance et flexibilité
+•Processus de conception complexe, grand 
+nombre de paramètres
+8
+=== PAGE 9 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+Définitions
+•Deep learning (DL)
+•Apprendre une hiérarchie profonde de concepts
+•Des concepts complexes composés de concepts plus 
+simples
+•Des couches de complexité de plus en plus profondes
+•Apprendre la représentation des données données
+•Contrairement aux solutions d’apprentissage 
+automatique plus classiques qui nécessitent d’être 
+présentées avec une représentation explicite 
+(features)
+•Tâches pour lesquelles il est difficile de savoir quelles 
+caractéristiques doivent être extraites
+9
+=== PAGE 10 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+10
+
+=== PAGE 11 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+11
+GEL-4072/7072 -Bioinstrumentation 
+et microsystèmesbiomédicaux
+Concepts de base de 
+l’apprentissage 
+automatique
+=== PAGE 12 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+12
+Concepts de base de l’apprentissage 
+automatique
+”Almost all of science is fitting models to data”
+•Les expériences > les observations et la collecte de données > l’extraction 
+de connaissances en découvrant des modèles simples expliquant les données 
+observées
+•Les problèmes modernes ne peuvent pas être résolus par l’homme (les 
+quantités et la complexité des données sont énormes, les experts sont rares 
+et l’analyse manuelle est coûteuse)
+•Le plein potentield’apprentissageautomatique
+•Disponibilité des données (stockage, dispositifs d’acquisition de 
+données numériques fiables)
+•Capacités de calcul (puissance de traitement, serveur/cloud computing)
+•Intérêt croissant pour les modèles informatiques capables d’apprendre 
+(analyser des données et extraire des informations automatiquement)
+=== PAGE 13 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+13
+Concepts de base de l’apprentissage 
+automatique
+•Historiquement, la résolution d’un problème sur un ordinateur nécessitait 
+un programme explicite (algorithme, séquence d’instructions, entrée à 
+sortie)
+•Machine learning : le programme apprend l’algorithme (processus sous-
+jacent, fonctionnalités, modèle)
+•Il y a un processus expliquant les données que nous observons
+•Les détails et les subtilités du processus sous-jacent à la génération 
+des données sont inconnus, mais pas complètement aléatoires
+•Il est impossible d’identifier complètement le processus, mais une bonne 
+approximation utile peut être construite pour détecter des modèles ou 
+des régularités
+•En supposant que l’avenir ou l’avenir proche ne différera pas beaucoup 
+du passé (données échantillonnées), on peut s’attendre à ce que les 
+prédictions futures soient quelque peu précises
+=== PAGE 14 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+14
+Concepts de base de l’apprentissage 
+automatique
+•En statistiques:
+•Inférence: Passer de l’observation à la 
+description générale
+•Estimation: apprentissage
+•Analysediscriminante: classification
+=== PAGE 15 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+15
+Concepts de base de l’apprentissage 
+automatique
+•En statistiques:
+•Exemple : estimation de la masse 
+volumique
+Source: https://scikit-learn.org/stable/modules/density.html
+=== PAGE 16 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+16
+Concepts de base de l’apprentissage 
+automatique
+•3 tâches principales (ou type d’apprentissage 
+automatique)
+•Apprentissagesupervisé
+•Apprentissagenon supervisé
+•Apprentissagepar renforcement
+=== PAGE 17 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+17
+Concepts de base de l’apprentissage 
+automatique
+Source: https://www.linkedin.com/pulse/business-intelligence-its-relationship-big-data-geekstyle/
+=== PAGE 18 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+18
+Concepts de base de l’apprentissage 
+automatique
+•Apprentissagesupervisé
+•Entrée X, sortie Y
+•Apprendre le mappage de l’entrée à la sortie
+•Valeurs correctes fournies par un superviseur
+y = g(x|θ)
+   
+ où g est le modèle et θ ses paramètres
+=== PAGE 19 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+19
+Concepts de base de l’apprentissage 
+automatique
+•Apprentissagesupervisé
+•Modèle défini par le concepteur
+•Paramètres optimisés par le programme d’apprentissage 
+automatique
+•Minimiser l’erreur d’approximation
+•Modèle réel:   g(x|θ) = y
+•Modèle d’apprentissage automatique: g’(x|θ) = y’
+•Erreur d’approximation entre y et y’
+=== PAGE 20 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+20
+Concepts de base de l’apprentissage 
+automatique
+•Apprentissagesupervisé
+•Classification : exemples 
+séparés de différentes classes 
+selon une fonction 
+discriminante
+•La fonction discriminante 
+définit la ou les règles de 
+séparation
+•Représentation : 
+caractéristiques décrivant 
+les données
+=== PAGE 21 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+21
+Concepts de base de l’apprentissage 
+automatique
+•Applications:
+•Prédiction / inférence sur des données 
+futures
+•Reconnaissance de formes
+•Caractères écrits
+•Reconnaissance vocale / faciale
+•Biométrie
+•Extraction des connaissances
+•Demandes de crédit
+•Détection des fraudes
+•Diagnostic médical
+•Surveillance de l’état
+•Ex. : Anomalies cardiaques
+•Données : Caractéristiques de l’ECG 
+(fréquence cardiaque, variabilité de la 
+fréquence cardiaque, condition 
+physique/médicale, âge, etc.)
+•Classes : En bonne santé, à risque, 
+arythmie (bradycardie, tachycardie, 
+irrégularités)
+•Apprentissagesupervisé
+•Classification : exemples 
+séparés de différentes classes 
+selon une fonction 
+discriminante
+•La fonction 
+discriminante définit la 
+ou les règles de 
+séparation
+•Représentation : 
+caractéristiques 
+décrivant les données
+=== PAGE 22 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+22
+Concepts de base de l’apprentissage 
+automatique
+•Apprentissagesupervisé
+•Classification
+•Exemple : reconnaissance gestuelle en temps réel à partir de données HD-EMG
+
+=== PAGE 23 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+23
+Concepts de base de l’apprentissage 
+automatique
+•Apprentissagesupervisé
+•Classification
+•Exemple : reconnaissance gestuelle en temps réel à partir de données HD-EMG
+=== PAGE 24 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+24
+Concepts de base de l’apprentissage 
+automatique
+•Apprentissagesupervisé
+•Régression : problèmes où la 
+sortie est un nombre
+•Variables / 
+caractéristiques
+=== PAGE 25 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+25
+Concepts de base de l’apprentissage 
+automatique
+•Application:
+•Prédiction de variables quantitatives
+•Analyse des tendances
+•Corrélation
+•Ex. : durée du séjour à l’hôpital
+•Données : symptômes, condition 
+physique/médicale, poids, âge, 
+ECG, etc.
+•Variable cible : durée du séjour
+•Apprentissagesupervisé
+•Régression : problèmes où la 
+sortie est un nombre
+•Variables / 
+caractéristiques
+=== PAGE 26 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+26
+Concepts de base de l’apprentissage 
+automatique
+•Apprentissagesupervisé
+•Régression
+•Exemple : extraction de l’âge biologique à partir de données 
+biomédicales [1]
+•Mesure quantitative du vieillissement
+•Registres d’activité locomotrice
+•Questionnaire/données de laboratoire
+•Estimation de la durée de vie prévue
+•Prédiction du risque de mortalité
+[1] Pyrkov, T.V ., Slipensky, K., Barg, M.et al.Extracting biological age from biomedical data via deep learning: too much of a good thing?.
+Sci Rep8,5210 (2018). https://doi.org/10.1038/s41598-018-23534-9
+=== PAGE 27 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+27
+Concepts de base de l’apprentissage 
+automatique
+[1] Pyrkov, T.V ., Slipensky, K., Barg, M.et al.Extracting biological age from biomedical data via deep learning: too much of a good thing?.
+Sci Rep8,5210 (2018). https://doi.org/10.1038/s41598-018-23534-9
+
+=== PAGE 28 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+28
+Concepts de base de l’apprentissage 
+automatique
+•Apprentissagenon supervisé
+•Apprentissage supervisé : mappage de l’entrée X à la 
+sortie Y
+•Valeurs correctes fournies par un superviseur
+•Apprentissagenon supervisé
+•Aucun superviseur ne doit fournir les valeurs 
+correctes/de référence
+•Uniquement les données d’entrée X
+•But:
+•Trouver des régularités dans l’entrée
+•Découvrir la structure sous-jacente de l’espace 
+d’entrée de sorte que les motifs se produisent 
+plus souvent que les autres
+•Que se passe-t-il généralement ? Qu’est-ce qui 
+ne l’est pas ?
+•Ex. : estimation de la densité en statistique
+=== PAGE 29 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+29
+Concepts de base de l’apprentissage 
+automatique
+•Apprentissagenon supervisé
+•Applications
+•Clustering : recherche de clusters ou de regroupements 
+d’entrée
+•Informations démographiques
+•Profil de distribution des clients
+•Compression d’image (regroupement de pixels de 
+couleurs similaires apparaissant fréquemment)
+•Regroupement de documents
+•Surveillance de l’état
+•Détectionde régularités/ anomalies
+•Activitémusculaire
+•Contractions régulières en EMG des patients amputés
+=== PAGE 30 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+30
+Concepts de base de l’apprentissage 
+automatique
+•Apprentissagenon supervisé
+•Applications
+•Réductionde la dimensionnalité:
+•Synthèse des données
+•Visualisation
+•Prétraitement
+=== PAGE 31 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+31
+Concepts de base de l’apprentissage 
+automatique
+•Apprentissagenon supervisé
+•Applications
+•Exemple : découverte du sous-type d’arythmie [1]
+[1] S. Tan et al., “Icentia11K: An Unsupervised Representation Learning Dataset for Arrhythmia Subtype Discovery,” 
+arXiv:1910.09570 [cs, eess, q-bio, stat], Oct. 2019, Accessed: Nov. 18, 2020. [Online]. Available: http://arxiv.org/abs/1910.09570.
+=== PAGE 32 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+32
+Concepts de base de l’apprentissage 
+automatique
+•Unsupervised learning
+•Applications
+•Arrythmia subtype discovery [1]
+[1] S. Tan et al., “Icentia11K: An Unsupervised Representation Learning Dataset for Arrhythmia Subtype Discovery,” 
+arXiv:1910.09570 [cs, eess, q-bio, stat], Oct. 2019, Accessed: Nov. 18, 2020. [Online]. Available: http://arxiv.org/abs/1910.09570.
+
+=== PAGE 33 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+33
+Concepts de base de l’apprentissage 
+automatique
+•Apprentissagepar renforcement
+•Algorithme interagissant avec l’environnement
+•Le résultat est une séquence d’actions
+•Politique guidant les actions présentes et futures
+•Évaluer la qualité des politiques et tirer les leçons des bonnes 
+séquences d’actions passées
+•Générerunepolitique
+•Retour d’information sur les actions
+•Récompenses/pénalités
+=== PAGE 34 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+34
+Concepts de base de l’apprentissage 
+automatique
+•Apprentissagepar renforcement
+•Exemple: jeu
+•Mouvement unique vs séquence de coups droits
+Source: https://ai.googleblog.com/2020/04/off-policy-estimation-for-infinite.html
+=== PAGE 35 ===
+www.ulaval.ca
+©Benoit Gosselin, 2024
+35
+Concepts de base de l’apprentissage 
+automatique
+•Apprentissagepar 
+renforcement
+•Application : découverte et 
+adaptation de traitements 
+médicaux/pharmaceutiques
+•Changement 
+d’environnement : 
+évolution de la maladie
+•Résultat : séquence 
+d’actions (traitements)
+•Récompense : réponse 
+du patient aux 
+traitements précédents
+Source: https://ai.googleblog.com/2020/04/off-policy-estimation-for-infinite.html
