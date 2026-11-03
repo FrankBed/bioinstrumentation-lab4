@@ -1,0 +1,25 @@
+# Cours et fichiers lourds de reference
+ContenuCours/
+bioamp_text.txt
+
+# Binaires locaux et outils portables
+mingit/
+gh_cli/
+tectonic.exe
+
+# Fichiers temporaires LaTeX
+*.aux
+*.log
+*.out
+*.toc
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+
+# Python
+__pycache__/
+*.pyc
+
+# System & OS
+.DS_Store
+Thumbs.db

@@ -1,0 +1,134 @@
+* GEL-7072 / GEL-4072 - Laboratoire 4 : Bioelectronique
+* Conception et simulation de la chaine complete du bioamplificateur ECG
+* Architecture : Filtre RFI -> INA823 (G1=10) -> Passe-Haut 0.48Hz -> Passe-Bas 159Hz & Gain TL082 (G2=101) -> Sortie ADC
+* Avec circuit Driven-Right-Leg (DRL) et polarisation unipolaire VDD=3.3V, VREF=1.65V
+
+.title Bioamplificateur ECG Complet
+
+* -------------------------------------------------------------
+* ALIMENTATION ET MASSE VIRTUELLE UNIPOLAIRES
+* -------------------------------------------------------------
+Vdd VDD 0 DC 3.3
+* Masse virtuelle mediatrice a mi-rail (generee par BioBLU ou suiveur TL082)
+Vref VREF 0 DC 1.65
+
+* Condensateurs de decouplage recommandes (protocole p. 2)
+C_dec1 VDD 0 100n
+C_dec2 VDD 0 10u
+
+* -------------------------------------------------------------
+* SOURCES DU BIOSIGNAL ECG (Differentiel, Mode commun et Offset DC)
+* -------------------------------------------------------------
+* 1) Signal ECG differentiel (1.2 mV crête-a-crête, 1.0V AC pour analyse frequentielle)
+Vin_ac IN_DIFF 0 AC 1.0 0
+* 2) Tension de mode commun 60 Hz corporel (Vcm = 10 mV sans DRL)
+Vcm_60 VCM_RAW 0 SINE(0 10m 60)
+* 3) Decalage DC de demi-cellule des electrodes (120 mV)
+V_halfcell V_DC 0 DC 120m
+
+* Entrees electrodes corporelles
+E_pos IN_POS BODY_CM IN_DIFF 0 0.5
+E_neg IN_NEG BODY_CM IN_DIFF 0 -0.5
+
+* Modele de corps et interface electrode-peau (Rd = 50k, Cd = 10nF)
+R_e1 IN_POS POS_ELECTRODE 10k
+R_e2 IN_NEG NEG_ELECTRODE 10k
+
+* -------------------------------------------------------------
+* ETAGE 1 : FILTRE RFI (EMI/RFI RECTIFICATION FILTER)
+* -------------------------------------------------------------
+* Resistances serie R1a = R1b = 1 kOhm
+R_rfi1 POS_ELECTRODE POS_INA 1k
+R_rfi2 NEG_ELECTRODE NEG_INA 1k
+* Condensateurs de mode commun (C1a = C1b = 1 nF vers REF)
+C_cm1 POS_INA VREF 1n
+C_cm2 NEG_INA VREF 1n
+* Condensateur differentiel C2 = 10 nF (10x plus grand que C_cm)
+C_diff POS_INA NEG_INA 10n
+
+* -------------------------------------------------------------
+* ETAGE 2 : PREAMPLIFICATEUR INA823 (G1 = 10 V/V)
+* -------------------------------------------------------------
+* Gain = 1 + 100k / RG. Pour G=10 : RG = 11.111 kOhm
+X_ina RG1 NEG_INA POS_INA 0 VREF V_INA VDD RG2 INA823_BEHAVIORAL
+Rg RG1 RG2 11.111k
+
+* -------------------------------------------------------------
+* ETAGE 3 : FILTRE PASSE-HAUT 1er ORDRE (fc = 0.48 Hz)
+* -------------------------------------------------------------
+* Condensateur de liaison serie CH = 1 uF
+C_H V_INA N_HP 1u
+* Resistance de tirage vers la masse virtuelle RH = 330 kOhm
+R_H N_HP VREF 330k
+
+* -------------------------------------------------------------
+* ETAGE 4 : FILTRE PASSE-BAS & GAIN TL082 (G2 = 101, fc = 159 Hz)
+* -------------------------------------------------------------
+* Amplificateur non-inverseur avec TL082 :
+* Entree non-inversante connectee a N_HP
+* Entree inversante N_INV reliee a VREF via R1 = 1 kOhm
+R1_gain N_INV VREF 1k
+* Contre-reaction Rf = 100 kOhm
+Rf_gain N_INV VOUT 100k
+* Condensateur passe-bas Cf = 10 nF en parallele sur Rf (fc = 1 / (2*pi*Rf*Cf) = 159.15 Hz)
+Cf_gain N_INV VOUT 10n
+
+* AOP TL082 (Modele non-inverseur a un AOP)
+X_opamp N_HP N_INV VDD 0 VOUT TL082_BEHAVIORAL
+
+* -------------------------------------------------------------
+* ETAGE 5 : CIRCUIT DRIVEN-RIGHT-LEG (DRL)
+* -------------------------------------------------------------
+* Prelevement du mode commun sur les entrees electrodes (Ra1 = Ra2 = 47 kOhm)
+Ra1 POS_ELECTRODE N_DRL_SUM 47k
+Ra2 NEG_ELECTRODE N_DRL_SUM 47k
+
+* AOP DRL inverseur (TL082)
+* Rf_drl = 470 kOhm -> Gain DRL = 2 * 470k / 47k = 20 V/V
+Rf_drl N_DRL_SUM N_DRL_OUT 470k
+* Condensateur de compensation de stabilite C_drl = 1 nF
+C_drl N_DRL_SUM N_DRL_OUT 1n
+
+* AOP TL082 pour le DRL
+X_drl_op VREF N_DRL_SUM VDD 0 N_DRL_OUT TL082_BEHAVIORAL
+
+* Resistance de securite de limitation de courant Ro = 100 kOhm vers electrode jambe droite
+Ro_drl N_DRL_OUT BODY_CM 100k
+* Impedance du corps vers la terre (Zg ~ 50 kOhm)
+R_body BODY_CM 0 50k
+
+* -------------------------------------------------------------
+* SOUS-CIRCUITS COMPORTEMENTAUX (MACRO-MODELS)
+* -------------------------------------------------------------
+.subckt INA823_BEHAVIORAL RG1 INM INP VM REF OUT VP RG2
+Rin_diff INP INM 1e12
+E_diff N_d 0 INP INM 10.0
+* Pole 380 kHz
+R_p N_d N_filt 1k
+C_p N_filt 0 4.188e-10
+* Sortie centree sur REF
+E_out OUT_raw 0 Value = { V(REF) + (V(N_filt) - 0.0) }
+R_o OUT_raw OUT 10
+.ends INA823_BEHAVIORAL
+
+.subckt TL082_BEHAVIORAL INP INM VP VM OUT
+* AOP JFET a haut gain (AOL = 106 dB, GBW = 3 MHz)
+Rin INP INM 1e12
+E_gain N_gain 0 INP INM 200000
+R_p N_gain N_pole 1k
+C_p N_pole 0 1.06e-8
+* Ecretage aux rails d'alimentation
+B_out OUT 0 V = limit(V(N_pole), V(VM)+0.2, V(VP)-0.2)
+.ends TL082_BEHAVIORAL
+
+* -------------------------------------------------------------
+* DIRECTIVES D'ANALYSE
+* -------------------------------------------------------------
+* 1) Analyse Frequentielle AC (Bode 0.01 Hz a 100 kHz)
+.ac dec 100 0.01 100k
+
+* 2) Analyse Temporelle Transitoire (0 a 3 secondes)
+.tran 0.5m 3.0 0 0.5m
+
+.end
+

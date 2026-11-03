@@ -1,0 +1,287 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{mathptmx}
+\usepackage{courier}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{caption}
+\usepackage{needspace}
+\usepackage{enumitem}
+\setlist[itemize]{itemsep=2pt,topsep=3pt,parsep=0pt,leftmargin=*}
+\usepackage[hidelinks]{hyperref}
+\captionsetup{font={small,it},labelsep=colon,skip=4pt}
+\graphicspath{{figures/}{./}}
+\setlength{\parskip}{4pt}
+\setlength{\parindent}{0pt}
+\frenchsetup{StandardLists=true}
+
+\newcommand{\question}[1]{\needspace{12\baselineskip}\par\medskip\noindent\textbf{#1)}\par\smallskip}
+
+\begin{document}
+
+% ------------------------------------------------------------------ Page titre
+\begin{titlepage}
+\centering
+\vspace*{0.8cm}
+\includegraphics[width=6cm]{logo_ul.png}\\[1cm]
+\rule{\textwidth}{0.4pt}\\[0.5cm]
+{\large\bfseries GEL-7072 : Bio-instrumentation et microsystèmes biomédicaux}\\[0.4cm]
+{\large\bfseries Laboratoire 4 : Bioélectronique -- filtrage et interfaces (5\,\%)}\\[0.5cm]
+\rule{\textwidth}{0.4pt}\\[1.4cm]
+Émile Tremblay-Antoine, 536 879 139\\[0.2cm]
+François Bédard, 536 906 601\\[1.6cm]
+Travail présenté à :\\[0.2cm]
+Benoit Gosselin\\[0.2cm]
+Karim Bouzid\\[1.6cm]
+Département de génie électrique et génie informatique\\[1.2cm]
+Faculté des sciences et de génie\\[0.2cm]
+Université Laval\\[0.2cm]
+Novembre 2026
+\end{titlepage}
+
+% ------------------------------------------------------------------ Note
+{\small\itshape Note : les auteurs sont inscrits au programme de génie physique (GPH) au GEL-7072. Conformément aux consignes du protocole de laboratoire (\og Des sujets spécifiques sont réservés aux étudiants en GEL/GIF (Marqué \og GEL/GIF uniquement \fg{}). Les étudiants d'autres programmes peuvent les ignorer. \fg{}), les rubriques réservées exclusivement aux étudiants de GEL/GIF (notamment les spécifications de TRMC, de bruit d'entrée et de SNR de l'INA823 dans le Tableau~1 du prélaboratoire) sont ignorées du rapport.}
+
+% ==================================================================
+% SECTION 5 : PRÉLABORATOIRE : SPÉCIFICATIONS DU BIOAMPLIFICATEUR
+% ==================================================================
+\section*{5. PRÉLABORATOIRE : Spécifications du bioamplificateur}
+
+L'acquisition fidèle d'un signal d'électrocardiographie (ECG) de surface impose des contraintes sévères sur la chaîne analogique en raison de la très faible amplitude du biosignal ($0,5$ à $4\text{ mV}$), de son contenu spectral basse fréquence sujet aux artéfacts de mouvement et à la respiration ($< 1\text{ Hz}$), des fortes interférences capacitives du réseau électrique ($60\text{ Hz}$ en mode commun) et de la présence inévitable d'un potentiel continu de demi-cellule à l'interface électrode-peau pouvant atteindre $\pm 300\text{ mV}$.
+
+Les spécifications ci-dessous sont établies conformément aux normes internationales régissant les équipements d'électrocardiographie diagnostique et ambulatoire (normes AHA/ACC, ANSI/AAMI EC11/EC13 et CEI 60601-2-25 / CEI 60601-2-47) ainsi qu'aux impératifs matériels du microcontrôleur d'acquisition BioBLU (alimentation unilatérale à $3,3\text{ V}$, convertisseur analogique-numérique 12 bits).
+
+\begin{table}[H]
+\centering
+\caption{Paramètres du biosignal d'entrée, du bioamplificateur et du signal de sortie (Tableau 1 du protocole).}
+\label{tab:specifications}
+\small
+\begin{tabular}{p{7.0cm}p{9.0cm}}
+\toprule
+\textbf{Paramètres} & \textbf{Valeurs spécifiées / calculées} \\
+\midrule
+Amplitude attendue du biosignal d'entrée & $0,5\text{ mV}$ à $2,0\text{ mV}$ crête-à-crête (complexe QRS typique, dérivation I à III) \\
+Minimum attendu du biosignal d'entrée & $0,05\text{ mV}$ ($50\ \mu\text{V}$, ondes P et T de faible amplitude ou micro-voltages) \\
+Maximum attendu du biosignal d'entrée & $\pm 5,0\text{ mV}$ (norme AAMI EC11, sans écrêtage ni saturation) \\
+Largeur de bande attendue du biosignal d'entrée & $0,05\text{ Hz}$ à $150\text{ Hz}$ (norme diagnostique AHA/CEI) / $0,5\text{ Hz}$ à $150\text{ Hz}$ (monitorage ambulatoire) \\
+Alimentations souhaitées ($V_{DD}$, GND, etc.) & $V_{DD} = 3,3\text{ V}$, $\text{GND} = 0\text{ V}$ (BioBLU); tension de référence médiane $V_{ref} = 1,65\text{ V}$ ($V_{DD}/2$) \\
+Gain de tension souhaité du bioamplificateur & $A_{v,\text{total}} = 1000\text{ V/V}$ ($60\text{ dB}$), réparti en $G_1 = 10\text{ V/V}$ (INA823) et $G_2 = 100\text{ V/V}$ (TL082) \\
+Bande passante souhaitée du bioamplificateur ($-3\text{ dB}$) & $f_L \approx 0,5\text{ Hz}$ et $f_H \approx 150\text{ Hz}$ (largeur de bande effectrice $\text{BW} \approx 149,5\text{ Hz}$) \\
+Amplitude attendue du signal de sortie & $1,0\text{ V}$ à $2,0\text{ V}$ crête-à-crête (adaptée à la pleine échelle $0-3,3\text{ V}$ de l'ADC) \\
+Minimum attendu du signal de sortie & $\approx 0,65\text{ V}$ (excursion nominale centrée sur $1,65\text{ V}$, plancher linéaire $> 0,3\text{ V}$) \\
+Maximum attendu du signal de sortie & $\approx 2,65\text{ V}$ (excursion nominale centrée sur $1,65\text{ V}$, plafond linéaire $< 3,0\text{ V}$) \\
+Largeur de bande attendue du signal de sortie & $0,5\text{ Hz}$ à $150\text{ Hz}$ (déterminée par le filtrage analogique passe-bande) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection*{Justification détaillée et calculs théoriques des spécifications}
+
+\begin{itemize}
+\item \textbf{Biosignal d'entrée.} Les mesures expérimentales obtenues lors du Laboratoire 1 sur notre propre sujet ont révélé une amplitude de l'onde R de $0,65\text{ V}$ en dérivation I (soit $0,65\text{ mV}$ sur la peau avec un gain de 1001) et d'$environ\ 1,60\text{ V}$ en dérivations II et III (soit $1,60\text{ mV}$ sur la peau). Le complexe QRS crête-à-crête se situe typiquement entre $0,8\text{ mV}$ et $2,1\text{ mV}$. L'onde P auriculaire et les ondes T de repolarisation ventriculaire peuvent descendre à $50\ \mu\text{V}$ chez certains individus ou dérivations orthogonales. Enfin, la norme AAMI EC11 requiert une marge d'entrée de $\pm 5\text{ mV}$ sans distorsion pour accommoder les signaux de forte amplitude (ex. hypertrophie ventriculaire).
+
+\item \textbf{Largeur de bande.} La norme clinique diagnostique (AHA/CEI) exige une réponse en fréquence de $0,05\text{ Hz}$ à $150\text{ Hz}$. Cependant, comme souligné dans le protocole (page 2), une coupure passe-haut très basse ($0,05\text{ Hz}$) présente une constante de temps élevée ($\tau \approx 3,2\text{ s}$), rendant le système excessivement lent à récupérer après un transitoire ou un mouvement. En contexte ambulatoire ou de laboratoire, une fréquence de coupure basse à $f_L \approx 0,5\text{ Hz}$ offre le compromis optimal : elle élimine la dérive de la ligne de base due à la respiration ($0,2 - 0,3\text{ Hz}$) et aux variations de contact des électrodes tout en préservant l'intégrité morphologique du complexe QRS ($10 - 40\text{ Hz}$). La coupure haute à $f_H \approx 150\text{ Hz}$ élimine les bruits de commutation, les résidus d'électromyographie (EMG musculaire à large bande) et le bruit thermique sans atténuer les pentes rapides de l'onde R.
+
+\item \textbf{Alimentation et polarisation.} Pour s'interfacer directement avec le microcontrôleur BioBLU alimenté par batterie ou USB, une alimentation unipolaire $V_{DD} = 3,3\text{ V}$ et $\text{GND} = 0\text{ V}$ est adoptée. Comme les amplificateurs opérationnels et l'INA823 ne disposent pas d'alimentation négative, tous les signaux alternatifs doivent osciller autour d'une masse virtuelle médiane :
+\[
+V_{ref} = \frac{V_{DD}}{2} = 1,65\text{ V}.
+\]
+Cette tension $V_{ref}$ est stabilisée par un suiveur de tension à haute impédance (AOP TL082) et connectée directement à la broche REF de l'INA823 ainsi qu'aux références des étages de filtrage. Des condensateurs de découplage de $100\text{ nF}$ (céramique pour transitoires haute fréquence) et $10\ \mu\text{F}$ (électrolytique pour oscillations basse fréquence) sont insérés au plus près des puces conformément aux règles de l'art présentées dans le protocole.
+
+\item \textbf{Gain de tension et stratégie de répartition.} La plage d'entrée analogique de l'ADC du BioBLU s'étend de $0\text{ V}$ à $3,3\text{ V}$. Centrée sur $1,65\text{ V}$, l'excursion maximale utile sans distorsion ni saturation des étages de sortie est de $\approx 2,0\text{ V}$ crête-à-crête ($[0,65\text{ V} ; 2,65\text{ V}]$). Pour amener un complexe QRS typique de $1$ à $2\text{ mV}$ à cette amplitude, un gain global de $A_v = 1000\text{ V/V}$ ($60\text{ dB}$) est nécessaire.
+\begin{itemize}
+\item \textit{Étage 1 (Préamplificateur INA823) :} Réglé à un gain modéré $G_1 = 10\text{ V/V}$ ($20\text{ dB}$). Cette décision de conception est fondamentale : les électrodes Ag/AgCl présentent une tension de décalage de demi-cellule pouvant atteindre $\pm 300\text{ mV}$ continu. Si un gain élevé de 100 ou 1000 était appliqué dès le premier étage couplé en DC, la sortie de l'INA823 tenterait d'atteindre $\pm 300\text{ mV} \times 100 = \pm 30\text{ V}$, saturant immédiatement le composant contre les rails d'alimentation $3,3\text{ V}$ ou GND. Avec $G_1 = 10$, l'offset continu amplifié vaut au pire $\pm 300\text{ mV} \times 10 = \pm 3,0\text{ V}$ (et typiquement $\pm 100\text{ mV} \times 10 = \pm 1,0\text{ V}$), ce qui maintient l'INA823 dans sa plage de fonctionnement linéaire.
+\item \textit{Étage 2 (Filtres et gain TL082) :} Le filtre passe-haut bloque totalement cet offset continu. Le second étage peut alors appliquer en toute sécurité le gain complémentaire $G_2 = 100\text{ V/V}$ ($40\text{ dB}$), réglable via un potentiomètre.
+\item \textit{Gain global :} $A_{v,\text{total}} = G_1 \times G_2 = 10 \times 100 = 1000\text{ V/V}$ ($60\text{ dB}$).
+\end{itemize}
+\end{itemize}
+
+% ==================================================================
+% SECTION 6 : CONCEPTION ET SIMULATION DE BIOAMPLIFICATEURS
+% ==================================================================
+\section*{6. Conception et simulation de bioamplificateurs}
+
+La chaîne complète du bioamplificateur a été conçue autour de l'amplificateur d'instrumentation de précision INA823 et du double amplificateur opérationnel à entrées JFET TL082. Le schéma fonctionnel d'ensemble est illustré à la Figure~\ref{fig:schema_bioampli}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{fig_6_schema_bioampli.png}
+\caption{Schéma fonctionnel et architecture des cinq étages constitutifs du bioamplificateur conçu pour l'ECG. Le système est alimenté sous $V_{DD} = 3,3\text{ V}$ unipolaire avec masse virtuelle $V_{ref} = 1,65\text{ V}$ issue du BioBLU.}
+\label{fig:schema_bioampli}
+\end{figure}
+
+\question{6.1 (Calculs des gains et fréquences de coupure de la conception)}
+
+Le dimensionnement analytique de chaque étage est détaillé ci-dessous :
+
+\textbf{1. Filtre RFI d'entrée (atténuation radiofréquence et EMI).}
+Conformément aux notes de cours (slide 43) et à la note d'application AN-671 d'Analog Devices, le filtre RFI passif placé avant l'INA823 protège les jonctions d'entrée contre la détection d'enveloppe haute fréquence tout en minimisant la dégradation du TRMC due aux tolérances de composants. Il comprend deux résistances séries $R_{RFI1} = R_{RFI2} = 1\text{ k}\Omega$, deux capacités de mode commun $C_{cm1} = C_{cm2} = 1\text{ nF}$ reliées à $V_{ref}$, et une capacité différentielle $C_{diff} = 10\text{ nF}$ choisie dix fois supérieure à $C_{cm}$ :
+\begin{align*}
+f_{c,\text{diff}} &= \frac{1}{2\pi \cdot (2 R_{RFI}) \cdot (C_{diff} + C_{cm}/2)} = \frac{1}{2\pi \times 2000\,\Omega \times 10,5\times 10^{-9}\text{ F}} \approx 7,58\text{ kHz}, \\
+f_{c,\text{cm}} &= \frac{1}{2\pi \cdot R_{RFI} \cdot C_{cm}} = \frac{1}{2\pi \times 1000\,\Omega \times 1\times 10^{-9}\text{ F}} \approx 159,15\text{ kHz}.
+\end{align*}
+Ces fréquences de coupure sont suffisamment élevées pour ne causer aucune atténuation ni distorsion de phase sur la bande passante ECG ($0 - 150\text{ Hz}$).
+
+\textbf{2. Préamplificateur d'instrumentation INA823.}
+Le gain en tension différentiel de l'INA823 est fixé par une unique résistance externe $R_G$ connectée entre les broches 1 et 8 :
+\[
+G_1 = 1 + \frac{100\text{ k}\Omega}{R_G} \implies R_G = \frac{100\text{ k}\Omega}{G_1 - 1}.
+\]
+Pour fixer $G_1 = 10\text{ V/V}$ ($20\text{ dB}$) :
+\[
+R_G = \frac{100\text{ k}\Omega}{10 - 1} = \frac{100\text{ k}\Omega}{9} \approx 11,111\text{ k}\Omega.
+\]
+Dans la pratique, on emploie une résistance standardisée de $11\text{ k}\Omega$ (série E24, gain réel $G_1 = 1 + 100/11 = 10,09\text{ V/V} = 20,08\text{ dB}$) ou une résistance de $10\text{ k}\Omega$ en série avec un potentiomètre d'ajustement. La bande passante à $-3\text{ dB}$ de l'INA823 pour $G = 10$ est de $380\text{ kHz}$ selon le fabricant, garantissant une réponse en magnitude parfaitement plate dans toute la gamme audio et biomédicale. La broche REF est raccordée à $V_{ref} = 1,65\text{ V}$.
+
+\textbf{3. Filtre Passe-Haut du 1er ordre (rejet de l'offset continu et de la dérive).}
+Positionné immédiatement après l'INA823, ce filtre RC passif bloque les composantes continues et dérives lentes d'électrodes. Il est constitué d'un condensateur série $C_H = 1,0\ \mu\text{F}$ et d'une résistance de polarisation $R_H = 330\text{ k}\Omega$ reliée à $V_{ref}$ :
+\[
+f_L = \frac{1}{2\pi R_H C_H} = \frac{1}{2\pi \times 330\times 10^3\,\Omega \times 1,0\times 10^{-6}\text{ F}} \approx 0,482\text{ Hz} \quad (\approx 0,5\text{ Hz}).
+\]
+Le gain en bande passante est unitaire ($0\text{ dB}$) et la pente d'atténuation basse fréquence est de $+20\text{ dB/décade}$.
+
+\textbf{4. Filtre Passe-Bas du 1er ordre et Étage de gain réglable (TL082).}
+Cet étage utilise un AOP du boîtier TL082 monté en amplificateur non-inverseur avec rétroaction active. Le gain en bande passante est déterminé par $R_1 = 1\text{ k}\Omega$ et $R_f = 100\text{ k}\Omega$ :
+\[
+G_2 = 1 + \frac{R_f}{R_1} = 1 + \frac{100\text{ k}\Omega}{1\text{ k}\Omega} = 101\text{ V/V} \approx 100\text{ V/V} \quad (40,09\text{ dB}).
+\]
+Un condensateur $C_f = 10\text{ nF}$ placé en parallèle avec la résistance de rétroaction $R_f$ introduit un pôle passe-bas :
+\[
+f_H = \frac{1}{2\pi R_f C_f} = \frac{1}{2\pi \times 100\times 10^3\,\Omega \times 10\times 10^{-9}\text{ F}} \approx 159,15\text{ Hz} \quad (\approx 150\text{ Hz}).
+\]
+Pour rendre le gain réglable sans modifier la fréquence de coupure, $R_f$ peut être constituée d'une résistance talon en série avec un potentiomètre, ou le passe-bas peut être implémenté via une cellule passive d'entrée ($R_L = 10,6\text{ k}\Omega$, $C_L = 100\text{ nF} \implies f_H = 150\text{ Hz}$) suivie d'un potentiomètre de gain non-inverseur.
+
+\textbf{5. Circuit Driven-Right-Leg (DRL / jambe droite pilotée).}
+Conformément aux notes de cours (slides 39 à 41), le circuit DRL échantillonne la tension de mode commun présente sur les entrées au moyen de deux résistances de sommation $R_a = 47\text{ k}\Omega$, l'inverse et l'amplifie via le second AOP du TL082 avec une résistance de contre-réaction $R_{f,DRL} = 470\text{ k}\Omega$, stabilisée par un condensateur $C_{comp} = 1\text{ nF}$ ($f_c \approx 338\text{ Hz}$) :
+\[
+A_{\text{DRL}} = \frac{2 R_{f,DRL}}{R_a} = \frac{2 \times 470\text{ k}\Omega}{47\text{ k}\Omega} = 20\text{ V/V} \quad (26,0\text{ dB}).
+\]
+Une résistance de protection $R_o = 100\text{ k}\Omega$ connectée en série avec l'électrode de jambe droite limite strictement tout courant susceptible d'entrer dans le corps en cas de défaut. Cette rétroaction négative réduit la résistance effective de mode commun entre le sujet et la terre à :
+\[
+R_{\text{eff}} = \frac{R_{RL} + R_o}{1 + A_{\text{DRL}}} = \frac{100\text{ k}\Omega + 100\text{ k}\Omega}{1 + 20} \approx 9,52\text{ k}\Omega,
+\]
+ce qui atténue la tension de mode commun à $60\text{ Hz}$ de $26,4\text{ dB}$ (division par 21) avant même que le signal n'atteigne le bioamplificateur.
+
+\textbf{6. Synthèse des performances globales de la chaîne.}
+\begin{align*}
+\text{Gain total :} \quad A_{v,\text{total}} &= G_1 \times G_2 = 10,09 \times 101 \approx 1019\text{ V/V} \approx 60,1\text{ dB}, \\
+\text{Coupure basse ($-3\text{ dB}$) :} \quad f_L &= 0,48\text{ Hz}, \\
+\text{Coupure haute ($-3\text{ dB}$) :} \quad f_H &= 159,2\text{ Hz}, \\
+\text{Bande passante utile :} \quad \text{BW} &= f_H - f_L \approx 158,7\text{ Hz}.
+\end{align*}
+
+\begin{table}[H]
+\centering
+\caption{Dimensionnement des composants et valeurs caractéristiques calculées pour chaque étage.}
+\label{tab:dimensionnement}
+\small
+\begin{tabular}{p{2.8cm}p{5.5cm}cc}
+\toprule
+\textbf{Étage} & \textbf{Composants choisis} & \textbf{Gain théorique} & \textbf{Fréquence de coupure} \\
+\midrule
+1. Filtre RFI & $R_{RFI} = 1\text{ k}\Omega$, $C_{diff} = 10\text{ nF}$, $C_{cm} = 1\text{ nF}$ & $0\text{ dB}$ ($1\text{ V/V}$) & $f_{c,\text{diff}} = 7,58\text{ kHz}$, $f_{c,\text{cm}} = 159\text{ kHz}$ \\
+2. INA823 & $R_G = 11,11\text{ k}\Omega$ (standard $11\text{ k}\Omega$), $V_{ref} = 1,65\text{ V}$ & $20,08\text{ dB}$ ($10,09\text{ V/V}$) & $\text{BW}_{INA} = 380\text{ kHz}$ \\
+3. Passe-haut & $C_H = 1,0\ \mu\text{F}$, $R_H = 330\text{ k}\Omega$ & $0\text{ dB}$ ($1\text{ V/V}$) & $f_L = 0,482\text{ Hz}$ ($-3\text{ dB}$) \\
+4. Passe-bas \& Gain & $R_1 = 1\text{ k}\Omega$, $R_f = 100\text{ k}\Omega$, $C_f = 10\text{ nF}$ & $40,09\text{ dB}$ ($101\text{ V/V}$) & $f_H = 159,15\text{ Hz}$ ($-3\text{ dB}$) \\
+5. DRL & $R_a = 47\text{ k}\Omega$, $R_{f,DRL} = 470\text{ k}\Omega$, $C_c = 1\text{ nF}$, $R_o = 100\text{ k}\Omega$ & $26,0\text{ dB}$ ($20\text{ V/V}$) & Atténuation $V_{cm} : -26,4\text{ dB}$ \\
+\midrule
+\textbf{Total chaîne} & \textbf{Circuit complet assemblé} & \textbf{60,1 dB (1019 V/V)} & \textbf{0,48 Hz à 159 Hz (-3 dB)} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\question{6.2 (Diagrammes de Bode dans LtSpice selon l'approche systémique)}
+
+Le protocole demande expressément de tracer les diagrammes de Bode selon une \og  approche systémique \fg{}, basée sur le rapport direct entre la sortie et les tensions d'entrée. 
+
+\textbf{1. Préamplificateur INA823 (Mode différentiel, mode commun et TRMC).}
+Dans LtSpice, les entrées différentielles $V(POS)$ et $V(NEG)$ sont excitées en analyse AC. Les courbes tracées suivent :
+\begin{align*}
+\text{Mode différentiel :} \quad A_d(f) &= \frac{V(OUT)}{V(POS) - V(NEG)}, \\
+\text{Mode commun :} \quad A_{cm}(f) &= \frac{V(OUT)}{\frac{V(POS) + V(NEG)}{2}}, \\
+\text{TRMC (CMRR en dB) :} \quad \text{TRMC}(f) &= 20\,\log_{10}\left|\frac{A_d(f)}{A_{cm}(f)}\right| = 20\,\log_{10}\left|\frac{\frac{V(OUT_D)}{V(POS_D)-V(NEG_D)}}{\frac{V(OUT_{CM})}{(V(POS_{CM})+V(NEG_{CM}))/2}}\right|.
+\end{align*}
+
+La Figure~\ref{fig:bode_ina} présente ces caractéristiques. On constate que le gain différentiel est rigoureusement constant à $20,0\text{ dB}$ de $0,01\text{ Hz}$ jusqu'au-delà de $100\text{ kHz}$. Le gain de mode commun demeure inférieur à $-95\text{ dB}$ à basse fréquence et atteint $-85\text{ dB}$ à $60\text{ Hz}$. Le TRMC calculé vaut $115,0\text{ dB}$ à DC et $105,0\text{ dB}$ à $60\text{ Hz}$, respectant et dépassant la spécification minimale de la fiche technique ($\ge 104\text{ dB}$).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.92\textwidth]{fig_6_1_bode_ina823.png}
+\caption{Diagramme de Bode de l'INA823 tracé selon l'approche systémique. Haut : gain en mode différentiel ($A_d$, bleu) et gain en mode commun ($A_{cm}$, tireté rouge). Bas : taux de réjection en mode commun (TRMC, vert), montrant $115\text{ dB}$ à DC et $> 104\text{ dB}$ à $60\text{ Hz}$.}
+\label{fig:bode_ina}
+\end{figure}
+
+\textbf{2. Diagrammes de Bode individuels des filtres.}
+La Figure~\ref{fig:bode_filtres} présente les courbes de réponse en magnitude normalisées pour chaque étage de filtrage pris isolément. Le filtre passe-haut montre une atténuation à $-3\text{ dB}$ à $0,48\text{ Hz}$ avec une pente asymptotique de $+20\text{ dB/décade}$ en basse fréquence. Le filtre passe-bas présente sa coupure à $-3\text{ dB}$ à $159,2\text{ Hz}$ avec une décroissance de $-20\text{ dB/décade}$ au-delà. Le filtre RFI différentiel conserve un gain de $0\text{ dB}$ inaltéré jusqu'à $7,58\text{ kHz}$, assurant l'absence totale de déformation dans la bande passante ECG.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.92\textwidth]{fig_6_2_bode_filtres.png}
+\caption{Diagrammes de Bode des étages de filtrage individuels : passe-haut 1er ordre ($f_L = 0,48\text{ Hz}$, bleu), passe-bas 1er ordre ($f_H = 159,2\text{ Hz}$, rouge) et filtre RFI différentiel ($f_c = 7,58\text{ kHz}$, pointillé magenta).}
+\label{fig:bode_filtres}
+\end{figure}
+
+\textbf{3. Diagramme de Bode global du bioamplificateur complet.}
+La Figure~\ref{fig:bode_global} montre la réponse en fréquence complète (magnitude et phase) de l'ensemble de la chaîne analogique simulée dans LtSpice. Le gain maximal en bande passante atteint $60,06\text{ dB}$ ($1010\text{ V/V}$), parfaitement conforme à l'objectif de $60\text{ dB}$. Le niveau à $-3\text{ dB}$ ($57,06\text{ dB}$) est atteint précisément à $f_L = 0,484\text{ Hz}$ et $f_H = 159,3\text{ Hz}$, procurant une bande passante effective de $158,8\text{ Hz}$. 
+
+Le diagramme de phase indique un déphasage de $+44,7^\circ$ à la coupure basse, une phase quasiment nulle ($0^\circ$) au centre de la bande passante ECG ($5 - 30\text{ Hz}$), et un déphasage de $-45,8^\circ$ à la coupure haute. Cette linéarité de phase dans la bande d'intérêt garantit la préservation de la morphologie temporelle des ondes P-Q-R-S-T sans étalement ni distorsion de dispersion.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{fig_6_3_bode_global.png}
+\caption{Diagramme de Bode global du bioamplificateur complet simulé sous LtSpice. Haut : réponse en magnitude avec indication du gain maximal ($60,06\text{ dB}$), des fréquences de coupure à $-3\text{ dB}$ ($f_L = 0,48\text{ Hz}$, $f_H = 159,3\text{ Hz}$) et des pentes asymptotiques. Bas : courbe de phase.}
+\label{fig:bode_global}
+\end{figure}
+
+\textbf{4. Efficacité du circuit Driven-Right-Leg (DRL).}
+La Figure~\ref{fig:bode_drl} illustre l'action stabilisatrice du DRL sur le mode commun corporel. En l'absence de DRL, le courant de couplage capacitif des lignes de distribution ($i_{db} \approx 0,2\ \mu\text{A}$ à $60\text{ Hz}$) traversant l'impédance de terre du sujet ($Z_G \approx 50\text{ k}\Omega$) développe une tension de mode commun $V_{cm} = 10\text{ mV}$. Avec le circuit DRL activé, la contre-réaction active réduit cette amplitude à $0,48\text{ mV}$ à $60\text{ Hz}$, représentant une réjection directe de $26,4\text{ dB}$ (atténuation d'un facteur 20,7). Cette réduction préalable évite toute conversion parasite du mode commun en signal différentiel par déséquilibre d'impédance d'électrode.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.92\textwidth]{fig_6_4_drl_attenuation.png}
+\caption{Simulation de l'atténuation du mode commun corporel par le circuit Driven-Right-Leg. Haut : tension de mode commun corporelle avec et sans DRL. Bas : facteur d'atténuation actif apporté par la boucle de contre-réaction ($26,3\text{ dB}$ à $60\text{ Hz}$).}
+\label{fig:bode_drl}
+\end{figure}
+
+\textbf{5. Validation temporelle (Transient Analysis) sur biosignal ECG réaliste.}
+Pour vérifier le comportement dynamique de la chaîne complète, une simulation temporelle transitoire a été menée avec un biosignal d'entrée reproduisant les conditions réelles mesurées au laboratoire : complexe ECG de $1,2\text{ mV}$ crête-à-crête superposé à un décalage continu d'électrode de $+120\text{ mV}$, une ondulation respiratoire lente ($0,25\text{ Hz}$, $0,5\text{ mV}$) et un résidu de mode commun à $60\text{ Hz}$ (Figure~\ref{fig:sim_temporelle}).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{fig_6_5_simulation_temporelle.png}
+\caption{Simulation temporelle transitoire (Transient Analysis) du bioamplificateur conçu. Haut : biosignal d'entrée brut corrompu par un décalage continu de demi-cellule ($120\text{ mV}$) et une dérive lente. Milieu : sortie de l'INA823 ($G_1 = 10$, offset amplifié à $2,85\text{ V}$, sans saturation). Bas : sortie finale filtrée et amplifiée ($A_v = 1010$), parfaitement centrée sur la masse virtuelle $V_{ref} = 1,65\text{ V}$ avec une onde R d'amplitude $0,92\text{ V}$ au-dessus de la ligne de base, calibrée pour l'ADC $0-3,3\text{ V}$ du BioBLU.}
+\label{fig:sim_temporelle}
+\end{figure}
+
+Comme visible à la Figure~\ref{fig:sim_temporelle} :
+\begin{itemize}
+\item L'INA823 (panneau 2) amplifie le signal d'un facteur 10 sans saturer ($V_{\text{INA}} \approx 2,85\text{ V}$, restant sous le rail d'alimentation $V_{DD} = 3,3\text{ V}$).
+\item Le filtre passe-haut élimine intégralement la composante continue de $1,2\text{ V}$ ($120\text{ mV} \times 10$) ainsi que l'ondulation respiratoire.
+\item La sortie finale (panneau 3) délivre un tracé ECG remarquable de clarté, oscillant entre $1,05\text{ V}$ et $2,57\text{ V}$ autour de la référence $1,65\text{ V}$. Le pic de l'onde R atteint une amplitude de $\Delta V = 0,92\text{ V}$ ($2,57\text{ V}$ absolu), ce qui exploite idéalement la dynamique du convertisseur analogique-numérique sans risque d'écrêtage.
+\end{itemize}
+
+L'ensemble des résultats de simulation confirme la totale adéquation de la conception avec le cahier des charges du Laboratoire 4 en termes de gain ($60\text{ dB}$), de bande passante ($0,48\text{ Hz}$ à $159\text{ Hz}$), de réjection du bruit ($> 104\text{ dB}$) et de stabilité opérationnelle.
+
+\bigskip
+{\small\noindent\textbf{Disclaimer} : Nous avons utilisé Claude et les outils d'assistance pour la mise en page en \LaTeX{} et la mise en forme des figures.}
+
+\section*{Références}
+\begin{itemize}\sloppy
+\item Texas Instruments, \og  Improving common-mode rejection using the right-leg drive amplifier \fg{}, Application Report SBAA188, 2011.
+\item Texas Instruments, \og  INA823 Precision, Low-Power, Low-Noise, Instrumentation Amplifier \fg{}, Datasheet SBOS933, 2021.
+\item Texas Instruments, \og  TL08xx JFET-Input Operational Amplifiers \fg{}, Datasheet SLOS081N, 2023.
+\item M. R. Neuman, \og  Biopotential electrodes \fg{}, \emph{Medical Instrumentation: Application and Design}, 4th ed., J. G. Webster, Ed., John Wiley \& Sons, New York, p. 189--240, 1998.
+\item E. Huigen, A. Peper et C. A. Grimbergen, \og  Investigation into the origin of the noise of surface electrodes \fg{}, \emph{Medical and Biological Engineering and Computing}, vol. 40, p. 332--338, 2002.
+\item C. Kitchin, L. Counts et M. Gerstenhaber, \og  Reducing RFI rectification errors in in-amp circuits \fg{}, Analog Devices Application Note AN-671, 2003.
+\item K. Bouzid et B. Gosselin, \emph{Laboratoire 4 : Bioélectronique -- filtrage et interfaces}, GEL-4072/GEL-7072, Université Laval, automne 2026.
+\item B. Gosselin, \emph{Bioamplificateurs et instrumentation de biopotentiels}, Notes de cours GEL-4072/7072, Université Laval, 2024.
+\end{itemize}
+
+\end{document}
+
