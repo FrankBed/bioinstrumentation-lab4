@@ -1,37 +1,40 @@
 ========================================================================
-GEL-7072 / GEL-4072 : Bio-instrumentation et microsystèmes biomédicaux
-Laboratoire 4 : Bioélectronique – filtrage et interfaces
-Fichiers de simulation LTspice pour l'Étape 6
+GEL-7072 : Bio-instrumentation et microsystemes biomedicaux
+Laboratoire 4 : Bioelectronique - filtrage et interfaces
+Simulations LTspice (questions 6.1 et 6.2)
 ========================================================================
 
-Ce répertoire contient les fichiers de simulation SPICE / LTspice conçus pour
-valider l'Étape 6 du Laboratoire 4 :
+Modeles (dossier modeles/, telecharges de ti.com, non modifies)
+  INA823.LIB : INA823 PSpice Model rev. B (SBOMBU8B)
+  TL082.301  : TL082 PSpice Model (SLOJ070), concu pour +/-15 V
 
-1. `ina823_bode.cir` :
-   Simulation AC selon l'« approche systémique » demandée à la question 6.2 :
-   - Mode différentiel : Tracez l'expression :
-     V(OUT_D)/(V(POS_D) - V(NEG_D))
-     Gain mesuré : 20 dB (G = 10 V/V).
-   - Mode commun : Tracez l'expression :
-     V(OUT_CM)/((V(POS_CM) + V(NEG_CM))/2)
-     Gain mesuré : -95 dB à DC, -85 dB à 60 Hz.
-   - TRMC (CMRR en dB) : Tracez l'expression :
-     20*log10(abs((V(OUT_D)/(V(POS_D)-V(NEG_D))) / (V(OUT_CM)/((V(POS_CM)+V(NEG_CM))/2))))
-     Valeur mesurée : 115 dB à DC, > 104 dB à 60 Hz.
+Fichiers
+  bioampli.sub          Sous-circuits partages : PATIENT (corps, courant de
+                        deplacement, 3 electrodes) et BIOAMPLI (RFI, INA823,
+                        passe-haut, passe-bas et gain TL082, sortie ADC, DRL)
+  ina823_offset_dc.cir  Balayage DC de l'offset entre electrodes (plage lineaire)
+  ina823_bode.cir       Bode de l'INA823, modes differentiel et commun, TRMC
+  filtres_bode.cir      Bode de chaque filtre pris isolement
+  bioampli_ac.cir       Bode de la chaine complete (TL082 en +/-5 V et sur 3,3 V)
+  drl_ac.cir            Effet du DRL sur le 60 Hz (avec / sans DRL)
+  bioampli_tran.cir     Simulation temporelle avec un ECG synthetique
+  ecg_pwl.txt           ECG synthetique (genere par generer_figures_simulation.py)
 
-2. `bioampli_complet.cir` :
-   Simulation complète de toute la chaîne analogique :
-   - Filtre RFI en entrée (R = 1k, C_diff = 10nF, C_cm = 1nF, fc = 7.6 kHz)
-   - Préamplificateur INA823 (G1 = 10 V/V, RG = 11.111 kOhm, REF = 1.65 V)
-   - Filtre Passe-Haut du 1er ordre (CH = 1 uF, RH = 330 kOhm, fL = 0.48 Hz)
-   - Filtre Passe-Bas & Étage de gain TL082 (R1 = 1k, Rf = 100k, Cf = 10nF, G2 = 101, fH = 159 Hz)
-   - Circuit Driven-Right-Leg (DRL) avec AOP TL082 (Ra = 47k, Rf = 470k, Ro = 100k)
-   - Alimentation unipolaire 3.3 V et masse virtuelle 1.65 V
+Lancer les simulations
+  macOS : LTspice -> File -> Open, choisir le type "Netlists (*.cir)",
+          ouvrir chaque .cir puis Run. (Sous macOS, LTspice tourne dans Wine :
+          le dossier personnel est le lecteur Y:.) Le .raw est ecrit a cote
+          du .cir.
+  Windows : python generer_figures_simulation.py lance LTspice en mode batch.
 
-Pour ouvrir dans LTspice :
-- Lancez LTspice.
-- Allez dans File -> Open, sélectionnez les fichiers `.cir`.
-- Cliquez sur "Run" (icône du petit bonhomme qui court).
-- Pour tracer un signal ou un ratio, faites un clic droit sur le graphique et choisissez "Add Traces", puis entrez les formules ci-dessus.
+Tracer les figures
+  python generer_figures_simulation.py --no-run
+  (lit les .raw, ecrit figures/*.png et ltspice/resultats_simulation.json)
+
+Expressions pour tracer dans LTspice (approche systemique, Add Trace)
+  ina823_bode   Ad   : V(OUT_D)/(V(POS_D)-V(NEG_D))
+                Acm  : V(OUT_C)/((V(POS_C)+V(NEG_C))/2)
+                TRMC : 20*log10(abs((V(OUT_D)/(V(POS_D)-V(NEG_D)))/(V(OUT_C)/((V(POS_C)+V(NEG_C))/2))))
+  bioampli_ac   V(OUTA)/(V(INPA)-V(INNA))
+  filtres_bode  (V(P1A)-V(N1A))/(V(POSA)-V(NEGA)), V(HOUT)/V(HIN), V(LOUT5)/V(LIN5), V(OOUT)/V(OIN)
 ========================================================================
-

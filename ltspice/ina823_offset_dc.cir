@@ -1,0 +1,20 @@
+* GEL-7072 Laboratoire 4 - Question 6.1 (plage d'offset continu)
+* Balayage DC de la tension differentielle continue entre les electrodes
+* (difference des potentiels de demi-cellule) a l'entree de l'INA823.
+* G1 = 9,93 V/V, alimentation 3,3 V, REF = 1,65 V.
+* On cherche la plage d'offset pour laquelle la sortie reste lineaire.
+
+.lib modeles/INA823.LIB
+
+V_AVCC AVCC 0 3.3
+V_REF REF 0 1.65
+V_OFF VOFF 0 0
+E_P POS REF VOFF 0 0.5
+E_N NEG REF VOFF 0 -0.5
+XU1 POS NEG AVCC 0 OUT REF RGP RGN INA823
+R_G1 RGP RGM 5.6k
+R_G2 RGM RGN 5.6k
+
+.save V(VOFF) V(OUT)
+.dc V_OFF -0.4 0.4 1m
+.end

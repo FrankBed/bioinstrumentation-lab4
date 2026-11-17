@@ -1,0 +1,32 @@
+* GEL-7072 Laboratoire 4 - Question 6.2 (validation temporelle)
+* ECG synthetique (onde R de 1,2 mV, fichier ecg_pwl.txt genere par le script Python)
+* + offset continu de demi-cellule de 50 mV entre les electrodes
+* + derive respiratoire 0,5 mV a 0,25 Hz
+* + courant de deplacement du secteur 0,2 uA a 60 Hz, electrodes desequilibrees de 20 %
+* Montage A : TL082 en +/-5 V ; Montage B : TL082 sur le BioBLU (3,3 V / 0 V)
+* Le point de fonctionnement DC initial charge CH : la simulation part du regime etabli.
+
+.lib modeles/INA823.LIB
+.lib modeles/TL082.301
+.include bioampli.sub
+.options plotwinsize=0
+
+V_AVCC AVCC 0 3.3
+V_REF REF 0 1.65
+V_P5 VP5 0 5
+V_M5 VM5 0 -5
+
+V_ECGRAW ECGRAW 0 PWL file=ecg_pwl.txt
+B_ECG VECG 0 V=V(ECGRAW) + 50m + 0.5m*sin(2*pi*0.25*time)
+V_ID VID 0 SINE(0 0.2 60)
+
+X_PA VECG VID INPA INNA RLDA BODYA PATIENT params: RDN=40.8k
+X_BA INPA INNA RLDA AVCC 0 REF VP5 VM5 OUTA INAA HPA GA RGMA DRLA BIOAMPLI
+
+X_PB VECG VID INPB INNB RLDB BODYB PATIENT params: RDN=40.8k
+X_BB INPB INNB RLDB AVCC 0 REF AVCC 0 OUTB INAB HPB GB RGMB DRLB BIOAMPLI
+
+.save V(VECG) V(INPA) V(INNA) V(INAA) V(HPA) V(GA) V(OUTA) V(BODYA) V(DRLA)
++ V(INPB) V(INNB) V(INAB) V(HPB) V(GB) V(OUTB) V(BODYB) V(DRLB)
+.tran 0 4 0 50u
+.end

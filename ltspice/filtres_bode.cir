@@ -1,0 +1,86 @@
+* GEL-7072 Laboratoire 4 - Question 6.2
+* Diagrammes de Bode de chaque filtre pris isolement (approche systemique)
+*   RFI        : (V(P1x)-V(N1x)) / (V(POSx)-V(NEGx))   [source ideale ou electrodes]
+*   Passe-haut : V(HOUT) / V(HIN)
+*   Passe-bas + gain (TL082) : V(LOUTx) / V(LINx)  (gain 101 dans la bande)
+*   RC de sortie : V(OOUT) / V(OIN)
+* Les signaux sont centres sur REF = 1,65 V comme dans le montage reel.
+
+.lib modeles/TL082.301
+
+V_AVCC AVCC 0 3.3
+V_REF REF 0 1.65
+V_P5 VP5 0 5
+V_M5 VM5 0 -5
+
+* ---- Filtre RFI retenu (R = 1 k, Ccm = 100 pF, Cdiff = 1 nF), source ideale
+V_PA POSA REF AC 0.5 0
+V_NA NEGA REF AC 0.5 180
+R_AP POSA P1A 1k
+R_AN NEGA N1A 1k
+C_AP P1A 0 100p
+C_AN N1A 0 100p
+C_AD P1A N1A 1n
+
+* ---- Filtre RFI retenu, alimente a travers deux electrodes (Rs + Rd||Cd)
+V_PB POSB REF AC 0.5 0
+V_NB NEGB REF AC 0.5 180
+R_BSP POSB EBP 200
+R_BDP EBP EB2P 51k
+C_BDP EBP EB2P 47n
+R_BSN NEGB EBN 200
+R_BDN EBN EB2N 51k
+C_BDN EBN EB2N 47n
+R_BP EB2P P1B 1k
+R_BN EB2N N1B 1k
+C_BP P1B 0 100p
+C_BN N1B 0 100p
+C_BD P1B N1B 1n
+
+* ---- Filtre RFI de la version precedente (Ccm = 1 nF, Cdiff = 10 nF), avec electrodes
+V_PC POSC REF AC 0.5 0
+V_NC NEGC REF AC 0.5 180
+R_CSP POSC ECP 200
+R_CDP ECP EC2P 51k
+C_CDP ECP EC2P 47n
+R_CSN NEGC ECN 200
+R_CDN ECN EC2N 51k
+C_CDN ECN EC2N 47n
+R_CP EC2P P1C 1k
+R_CN EC2N N1C 1k
+C_CP P1C 0 1n
+C_CN N1C 0 1n
+C_CD P1C N1C 10n
+
+* ---- Passe-haut passif : CH = 1 uF, RH = 330 k vers REF
+V_H HIN REF AC 1
+C_H HIN HOUT 1u
+R_H HOUT REF 330k
+
+* ---- Passe-bas et gain, TL082 alimente en +/-5 V (montage propose)
+V_L5 LIN5 REF AC 1
+XU5 LIN5 INV5 VP5 VM5 LOUT5 TL082
+R_15 INV5 REF 1k
+R_F5 INV5 LOUT5 100k
+C_F5 INV5 LOUT5 10n
+
+* ---- Passe-bas et gain, TL082 alimente par le BioBLU (3,3 V / 0 V)
+V_L3 LIN3 REF AC 1
+XU3 LIN3 INV3 AVCC 0 LOUT3 TL082
+R_13 INV3 REF 1k
+R_F3 INV3 LOUT3 100k
+C_F3 INV3 LOUT3 10n
+
+* ---- RC de sortie vers l'ADC : 1 k / 100 nF et diodes de protection
+V_O OIN REF AC 1
+R_O OIN OOUT 1k
+C_O OOUT 0 100n
+D_OH OOUT AVCC DSCH
+D_OL 0 OOUT DSCH
+.model DSCH D(Is=10n Rs=5 N=1.05 Cjo=10p)
+
+.save V(POSA) V(NEGA) V(P1A) V(N1A) V(POSB) V(NEGB) V(P1B) V(N1B)
++ V(POSC) V(NEGC) V(P1C) V(N1C) V(HIN) V(HOUT) V(LIN5) V(LOUT5)
++ V(LIN3) V(LOUT3) V(OIN) V(OOUT)
+.ac dec 50 0.01 1Meg
+.end

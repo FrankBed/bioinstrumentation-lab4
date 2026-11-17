@@ -1,0 +1,33 @@
+* GEL-7072 Laboratoire 4 - Circuit Driven-Right-Leg
+* Reponse au courant de deplacement du secteur i_d = 0,2 uA (notes de cours p. 36-41)
+*   V(BODYx) - V(REF) : tension de mode commun du corps
+*   V(OUTx)           : 60 Hz residuel a la sortie (desequilibre d'electrodes 20 %)
+* Montage A : DRL actif ; Montage B : jambe droite reliee directement a REF
+* TL082 alimentes en +/-5 V, INA823 sur le BioBLU (3,3 V, REF = 1,65 V)
+
+.lib modeles/INA823.LIB
+.lib modeles/TL082.301
+.include bioampli.sub
+
+V_AVCC AVCC 0 3.3
+V_REF REF 0 1.65
+V_P5 VP5 0 5
+V_M5 VM5 0 -5
+
+V_ECG VECG 0 0
+V_ID VID 0 AC 0.2
+
+* Electrode NEG 20 % plus faible que POS pour convertir le mode commun
+X_PA VECG VID INPA INNA RLDA BODYA PATIENT params: RDN=40.8k
+X_BA INPA INNA RLDA AVCC 0 REF VP5 VM5 OUTA INAA HPA GA RGMA DRLA BIOAMPLI params: DRL=1
+
+X_PB VECG VID INPB INNB RLDB BODYB PATIENT params: RDN=40.8k
+X_BB INPB INNB RLDB AVCC 0 REF VP5 VM5 OUTB INAB HPB GB RGMB DRLB BIOAMPLI params: DRL=0
+
+* Montage C : DRL actif, filtre RFI de la version precedente (Ccm = 1 nF, Cdiff = 10 nF)
+X_PC VECG VID INPC INNC RLDC BODYC PATIENT params: RDN=40.8k
+X_BC INPC INNC RLDC AVCC 0 REF VP5 VM5 OUTC INAC HPC GC RGMC DRLC BIOAMPLI params: DRL=1 CCM=1n CDIFF=10n
+
+.save V(VID) V(BODYA) V(BODYB) V(BODYC) V(INPA) V(INNA) V(INPB) V(INNB) V(OUTA) V(OUTB) V(OUTC) V(DRLA) V(RGMA)
+.ac dec 50 1 100k
+.end
