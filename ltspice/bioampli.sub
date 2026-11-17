@@ -1,0 +1,88 @@
+* =====================================================================
+* GEL-7072 Laboratoire 4 - Sous-circuits partages par les simulations
+*   PATIENT  : corps, courant de deplacement du secteur et 3 electrodes
+*   BIOAMPLI : chaine complete (RFI -> INA823 -> passe-haut -> passe-bas
+*              et gain TL082 -> sortie ADC) + circuit Driven-Right-Leg
+* Les modeles TI doivent etre charges par le fichier principal :
+*   .lib modeles/INA823.LIB   et   .lib modeles/TL082.301
+* =====================================================================
+
+* ---------------------------------------------------------------------
+* PATIENT
+*   VECG : biopotentiel differentiel (V(VECG) = V(POS) - V(NEG) a la peau)
+*   VID  : commande du courant de deplacement, i_d = 1 uA/V x V(VID)
+*   INP, INN : bornes des electrodes de mesure (cote circuit)
+*   RLD  : borne de l'electrode de jambe droite (cote circuit)
+*   BODY : potentiel du corps (point de test)
+* Electrode Ag/AgCl (notes de cours, Bioelectrodes p. 23-25) :
+*   Rs en serie avec Rd || Cd ; Rd = 51 k, Cd = 47 nF (f = 66 Hz), Rs = 200
+* Le desequilibre RDP / RDN convertit le mode commun en signal differentiel.
+* ---------------------------------------------------------------------
+.subckt PATIENT VECG VID INP INN RLD BODY
++ params: RDP=51k RDN=51k RDRL=51k CD=47n RS=200 CBODY=200p
+G_D 0 BODY VID 0 1u
+C_BODY BODY 0 {CBODY}
+E_P BP BODY VECG 0 0.5
+E_N BN BODY VECG 0 -0.5
+R_SP BP EP {RS}
+R_DP EP INP {RDP}
+C_DP EP INP {CD}
+R_SN BN EN {RS}
+R_DN EN INN {RDN}
+C_DN EN INN {CD}
+R_SRL BODY ERL {RS}
+R_DRL ERL RLD {RDRL}
+C_DRL ERL RLD {CD}
+.ends PATIENT
+
+* ---------------------------------------------------------------------
+* BIOAMPLI
+*   INP INN RLD : bornes electrodes POS, NEG et jambe droite
+*   AVCC AGND REF : alimentation BioBLU (3,3 V / 0 V / 1,65 V)
+*   VOPP VOPN : alimentation des TL082 (3,3 V / 0 V ou +5 V / -5 V)
+*   OUT : sortie vers l'ADC du BioBLU
+*   INAOUT HPOUT GOUT RGMID DRLOUT : points de test
+*   DRL = 1 : DRL actif ; DRL = 0 : jambe droite reliee directement a REF
+* ---------------------------------------------------------------------
+.subckt BIOAMPLI INP INN RLD AVCC AGND REF VOPP VOPN OUT INAOUT HPOUT GOUT RGMID DRLOUT
++ params: DRL=1 RRFI=1k CCM=100p CDIFF=1n RG2=5.6k CH=1u RH=330k R1=1k RF=100k CF=10n
++ ROUT=1k COUT=100n RDIN=10k RDF=1Meg CDF=3.3n RO=100k
+
+* 1) Filtre RFI (AN-671) : R serie, C mode commun vers AGND, C differentiel
+R_RFIP INP P1 {RRFI}
+R_RFIN INN N1 {RRFI}
+C_CMP P1 AGND {CCM}
+C_CMN N1 AGND {CCM}
+C_DIFF P1 N1 {CDIFF}
+
+* 2) Preamplificateur INA823, G1 = 1 + 100k / (2 x RG2) ; RG scinde pour le DRL
+XU1 P1 N1 AVCC AGND INAOUT REF RGP RGN INA823
+R_G1 RGP RGMID {RG2}
+R_G2 RGMID RGN {RG2}
+
+* 3) Passe-haut 1er ordre : fL = 1 / (2 pi RH CH)
+C_H INAOUT HPOUT {CH}
+R_H HPOUT REF {RH}
+
+* 4) Passe-bas 1er ordre et gain (TL082 A) : G2 = 1 + RF/R1, fH = 1/(2 pi RF CF)
+XU2A HPOUT INV VOPP VOPN GOUT TL082
+R_1 INV REF {R1}
+R_F INV GOUT {RF}
+C_F INV GOUT {CF}
+
+* 5) Sortie vers l'ADC : RC (anti-repliement) et diodes Schottky de protection
+R_OUT GOUT OUT {ROUT}
+C_OUT OUT AGND {COUT}
+D_HI OUT AVCC DSCH
+D_LO AGND OUT DSCH
+
+* 6) Driven-Right-Leg (TL082 B) : inverseur sur le point milieu de RG
+R_DIN RGMID DINV {RDIN}
+R_DF DINV DRLOUT {RDF}
+C_DF DINV DRLOUT {CDF}
+XU2B REF DINV VOPP VOPN DRLOUT TL082
+R_O DRLOUT RLD {if(DRL, RO, 1T)}
+R_BYP REF RLD {if(DRL, 1T, 1m)}
+
+.model DSCH D(Is=10n Rs=5 N=1.05 Cjo=10p)
+.ends BIOAMPLI

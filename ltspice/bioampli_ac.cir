@@ -1,0 +1,31 @@
+* GEL-7072 Laboratoire 4 - Question 6.2
+* Diagramme de Bode de la chaine complete (patient + electrodes + bioamplificateur)
+*   Gain du circuit : V(OUTx) / (V(INPx) - V(INNx))
+*   Gain vu de la peau : V(OUTx) / V(VECG)
+* Montage A : TL082 alimentes en +/-5 V (alimentation de laboratoire), INA823 sur le BioBLU
+* Montage B : tout le circuit sur le BioBLU (3,3 V / 0 V)
+
+.lib modeles/INA823.LIB
+.lib modeles/TL082.301
+.include bioampli.sub
+
+V_AVCC AVCC 0 3.3
+V_REF REF 0 1.65
+V_P5 VP5 0 5
+V_M5 VM5 0 -5
+
+V_ECG VECG 0 AC 1
+V_ID VID 0 0
+
+* Montage A (TL082 en +/-5 V)
+X_PA VECG VID INPA INNA RLDA BODYA PATIENT
+X_BA INPA INNA RLDA AVCC 0 REF VP5 VM5 OUTA INAA HPA GA RGMA DRLA BIOAMPLI
+
+* Montage B (TL082 en 3,3 V)
+X_PB VECG VID INPB INNB RLDB BODYB PATIENT
+X_BB INPB INNB RLDB AVCC 0 REF AVCC 0 OUTB INAB HPB GB RGMB DRLB BIOAMPLI
+
+.save V(VECG) V(INPA) V(INNA) V(INAA) V(HPA) V(GA) V(OUTA)
++ V(INPB) V(INNB) V(INAB) V(HPB) V(GB) V(OUTB)
+.ac dec 50 0.01 100k
+.end

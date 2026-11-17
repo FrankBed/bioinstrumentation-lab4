@@ -14,18 +14,16 @@ Ce dépôt contient le code source en LaTeX du rapport du Laboratoire 4, les scr
 
 * **`main.tex`** : Code source LaTeX du rapport (Étapes 5 et 6 complétées selon le gabarit du Laboratoire 3).
 * **`main.pdf`** / **`TREMBLAY-ANTOINE_BEDARD_LAB4.pdf`** : Rendu PDF prêt pour révision et conforme aux exigences de soumission.
-* **`generer_figures_simulation.py`** : Script Python autonome générant l'ensemble des figures, calculs analytiques et diagrammes de Bode.
-* **`figures/`** : Répertoire contenant toutes les figures vectorielles/haute résolution insérées dans le rapport :
-  * `fig_6_schema_bioampli.png` : Schéma fonctionnel complet de la chaîne de bioamplification.
-  * `fig_6_1_bode_ina823.png` : Diagramme de Bode systémique de l'INA823 (modes différentiel et commun, TRMC).
-  * `fig_6_2_bode_filtres.png` : Diagrammes de Bode individuels des étages de filtrage.
-  * `fig_6_3_bode_global.png` : Réponse en fréquence globale (magnitude et phase).
-  * `fig_6_4_drl_attenuation.png` : Simulation de l'atténuation du mode commun 60 Hz par le DRL.
-  * `fig_6_5_simulation_temporelle.png` : Analyse temporelle transitoire (Transient) sur tracé ECG réaliste.
-* **`ltspice/`** : Modèles de simulation SPICE conformes aux exigences du protocole :
-  * `ina823_bode.cir` : Analyse AC systémique de l'INA823.
-  * `bioampli_complet.cir` : Netlist SPICE de la chaîne complète (AC + Transitoire).
-  * `README_ltspice.txt` : Guide d'exécution dans LTspice.
+* **`generer_figures_simulation.py`** : Lit les résultats LTspice (`ltspice/*.raw`) et trace les figures du rapport. Avec `--no-run`, il n'appelle pas LTspice (sous macOS, lancer les `.cir` dans LTspice d'abord).
+* **`figures/`** : Figures du rapport :
+  * `fig_6_schema_bioampli.png` : Schéma fonctionnel de la chaîne.
+  * `fig_6_1_offset_ina823.png` : Plage d'offset continu admissible par l'INA823 (balayage DC).
+  * `fig_6_2a_bode_ina823.png` : Bode systémique de l'INA823 (modes différentiel et commun, TRMC).
+  * `fig_6_2b_bode_filtres.png` : Bode de chaque filtre.
+  * `fig_6_2c_bode_global.png` : Bode de la chaîne complète.
+  * `fig_6_2d_drl.png` : Effet du Driven-Right-Leg sur le 60 Hz.
+  * `fig_6_2e_temporel.png` : Simulation temporelle avec un ECG synthétique.
+* **`ltspice/`** : Netlists LTspice et modèles TI (INA823, TL082) ; voir `ltspice/README_ltspice.txt`.
 
 ---
 

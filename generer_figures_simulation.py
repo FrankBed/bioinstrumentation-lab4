@@ -1,485 +1,622 @@
+#!/usr/bin/env python3
+"""Laboratoire 4 (GEL-7072) : simulations LTspice et figures du rapport.
+
+Toutes les courbes de simulation proviennent des fichiers .raw produits par
+LTspice a partir des netlists du dossier ltspice/ (modeles TI de l'INA823 et
+du TL082). Ce script ne calcule aucune reponse en frequence lui-meme : il
+lance LTspice, lit les resultats et les met en forme.
+
+Usage :
+    python generer_figures_simulation.py           # lance LTspice puis trace
+    python generer_figures_simulation.py --no-run  # trace a partir des .raw existants
+
+Le chemin de LTspice peut etre impose avec la variable d'environnement LTSPICE.
+"""
+import argparse
+import json
 import os
+import shutil
+import subprocess
+import sys
+from pathlib import Path
+
 import numpy as np
+import matplotlib
+
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-import scipy.signal as signal
-
-# Set plotting style matching the Lab 3 LaTeX document
-plt.rcParams.update({
-    'font.family': 'serif',
-    'font.size': 10,
-    'axes.labelsize': 11,
-    'axes.titlesize': 11,
-    'xtick.labelsize': 9,
-    'ytick.labelsize': 9,
-    'legend.fontsize': 9,
-    'figure.titlesize': 12,
-    'lines.linewidth': 1.6,
-    'grid.alpha': 0.5,
-    'grid.linestyle': '--'
-})
-
-os.makedirs('figures', exist_ok=True)
-
-# -----------------------------------------------------------------------------
-# 1. PARAMETERS & TRANSFER FUNCTIONS
-# -----------------------------------------------------------------------------
-# RFI Filter
-R_rfi = 1e3        # 1 kOhm
-C_diff = 10e-9     # 10 nF
-C_cm = 1e-9        # 1 nF
-tau_rfi_diff = 2 * R_rfi * (C_diff + C_cm / 2.0)
-f_c_rfi_diff = 1.0 / (2.0 * np.pi * tau_rfi_diff)  # ~7.58 kHz
-f_c_rfi_cm = 1.0 / (2.0 * np.pi * R_rfi * C_cm)     # ~159 kHz
-
-# INA823 Pre-amplifier
-# G1 = 1 + 100k / RG = 10 -> RG = 100k / 9 = 11.111 kOhm
-G1 = 10.0
-G1_dB = 20 * np.log10(G1)
-f_c_ina = 380e3 # Bandwidth at G=10 is 380 kHz for INA823
-cmrr_dc_dB = 115.0 # Typical CMRR at DC for G=10
-cmrr_60hz_dB = 105.0
-
-# High-Pass Filter (1st order)
-# f_L = 0.482 Hz approx 0.5 Hz
-C_H = 1.0e-6       # 1 uF
-R_H = 330e3        # 330 kOhm
-f_L = 1.0 / (2.0 * np.pi * R_H * C_H) # 0.482 Hz
-w_L = 2.0 * np.pi * f_L
-
-# Low-Pass Filter & Gain Stage (TL082)
-# G2 = 1 + Rf / R1 = 1 + 100k / 1k = 101 V/V ~ 40.09 dB
-# Cf = 10 nF in parallel with Rf -> f_H = 1 / (2*pi*Rf*Cf) = 159.15 Hz ~ 150 Hz
-R1_gain = 1e3      # 1 kOhm
-Rf_gain = 100e3    # 100 kOhm
-Cf_gain = 10e-9    # 10 nF
-G2 = 1.0 + Rf_gain / R1_gain # 101 V/V
-G2_dB = 20 * np.log10(G2)
-f_H = 1.0 / (2.0 * np.pi * Rf_gain * Cf_gain) # 159.15 Hz
-w_H = 2.0 * np.pi * f_H
-
-# Total Bioamplifier Gain & Bandwidth
-G_tot = G1 * G2
-G_tot_dB = 20 * np.log10(G_tot) # ~60.09 dB
-BW = f_H - f_L
-
-print(f"Bioamplifier Design Summary:")
-print(f"RFI diff cutoff: {f_c_rfi_diff:.2f} Hz, cm cutoff: {f_c_rfi_cm:.2f} Hz")
-print(f"INA823 Gain G1: {G1:.2f} ({G1_dB:.2f} dB), BW: {f_c_ina/1e3:.1f} kHz")
-print(f"High-pass cutoff f_L: {f_L:.3f} Hz")
-print(f"Low-pass cutoff f_H: {f_H:.2f} Hz")
-print(f"Gain second stage G2: {G2:.2f} ({G2_dB:.2f} dB)")
-print(f"Total Gain G_tot: {G_tot:.2f} ({G_tot_dB:.2f} dB)")
-print(f"Bandwidth: {BW:.2f} Hz")
-
-# Frequency vector for Bode plots
-freqs = np.logspace(-2, 6, 2000) # 0.01 Hz to 1 MHz
-w = 2.0 * np.pi * freqs
-s = 1j * w
-
-# -----------------------------------------------------------------------------
-# FIGURE 6.1: DIAGRAMME DE BODE INA823 (APPROCHE SYSTÉMIQUE)
-# -----------------------------------------------------------------------------
-# Differential transfer function: Ad(s) = G1 / (1 + s / (2*pi*f_c_ina))
-Ad = G1 / (1.0 + s / (2.0 * np.pi * f_c_ina))
-
-# Common Mode Rejection Ratio CMRR(s) modeling:
-# CMRR is 115 dB at DC, single pole roll-off around 1 kHz
-w_cmrr_pole = 2.0 * np.pi * 1000.0
-cmrr_linear_dc = 10**(cmrr_dc_dB / 20.0)
-cmrr_s = cmrr_linear_dc / np.sqrt(1.0 + (w / w_cmrr_pole)**2)
-cmrr_s_dB = 20.0 * np.log10(cmrr_s)
-
-# Common Mode Gain: Acm(s) = Ad(s) / cmrr(s)
-Acm = np.abs(Ad) / cmrr_s
-Acm_dB = 20.0 * np.log10(Acm)
-Ad_dB = 20.0 * np.log10(np.abs(Ad))
-
-fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(7.2, 5.0), sharex=True)
-
-ax1.semilogx(freqs, Ad_dB, 'b-', label=r'Mode différentiel $A_d = \frac{V(OUT)}{V(POS)-V(NEG)}$ ($G_1 = 10$)')
-ax1.semilogx(freqs, Acm_dB, 'r--', label=r'Mode commun $A_{cm} = \frac{V(OUT)}{(V(POS)+V(NEG))/2}$')
-ax1.axvline(60, color='gray', linestyle=':', alpha=0.8, label=r'Fréquence secteur (60 Hz)')
-ax1.scatter([60], [20*np.log10(np.interp(60, freqs, Acm))], color='red', zorder=5)
-ax1.annotate(f'Acm(60 Hz) = {20*np.log10(np.interp(60, freqs, Acm)):.1f} dB', 
-             xy=(60, 20*np.log10(np.interp(60, freqs, Acm))), xytext=(120, -75),
-             arrowprops=dict(arrowstyle='->', color='red'))
-
-ax1.set_ylabel('Gain (dB)')
-ax1.set_ylim(-110, 30)
-ax1.grid(True, which='both')
-ax1.legend(loc='upper right')
-ax1.set_title("Diagramme de Bode de l'étage préamplificateur INA823 (approche systémique)")
-
-ax2.semilogx(freqs, cmrr_s_dB, 'g-', label=r'TRMC (CMRR) $= 20\,\log_{10}(|A_d / A_{cm}|)$')
-ax2.axvline(60, color='gray', linestyle=':', alpha=0.8)
-cmrr_at_60 = np.interp(60, freqs, cmrr_s_dB)
-ax2.scatter([60], [cmrr_at_60], color='green', zorder=5)
-ax2.annotate(f'TRMC(60 Hz) = {cmrr_at_60:.1f} dB\n(Fiche technique : $\\geq 104$ dB)', 
-             xy=(60, cmrr_at_60), xytext=(150, 95),
-             arrowprops=dict(arrowstyle='->', color='green'))
-
-ax2.set_xlabel('Fréquence (Hz)')
-ax2.set_ylabel('TRMC (dB)')
-ax2.set_ylim(40, 125)
-ax2.grid(True, which='both')
-ax2.legend(loc='lower left')
-
-plt.tight_layout()
-fig.savefig('figures/fig_6_1_bode_ina823.png', dpi=300)
-fig.savefig('fig_6_1_bode_ina823.png', dpi=300)
-plt.close(fig)
-print("Figure 6.1 saved.")
-
-# -----------------------------------------------------------------------------
-# FIGURE 6.2: DIAGRAMME DE BODE DES ÉTAGES DE FILTRAGE
-# -----------------------------------------------------------------------------
-# High-pass filter
-H_HP = (s / w_L) / (1.0 + s / w_L)
-H_HP_dB = 20.0 * np.log10(np.abs(H_HP))
-
-# Low-pass filter (active TL082 non-inverting with Cf)
-# H_LP_gain(s) = (1 + Rf/R1) * (1 + s*tau_z) / (1 + s*tau_p)
-tau_p = Rf_gain * Cf_gain
-tau_z = (R1_gain * Rf_gain * Cf_gain) / (R1_gain + Rf_gain)
-# To provide true low-pass attenuation beyond zero, cascaded with op-amp GBW (TL082 GBW ~ 3 MHz)
-w_opamp = 2.0 * np.pi * 3e6
-H_opamp = 1.0 / (1.0 + (G2 * s) / w_opamp)
-H_LP_gain = ((1.0 + s * tau_z) / (1.0 + s * tau_p)) * G2 * H_opamp
-H_LP_dB = 20.0 * np.log10(np.abs(H_LP_gain))
-
-# Normalized Low-pass filter alone (0 dB in passband)
-H_LP_norm_dB = H_LP_dB - G2_dB
-
-# RFI differential filter
-H_RFI = 1.0 / (1.0 + s * tau_rfi_diff)
-H_RFI_dB = 20.0 * np.log10(np.abs(H_RFI))
-
-fig, ax = plt.subplots(figsize=(7.2, 4.2))
-ax.semilogx(freqs, H_HP_dB, 'b-', label=f'Passe-haut 1er ordre ($R_H=330\\,\\mathrm{{k\\Omega}}, C_H=1\\,\\mu\\mathrm{{F}}$, $f_L={f_L:.2f}\\,\\mathrm{{Hz}}$)')
-ax.semilogx(freqs, H_LP_norm_dB, 'r-', label=f'Passe-bas 1er ordre ($R_f=100\\,\\mathrm{{k\\Omega}}, C_f=10\\,\\mathrm{{nF}}$, $f_H={f_H:.1f}\\,\\mathrm{{Hz}}$)')
-ax.semilogx(freqs, H_RFI_dB, 'm:', label=f'Filtre RFI diff. ($R=1\\,\\mathrm{{k\\Omega}}, C=10\\,\\mathrm{{nF}}$, $f_c={f_c_rfi_diff/1e3:.2f}\\,\\mathrm{{kHz}}$)')
-
-# Cutoff markers
-ax.axhline(-3, color='k', linestyle='--', alpha=0.6, label='Atténuation de -3 dB')
-ax.scatter([f_L, f_H], [-3, -3], color='black', zorder=5)
-ax.annotate(f'$f_L = {f_L:.2f}\\,\\mathrm{{Hz}}$\n(-3 dB)', xy=(f_L, -3), xytext=(0.04, -18),
-            arrowprops=dict(arrowstyle='->', color='blue'))
-ax.annotate(f'$f_H = {f_H:.1f}\\,\\mathrm{{Hz}}$\n(-3 dB)', xy=(f_H, -3), xytext=(400, -18),
-            arrowprops=dict(arrowstyle='->', color='red'))
-
-# Slopes annotations
-ax.text(0.02, -25, '+20 dB/décade', color='blue', fontsize=9, rotation=28)
-ax.text(1200, -25, '-20 dB/décade', color='red', fontsize=9, rotation=-28)
-
-ax.set_xlim(0.01, 100e3)
-ax.set_ylim(-40, 5)
-ax.set_xlabel('Fréquence (Hz)')
-ax.set_ylabel('Gain normalisé (dB)')
-ax.set_title('Diagrammes de Bode des étages de filtrage individuels')
-ax.grid(True, which='both')
-ax.legend(loc='lower center', framealpha=0.9)
-
-plt.tight_layout()
-fig.savefig('figures/fig_6_2_bode_filtres.png', dpi=300)
-fig.savefig('fig_6_2_bode_filtres.png', dpi=300)
-plt.close(fig)
-print("Figure 6.2 saved.")
-
-# -----------------------------------------------------------------------------
-# FIGURE 6.3: DIAGRAMME DE BODE GLOBAL DU BIOAMPLIFICATEUR
-# -----------------------------------------------------------------------------
-# Total Bioamplifier Transfer Function
-H_tot = H_RFI * Ad * H_HP * H_LP_gain
-H_tot_mag = np.abs(H_tot)
-H_tot_dB = 20.0 * np.log10(H_tot_mag)
-H_tot_phase = np.angle(H_tot, deg=True)
-
-# Find exact -3dB points numerically from total response
-max_gain_dB = np.max(H_tot_dB)
-threshold_3dB = max_gain_dB - 3.0
-passband_indices = np.where(H_tot_dB >= threshold_3dB)[0]
-f_low_sim = freqs[passband_indices[0]]
-f_high_sim = freqs[passband_indices[-1]]
-
-fig, (ax_mag, ax_phase) = plt.subplots(2, 1, figsize=(7.2, 5.2), sharex=True)
-
-# Magnitude Plot
-ax_mag.semilogx(freqs, H_tot_dB, 'b-', label='Gain total $A_v(f)$')
-ax_mag.axhline(max_gain_dB, color='darkblue', linestyle=':', alpha=0.7, label=f'Gain max = {max_gain_dB:.2f} dB ({G_tot:.0f} V/V)')
-ax_mag.axhline(threshold_3dB, color='gray', linestyle='--', alpha=0.7, label=f'Niveau -3 dB = {threshold_3dB:.2f} dB')
-
-ax_mag.scatter([f_low_sim, f_high_sim], [threshold_3dB, threshold_3dB], color='red', zorder=5)
-ax_mag.annotate(f'$f_L = {f_low_sim:.2f}\\,\\mathrm{{Hz}}$', xy=(f_low_sim, threshold_3dB), xytext=(0.04, 45),
-                arrowprops=dict(arrowstyle='->', color='red', lw=1.2))
-ax_mag.annotate(f'$f_H = {f_high_sim:.1f}\\,\\mathrm{{Hz}}$', xy=(f_high_sim, threshold_3dB), xytext=(400, 45),
-                arrowprops=dict(arrowstyle='->', color='red', lw=1.2))
-
-# Highlight ECG diagnostic passband
-ax_mag.axvspan(f_low_sim, f_high_sim, color='green', alpha=0.1, label=f'Bande passante ECG ({f_low_sim:.2f} - {f_high_sim:.0f} Hz)')
-
-ax_mag.text(0.02, 20, '+20 dB/décade\n(Rejet dérive DC)', color='blue', fontsize=8)
-ax_mag.text(2500, 20, '-20 dB/décade\n(Rejet bruit HF/EMG)', color='blue', fontsize=8)
-
-ax_mag.set_ylabel('Gain en tension (dB)')
-ax_mag.set_ylim(-20, 70)
-ax_mag.grid(True, which='both')
-ax_mag.legend(loc='lower left', fontsize=8.5)
-ax_mag.set_title("Diagramme de Bode complet du bioamplificateur ECG ($A_{v,\\mathrm{total}}$)")
-
-# Phase Plot
-ax_phase.semilogx(freqs, H_tot_phase, 'purple', label='Déphasage (degrés)')
-ax_phase.axhline(0, color='gray', linestyle=':')
-ax_phase.axvline(f_low_sim, color='red', linestyle=':', alpha=0.5)
-ax_phase.axvline(f_high_sim, color='red', linestyle=':', alpha=0.5)
-
-phase_fl = np.interp(f_low_sim, freqs, H_tot_phase)
-phase_fh = np.interp(f_high_sim, freqs, H_tot_phase)
-ax_phase.scatter([f_low_sim, f_high_sim], [phase_fl, phase_fh], color='red', zorder=5)
-ax_phase.annotate(f'{phase_fl:.1f}°', xy=(f_low_sim, phase_fl), xytext=(0.05, 50),
-                  arrowprops=dict(arrowstyle='->', color='purple'))
-ax_phase.annotate(f'{phase_fh:.1f}°', xy=(f_high_sim, phase_fh), xytext=(350, -50),
-                  arrowprops=dict(arrowstyle='->', color='purple'))
-
-ax_phase.set_xlabel('Fréquence (Hz)')
-ax_phase.set_ylabel('Phase (degrés)')
-ax_phase.set_ylim(-180, 180)
-ax_phase.set_yticks([-180, -90, -45, 0, 45, 90, 180])
-ax_phase.grid(True, which='both')
-ax_phase.legend(loc='lower left', fontsize=8.5)
-
-plt.tight_layout()
-fig.savefig('figures/fig_6_3_bode_global.png', dpi=300)
-fig.savefig('fig_6_3_bode_global.png', dpi=300)
-plt.close(fig)
-print(f"Figure 6.3 saved: f_L = {f_low_sim:.3f} Hz, f_H = {f_high_sim:.2f} Hz, Gain = {max_gain_dB:.2f} dB.")
-
-# -----------------------------------------------------------------------------
-# FIGURE 6.4: ATTÉNUATION DU MODE COMMUN AVEC ET SANS DRL
-# -----------------------------------------------------------------------------
-f_drl = np.logspace(0, 4, 500)
-A_drl_dc = 20.0
-f_c_drl = 338.0 # compensation capacitor 1 nF with 470k
-A_drl_f = A_drl_dc / np.sqrt(1.0 + (f_drl / f_c_drl)**2)
-
-# Vcm without DRL
-vcm_raw = 10e-3 # 10 mV at 60 Hz
-vcm_without = vcm_raw * np.ones_like(f_drl)
-vcm_with = vcm_raw / (1.0 + A_drl_f)
-
-attenuation_dB = 20 * np.log10(vcm_without / vcm_with)
-
-fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(7.2, 4.8), sharex=True)
-
-ax1.semilogx(f_drl, vcm_without * 1e3, 'r--', label='Mode commun corporel sans DRL ($V_{cm}$ brut)')
-ax1.semilogx(f_drl, vcm_with * 1e3, 'g-', label='Mode commun corporel avec DRL')
-ax1.axvline(60, color='gray', linestyle=':')
-vcm_60_no = np.interp(60, f_drl, vcm_without * 1e3)
-vcm_60_with = np.interp(60, f_drl, vcm_with * 1e3)
-ax1.scatter([60, 60], [vcm_60_no, vcm_60_with], color=['red', 'green'], zorder=5)
-ax1.annotate(f'{vcm_60_no:.1f} mV', xy=(60, vcm_60_no), xytext=(12, 11.5),
-             arrowprops=dict(arrowstyle='->', color='red'))
-ax1.annotate(f'{vcm_60_with:.2f} mV (-26,4 dB)', xy=(60, vcm_60_with), xytext=(120, 2),
-             arrowprops=dict(arrowstyle='->', color='green'))
-
-ax1.set_ylabel(r'$V_{cm}$ corporel ($\mathrm{mV}$)')
-ax1.set_ylim(-0.5, 14)
-ax1.grid(True, which='both')
-ax1.legend(loc='center right')
-ax1.set_title("Effet du circuit Driven-Right-Leg (DRL) sur la réjection du mode commun 60 Hz")
-
-ax2.semilogx(f_drl, attenuation_dB, 'b-', label=r'Facteur d’atténuation du DRL : $20\,\log_{10}(1 + A_{\mathrm{DRL}})$')
-ax2.axvline(60, color='gray', linestyle=':')
-att_60 = np.interp(60, f_drl, attenuation_dB)
-ax2.scatter([60], [att_60], color='blue', zorder=5)
-ax2.annotate(f'{att_60:.1f} dB à 60 Hz\n(atténuation d’un facteur {10**(att_60/20):.1f})',
-             xy=(60, att_60), xytext=(120, 18),
-             arrowprops=dict(arrowstyle='->', color='blue'))
-
-ax2.set_xlabel('Fréquence (Hz)')
-ax2.set_ylabel('Atténuation (dB)')
-ax2.set_ylim(0, 32)
-ax2.grid(True, which='both')
-ax2.legend(loc='lower left')
-
-plt.tight_layout()
-fig.savefig('figures/fig_6_4_drl_attenuation.png', dpi=300)
-fig.savefig('fig_6_4_drl_attenuation.png', dpi=300)
-plt.close(fig)
-print("Figure 6.4 saved.")
-
-# -----------------------------------------------------------------------------
-# FIGURE 6.5: SIMULATION TEMPORELLE (TRANSIENT ANALYSIS) DU SIGNAL ECG
-# -----------------------------------------------------------------------------
-# Generate synthetic realistic ECG signal over 5 seconds, plotted after settling (t = 1.0 to 4.0 s)
-np.random.seed(42)
-fs = 2000.0 # 2 kHz sampling rate
-t_full = np.arange(0, 5.0, 1.0/fs)
-
-def ecg_wave(t_vec, hr=68):
-    period = 60.0 / hr
-    ecg = np.zeros_like(t_vec)
-    for t0 in np.arange(0.2, t_vec[-1] + period, period):
-        # P-wave: Gaussian peak around t0 - 0.16
-        ecg += 0.15 * np.exp(-((t_vec - (t0 - 0.16)) / 0.025)**2)
-        # Q-wave: negative dip around t0 - 0.04
-        ecg -= 0.15 * np.exp(-((t_vec - (t0 - 0.04)) / 0.01)**2)
-        # R-wave: sharp positive peak at t0
-        ecg += 1.2 * np.exp(-((t_vec - t0) / 0.015)**2)
-        # S-wave: negative dip around t0 + 0.035
-        ecg -= 0.3 * np.exp(-((t_vec - (t0 + 0.035)) / 0.012)**2)
-        # T-wave: wider positive peak around t0 + 0.22
-        ecg += 0.35 * np.exp(-((t_vec - (t0 + 0.22)) / 0.05)**2)
-    return ecg
-
-ecg_clean_full = ecg_wave(t_full, hr=68) # ~1.2 mV R-wave peak
-
-# Perturbations:
-# 1) DC electrode half-cell offset: 120 mV
-dc_offset = 120.0 # mV
-# 2) Respiration baseline drift (0.25 Hz): 0.5 mV
-drift_full = 0.5 * np.sin(2 * np.pi * 0.25 * t_full)
-# 3) Residual 60 Hz after DRL & TRMC (common mode 10 mV -> DRL 0.48 mV -> TRMC 105 dB gives < 0.01 mV diff, plus 0.04 mV impedance mismatch)
-noise_60hz_full = 0.05 * np.sin(2 * np.pi * 60.0 * t_full)
-# 4) Wideband thermal noise
-noise_hf_full = 0.015 * np.random.randn(len(t_full))
-
-# Raw input bio-signal (mV)
-ecg_raw_full = ecg_clean_full + dc_offset + drift_full + noise_60hz_full + noise_hf_full
-
-# Step 1: INA823 output (Gain 10, offset amplifié, centré sur Vref = 1.65 V)
-v_ina_full = 1.65 + G1 * (ecg_raw_full / 1000.0)
-
-# Step 2: High-pass filtering (1st order Butterworth, f_L = 0.48 Hz)
-sos_hp = signal.butter(1, f_L, 'highpass', fs=fs, output='sos')
-ecg_hp_full = signal.sosfilt(sos_hp, ecg_raw_full - dc_offset)
-
-# Step 3: Low-pass filtering (1st order Butterworth, f_H = 159 Hz) & Gain G2 = 101
-sos_lp = signal.butter(1, f_H, 'lowpass', fs=fs, output='sos')
-ecg_lp_full = signal.sosfilt(sos_lp, ecg_hp_full)
-
-# Final output: amplified by G2 = 101, centered at Vref = 1.65 V
-v_final_full = 1.65 + (G_tot * ecg_lp_full / 1000.0)
-
-# Extract settled window for visualization: t from 1.0 to 4.0 s (re-zero time to 0 .. 3 s)
-mask = (t_full >= 1.0) & (t_full <= 4.0)
-t = t_full[mask] - 1.0
-ecg_raw_input = ecg_raw_full[mask]
-v_ina_out = v_ina_full[mask]
-v_final_out = v_final_full[mask]
-
-fig, (ax1, ax2, ax3) = plt.subplots(3, 1, figsize=(7.2, 5.8), sharex=True)
-
-# Panneau 1: Signal d'entrée brut
-ax1.plot(t, ecg_raw_input, 'k-', lw=1.0, label=r'Biosignal d’entrée brut $V_{in}$ (mV)')
-ax1.axhline(dc_offset, color='r', linestyle='--', alpha=0.7, label=f'Décalage DC demi-cellule ({dc_offset:.0f} mV)')
-ax1.set_ylabel(r'$V_{in}$ ($\mathrm{mV}$)')
-ax1.set_ylim(dc_offset - 3, dc_offset + 5)
-ax1.set_title('Simulation temporelle (Transient Analysis) du bioamplificateur conçu')
-ax1.grid(True)
-ax1.legend(loc='upper right', fontsize=8)
-
-# Panneau 2: Sortie préamplificateur INA823
-ax2.plot(t, v_ina_out, 'darkblue', lw=1.1, label=r'Sortie INA823 $V_{\mathrm{INA}}$ (V), $G_1 = 10$ ($V_{ref}=1,65\,\mathrm{V}$)')
-ax2.axhline(1.65 + G1*(dc_offset/1e3), color='r', linestyle=':', label=f'Offset amplifié ({1.65 + G1*(dc_offset/1e3):.2f} V, sous saturation)')
-ax2.set_ylabel(r'$V_{\mathrm{INA}}$ ($\mathrm{V}$)')
-ax2.set_ylim(2.7, 3.1)
-ax2.grid(True)
-ax2.legend(loc='upper right', fontsize=8)
-
-# Panneau 3: Sortie finale filtrée et amplifiée
-ax3.plot(t, v_final_out, 'g-', lw=1.3, label=r'Sortie finale $V_{out}$ (V), $A_v = 1010$ ($V_{ref}=1,65\,\mathrm{V}$)')
-ax3.axhline(1.65, color='gray', linestyle='--', label=r'Masse virtuelle $V_{ref} = 1,65\,\mathrm{V}$')
-ax3.axhline(3.3, color='r', linestyle=':', label=r'Pleine échelle ADC ($V_{DD} = 3,3\,\mathrm{V}$)')
-ax3.axhline(0.0, color='r', linestyle=':', label=r'GND ($0\,\mathrm{V}$)')
-
-# Annotate R wave peak
-r_idx = np.argmax(v_final_out[int(0.5*fs):int(1.5*fs)]) + int(0.5*fs)
-ax3.annotate(f'Onde R amplifiée\n$V_{{peak}} = {v_final_out[r_idx]:.2f}\\,\\mathrm{{V}}$\n($\\Delta V = {v_final_out[r_idx]-1.65:.2f}\\,\\mathrm{{V}}$)',
-             xy=(t[r_idx], v_final_out[r_idx]), xytext=(t[r_idx]+0.16, 2.05),
-             arrowprops=dict(arrowstyle='->', color='green', lw=1.2))
-
-ax3.set_xlabel('Temps stabilisé (s)')
-ax3.set_ylabel(r'$V_{out}$ ($\mathrm{V}$)')
-ax3.set_ylim(-0.2, 3.6)
-ax3.grid(True)
-ax3.legend(loc='lower right', fontsize=8)
-
-plt.tight_layout()
-fig.savefig('figures/fig_6_5_simulation_temporelle.png', dpi=300)
-fig.savefig('fig_6_5_simulation_temporelle.png', dpi=300)
-plt.close(fig)
-print("Figure 6.5 saved.")
-
-# -----------------------------------------------------------------------------
-# FIGURE 6.0: SCHÉMA BLOCS / ARCHITECTURE DU BIOAMPLIFICATEUR (CORRIGÉ & AÉRÉ)
-# -----------------------------------------------------------------------------
-fig, ax = plt.subplots(figsize=(9.0, 3.8))
-ax.axis('off')
-
 from matplotlib.patches import FancyBboxPatch
 
-def draw_block(ax, x, y, w, h, title, subtitle, color='#EBF3FB', edgecolor='#2B5B84'):
-    p = FancyBboxPatch((x, y), w, h, boxstyle="round,pad=0.01,rounding_size=0.04",
-                       fc=color, ec=edgecolor, lw=1.5)
-    ax.add_patch(p)
-    ax.text(x + w/2.0, y + h*0.73, title, ha='center', va='center', weight='bold', fontsize=8.6, color='#1A364A')
-    ax.text(x + w/2.0, y + h*0.27, subtitle, ha='center', va='center', fontsize=7.4, color='#333333')
+ICI = Path(__file__).resolve().parent
+DOSSIER_SPICE = ICI / "ltspice"
+DOSSIER_FIG = ICI / "figures"
+NETLISTS = ["ina823_offset_dc", "ina823_bode", "filtres_bode",
+            "bioampli_ac", "drl_ac", "bioampli_tran"]
 
-def draw_arrow(ax, x1, y1, x2, y2, label=""):
-    ax.annotate("", xy=(x2, y2), xytext=(x1, y1),
-                arrowprops=dict(arrowstyle="->", color="#1A364A", lw=1.5))
-    if label:
-        ax.text((x1+x2)/2.0, (y1+y2)/2.0 + 0.05, label, ha='center', va='bottom', fontsize=8, weight='bold')
+# Valeurs nominales (doivent correspondre a ltspice/bioampli.sub)
+VDD, VREF = 3.3, 1.65
+G1_THEO = 1 + 100e3 / (2 * 5.6e3)          # 9,93 V/V
+G2_THEO = 1 + 100e3 / 1e3                  # 101 V/V
 
-# Parameters for clear spacing
-bw = 0.16
-bh = 0.36
-y_top = 0.53
+# Palette categorielle validee (slots 1 a 3) et encres de texte
+BLEU, ORANGE, AQUA = "#2a78d6", "#eb6834", "#1baf7a"
+GRIS = "#8a8984"
+ENCRE, ENCRE2 = "#0b0b0b", "#52514e"
 
-# Blocks coordinates
-x1 = 0.06
-x2 = 0.30
-x3 = 0.54
-x4 = 0.78
+plt.rcParams.update({
+    "font.family": "serif", "font.size": 10, "axes.labelsize": 10.5,
+    "axes.titlesize": 10.5, "xtick.labelsize": 9, "ytick.labelsize": 9,
+    "legend.fontsize": 8.5, "lines.linewidth": 1.5, "axes.edgecolor": ENCRE2,
+    "axes.labelcolor": ENCRE, "xtick.color": ENCRE2, "ytick.color": ENCRE2,
+    "grid.color": "#d9d8d4", "grid.linewidth": 0.6, "grid.linestyle": "-",
+    "legend.frameon": True, "legend.framealpha": 0.92, "legend.edgecolor": "#d9d8d4",
+    "savefig.dpi": 300, "savefig.bbox": "tight",
+})
 
-draw_block(ax, x1, y_top, bw, bh, "1. Filtre RFI", "Passif EMI/RFI\n$f_{c,diff}=7,6\\,\\mathrm{kHz}$", color='#FEF3D6', edgecolor='#B8860B')
-draw_block(ax, x2, y_top, bw, bh, "2. Préampli.\nINA823", "$G_1 = 10\\,\\mathrm{V/V}$ (20 dB)\nTRMC $\\geq 104\\,\\mathrm{dB}$", color='#DCEEFB', edgecolor='#1F77B4')
-draw_block(ax, x3, y_top, bw, bh, "3. Passe-Haut", "1er ordre $R_H C_H$\n$f_L = 0,48\\,\\mathrm{Hz}$", color='#E2F0D9', edgecolor='#385723')
-draw_block(ax, x4, y_top, bw, bh, "4. Passe-Bas\n& Gain TL082", "$G_2 = 101\\,\\mathrm{V/V}$ (40 dB)\n$f_H = 159\\,\\mathrm{Hz}$", color='#FCE4D6', edgecolor='#C65911')
 
-# DRL block at bottom
-draw_block(ax, 0.30, 0.06, 0.40, 0.32, "5. Circuit Driven-Right-Leg (DRL)", 
-           "Inverseur TL082 ($A_{\\mathrm{DRL}}=20$) + protection $R_o = 100\\,\\mathrm{k\\Omega}$\nRéjection du mode commun 60 Hz (-26,4 dB)", 
-           color='#EDEDED', edgecolor='#595959')
+# ---------------------------------------------------------------------------
+# ECG synthetique pour la simulation temporelle (fichier PWL de LTspice)
+# ---------------------------------------------------------------------------
+def ecg_synthetique(t, fc=68.0):
+    """ECG de derivation I simplifie (en volts), onde R de 1,2 mV."""
+    periode = 60.0 / fc
+    v = np.zeros_like(t)
+    for t0 in np.arange(0.2, t[-1] + periode, periode):
+        v += 0.15 * np.exp(-((t - (t0 - 0.16)) / 0.025) ** 2)   # P
+        v -= 0.15 * np.exp(-((t - (t0 - 0.04)) / 0.010) ** 2)   # Q
+        v += 1.20 * np.exp(-((t - t0) / 0.015) ** 2)            # R
+        v -= 0.30 * np.exp(-((t - (t0 + 0.035)) / 0.012) ** 2)  # S
+        v += 0.35 * np.exp(-((t - (t0 + 0.22)) / 0.050) ** 2)   # T
+    return v * 1e-3
 
-# Arrows main chain
-y_arrow = y_top + bh/2.0
-draw_arrow(ax, -0.04, y_arrow, x1, y_arrow, "ECG")
-draw_arrow(ax, x1 + bw, y_arrow, x2, y_arrow)
-draw_arrow(ax, x2 + bw, y_arrow, x3, y_arrow)
-draw_arrow(ax, x3 + bw, y_arrow, x4, y_arrow)
-draw_arrow(ax, x4 + bw, y_arrow, x4 + bw + 0.07, y_arrow)
-ax.text(x4 + bw + 0.08, y_arrow, "Vers ADC\n(0 - 3,3 V)", va='center', ha='left', fontsize=8, weight='bold', color='#1A364A')
 
-# DRL connections
-ax.annotate("", xy=(x2 + 0.08, 0.38), xytext=(x2 + 0.08, y_top),
-            arrowprops=dict(arrowstyle="->", color="#595959", lw=1.2, ls="--"))
-ax.text(x2 + 0.10, 0.45, "Mode commun\n$V_{cm}$ ($R_a$)", fontsize=7.5, color='#595959')
+def ecrire_pwl():
+    t = np.arange(0.0, 4.0 + 1e-9, 0.5e-3)
+    v = ecg_synthetique(t)
+    with open(DOSSIER_SPICE / "ecg_pwl.txt", "w") as f:
+        for ti, vi in zip(t, v):
+            f.write(f"{ti:.4f} {vi:.6e}\n")
 
-ax.annotate("", xy=(-0.04, 0.22), xytext=(0.30, 0.22),
-            arrowprops=dict(arrowstyle="->", color="#595959", lw=1.2, ls="--"))
-ax.text(0.13, 0.24, "Jambe droite (REF)", fontsize=7.5, color='#595959', ha='center')
 
-# Power supply banner
-ax.text(0.5, 0.97, "Alimentation unipolaire : $V_{DD} = 3,3\\,\\mathrm{V}$, $\\mathrm{GND} = 0\\,\\mathrm{V}$, polarisation $V_{ref} = 1,65\\,\\mathrm{V}$ (BioBLU)",
-        ha='center', va='top', fontsize=8.5, weight='bold', color='#1A364A',
-        bbox=dict(boxstyle='square,pad=0.2', fc='#F2F2F2', ec='none'))
+# ---------------------------------------------------------------------------
+# Execution de LTspice
+# ---------------------------------------------------------------------------
+def trouver_ltspice():
+    if os.environ.get("LTSPICE"):
+        return os.environ["LTSPICE"]
+    candidats = [
+        "/Applications/LTspice.app/Contents/MacOS/LTspice",
+        r"C:\Program Files\ADI\LTspice\LTspice.exe",
+        os.path.expandvars(r"%LOCALAPPDATA%\Programs\ADI\LTspice\LTspice.exe"),
+        r"C:\Program Files\LTC\LTspiceXVII\XVIIx64.exe",
+    ]
+    for c in candidats:
+        if Path(c).exists():
+            return c
+    return shutil.which("LTspice") or shutil.which("ltspice")
 
-ax.set_xlim(-0.06, 1.06)
-ax.set_ylim(0, 1.0)
-plt.tight_layout()
-fig.savefig('figures/fig_6_schema_bioampli.png', dpi=300)
-fig.savefig('fig_6_schema_bioampli.png', dpi=300)
-plt.close(fig)
-print("Figure 6.0 updated cleanly.")
 
+def lancer_ltspice(exe):
+    for nom in NETLISTS:
+        cir = DOSSIER_SPICE / f"{nom}.cir"
+        raw = DOSSIER_SPICE / f"{nom}.raw"
+        if raw.exists():
+            raw.unlink()
+        print(f"LTspice : {cir.name} ...", flush=True)
+        subprocess.run([exe, "-b", str(cir)], cwd=DOSSIER_SPICE, check=False, timeout=900)
+        if not raw.exists():
+            log = DOSSIER_SPICE / f"{nom}.log"
+            texte = log.read_text(errors="replace") if log.exists() else "(pas de .log)"
+            sys.exit(f"Echec de la simulation {cir.name} :\n{texte}")
+
+
+# ---------------------------------------------------------------------------
+# Lecture des fichiers .raw de LTspice (binaire ou ASCII, UTF-16 ou UTF-8)
+# ---------------------------------------------------------------------------
+def lire_raw(chemin):
+    donnees = Path(chemin).read_bytes()
+    codec = "utf-16-le" if donnees[1:2] == b"\x00" else "latin-1"
+    marqueurs = {m: m.encode(codec) for m in ("Binary:\n", "Values:\n")}
+    pos, mode = -1, None
+    for m, octets in marqueurs.items():
+        pos = donnees.find(octets)
+        if pos >= 0:
+            mode = m
+            break
+    if pos < 0:
+        raise ValueError(f"{chemin} : en-tete non reconnu")
+    entete = donnees[:pos].decode(codec)
+    debut = pos + len(marqueurs[mode])
+
+    lignes = entete.splitlines()
+    info, noms = {}, []
+    for i, ligne in enumerate(lignes):
+        if ligne.startswith("Variables:"):
+            for v in lignes[i + 1:]:
+                champs = v.split()
+                if len(champs) >= 2 and champs[0].isdigit():
+                    noms.append(champs[1])
+            break
+        if ":" in ligne:
+            cle, val = ligne.split(":", 1)
+            info[cle.strip().lower()] = val.strip()
+    n, m = int(info["no. variables"]), int(info["no. points"])
+    drapeaux = info.get("flags", "").lower()
+    complexe = "complex" in drapeaux
+
+    if mode == "Binary:\n":
+        reste = len(donnees) - debut
+        if complexe:
+            tab = np.frombuffer(donnees, dtype="<c16", count=n * m, offset=debut).reshape(m, n)
+            cols = [tab[:, k] for k in range(n)]
+        elif "double" in drapeaux or reste == n * m * 8:
+            tab = np.frombuffer(donnees, dtype="<f8", count=n * m, offset=debut).reshape(m, n)
+            cols = [tab[:, k] for k in range(n)]
+        else:
+            dt = np.dtype([("x", "<f8")] + [(f"v{k}", "<f4") for k in range(1, n)])
+            tab = np.frombuffer(donnees, dtype=dt, count=m, offset=debut)
+            cols = [tab["x"]] + [tab[f"v{k}"].astype(float) for k in range(1, n)]
+    else:
+        jetons = donnees[debut:].decode(codec).split()
+        valeurs = []
+        k = 0
+        for _ in range(m):
+            k += 1  # indice du point
+            for _ in range(n):
+                j = jetons[k]
+                k += 1
+                if complexe:
+                    re, im = j.split(",")
+                    valeurs.append(complex(float(re), float(im)))
+                else:
+                    valeurs.append(float(j))
+        tab = np.array(valeurs).reshape(m, n)
+        cols = [tab[:, k] for k in range(n)]
+
+    res = {}
+    for nom, col in zip(noms, cols):
+        res[nom.lower()] = col
+    x = np.real(cols[0])  # temps, frequence ou valeur balayee
+    if "transient" in info.get("plotname", "").lower():
+        x = np.abs(x)  # LTspice marque certains points de temps par un signe negatif
+    res["_x"] = x
+    return res
+
+
+def v(raw, noeud):
+    return raw[f"v({noeud.lower()})"]
+
+
+# ---------------------------------------------------------------------------
+# Outils d'analyse
+# ---------------------------------------------------------------------------
+def db(h):
+    return 20 * np.log10(np.maximum(np.abs(h), 1e-30))
+
+
+def valeur_a(f, y, f0):
+    """Interpolation en echelle logarithmique de frequence."""
+    return np.interp(np.log10(f0), np.log10(f), y)
+
+
+def _croise(f, y, k, seuil):
+    lf = np.log10(f[k:k + 2])
+    return 10 ** np.interp(seuil, sorted(y[k:k + 2]), lf if y[k] < y[k + 1] else lf[::-1])
+
+
+def coupures(f, mag_db):
+    """Gain max et frequences a -3 dB (basse et haute) d'une courbe en dB."""
+    i = int(np.argmax(mag_db))
+    gmax = mag_db[i]
+    seuil = gmax - 3.0
+    fl = fh = None
+    bas = np.where(mag_db[:i] < seuil)[0]
+    if bas.size:
+        fl = _croise(f, mag_db, bas[-1], seuil)
+    haut = np.where(mag_db[i:] < seuil)[0]
+    if haut.size:
+        fh = _croise(f, mag_db, i + haut[0] - 1, seuil)
+    return gmax, fl, fh
+
+
+def fmt_hz(x):
+    if x is None:
+        return "n/a"
+    if x >= 1e3:
+        return f"{x / 1e3:.3g} kHz".replace(".", ",")
+    return f"{x:.3g} Hz".replace(".", ",")
+
+
+def virgule(x, nd=2):
+    return f"{x:.{nd}f}".replace(".", ",")
+
+
+def axes_freq(ax):
+    ax.set_xscale("log")
+    ax.grid(True, which="major")
+    ax.grid(True, which="minor", alpha=0.35)
+
+
+def marquer(ax, x, y, texte, dx=1.6, dy=0.0, ha="left"):
+    ax.plot([x], [y], "o", ms=5, mfc="white", mec=ENCRE, mew=1.1, zorder=6)
+    ax.annotate(texte, xy=(x, y), xytext=(x * dx, y + dy), color=ENCRE, fontsize=8.5,
+                ha=ha, va="center",
+                arrowprops=dict(arrowstyle="-", color=ENCRE2, lw=0.7))
+
+
+# ---------------------------------------------------------------------------
+# Figures
+# ---------------------------------------------------------------------------
+def fig_offset(res):
+    raw = lire_raw(DOSSIER_SPICE / "ina823_offset_dc.raw")
+    voff = raw["_x"]
+    vout = np.real(v(raw, "out"))
+    gain = np.gradient(vout, voff)
+    g0 = float(np.interp(0.0, voff, gain))
+    ok = np.abs(gain - g0) <= 0.05 * g0
+    i0 = int(np.argmin(np.abs(voff)))
+    g = i0
+    while g > 0 and ok[g - 1]:
+        g -= 1
+    d = i0
+    while d < len(ok) - 1 and ok[d + 1]:
+        d += 1
+    vmin, vmax = voff[g], voff[d]
+    res["offset"] = {"gain_0": g0, "voff_min_mV": vmin * 1e3, "voff_max_mV": vmax * 1e3,
+                     "vout_min": float(vout[g]), "vout_max": float(vout[d])}
+
+    fig, (a1, a2) = plt.subplots(2, 1, figsize=(7.0, 4.6), sharex=True,
+                                 gridspec_kw={"height_ratios": [1.4, 1]})
+    a1.axvspan(vmin * 1e3, vmax * 1e3, color=BLEU, alpha=0.08, lw=0)
+    a1.plot(voff * 1e3, VREF + G1_THEO * voff, color=GRIS, ls="--", lw=1.2,
+            label=f"Idéal : $V_{{ref}} + G_1 V_{{off}}$ ($G_1 = {virgule(G1_THEO)}$)")
+    a1.plot(voff * 1e3, vout, color=BLEU, label="INA823 (modèle TI), sortie")
+    for yv in (0, VDD):
+        a1.axhline(yv, color=ENCRE2, lw=0.8, ls=":")
+    a1.set_ylim(-0.6, 3.9)
+    a1.set_ylabel("$V_{OUT}$ (V)")
+    a1.legend(loc="upper left")
+    a1.grid(True)
+    a1.set_title("Sortie de l'INA823 en fonction de l'offset continu entre les électrodes")
+    a2.axvspan(vmin * 1e3, vmax * 1e3, color=BLEU, alpha=0.08, lw=0)
+    a2.plot(voff * 1e3, gain, color=BLEU)
+    a2.set_ylim(-0.5, 11.5)
+    a2.set_ylabel("Gain petit signal (V/V)")
+    a2.set_xlabel("Offset différentiel continu $V_{off}$ (mV)")
+    a2.grid(True)
+    a2.text((vmin + vmax) / 2 * 1e3, 4.2,
+            f"Zone linéaire (gain à ±5 %)\n{virgule(vmin * 1e3, 0).replace('-', '−')} à +{virgule(vmax * 1e3, 0)} mV",
+            ha="center", va="center", color=ENCRE, fontsize=9)
+    fig.tight_layout()
+    fig.savefig(DOSSIER_FIG / "fig_6_1_offset_ina823.png")
+    plt.close(fig)
+
+
+def fig_bode_ina(res):
+    raw = lire_raw(DOSSIER_SPICE / "ina823_bode.raw")
+    f = raw["_x"]
+    ad = v(raw, "out_d") / (v(raw, "pos_d") - v(raw, "neg_d"))
+    acm = v(raw, "out_c") / ((v(raw, "pos_c") + v(raw, "neg_c")) / 2)
+    ad_db, acm_db = db(ad), db(acm)
+    trmc = ad_db - acm_db
+    gmax, _, fh = coupures(f, ad_db)
+    r = {"Ad_dB_1Hz": valeur_a(f, ad_db, 1.0), "Ad_dB_60Hz": valeur_a(f, ad_db, 60.0),
+         "fH_INA_Hz": fh, "Acm_dB_60Hz": valeur_a(f, acm_db, 60.0),
+         "TRMC_dB_1Hz": valeur_a(f, trmc, 1.0), "TRMC_dB_60Hz": valeur_a(f, trmc, 60.0),
+         "TRMC_dB_1kHz": valeur_a(f, trmc, 1e3)}
+    res["ina823"] = r
+
+    fig, (a1, a2) = plt.subplots(2, 1, figsize=(7.0, 5.0), sharex=True)
+    a1.plot(f, ad_db, color=BLEU, label=r"Mode différentiel $V(OUT)/(V(POS)-V(NEG))$")
+    a1.plot(f, acm_db, color=ORANGE, label=r"Mode commun $V(OUT)/\frac{V(POS)+V(NEG)}{2}$")
+    a1.axvline(60, color=ENCRE2, lw=0.8, ls=":")
+    marquer(a1, 60, r["Ad_dB_60Hz"], f"{virgule(r['Ad_dB_60Hz'])} dB", dx=2.2, dy=-14)
+    marquer(a1, 60, r["Acm_dB_60Hz"], f"{virgule(r['Acm_dB_60Hz'], 1).replace('-', '−')} dB", dx=2.2, dy=-14)
+    a1.set_ylabel("Gain (dB)")
+    a1.set_ylim(-130, 40)
+    axes_freq(a1)
+    a1.legend(loc="center left")
+    a1.set_title("INA823, $G_1 = 9{,}93$ V/V, alimentation 3,3 V (modèle TI, LTspice)")
+    a2.plot(f, trmc, color=AQUA, label=r"TRMC $= 20\log_{10}|A_d/A_{cm}|$")
+    a2.axvline(60, color=ENCRE2, lw=0.8, ls=":")
+    marquer(a2, 60, r["TRMC_dB_60Hz"], f"{virgule(r['TRMC_dB_60Hz'], 1)} dB à 60 Hz", dx=2.2, dy=-12)
+    a2.set_ylabel("TRMC (dB)")
+    a2.set_xlabel("Fréquence (Hz)")
+    axes_freq(a2)
+    a2.legend(loc="lower left")
+    fig.tight_layout()
+    fig.savefig(DOSSIER_FIG / "fig_6_2a_bode_ina823.png")
+    plt.close(fig)
+
+
+def fig_bode_filtres(res):
+    raw = lire_raw(DOSSIER_SPICE / "filtres_bode.raw")
+    f = raw["_x"]
+
+    def rapport(sortie_p, sortie_n, entree_p, entree_n):
+        return (v(raw, sortie_p) - v(raw, sortie_n)) / (v(raw, entree_p) - v(raw, entree_n))
+
+    rfi_a = db(rapport("p1a", "n1a", "posa", "nega"))
+    rfi_b = db(rapport("p1b", "n1b", "posb", "negb"))
+    rfi_c = db(rapport("p1c", "n1c", "posc", "negc"))
+    hp = db(v(raw, "hout") / v(raw, "hin"))
+    lp5 = db(v(raw, "lout5") / v(raw, "lin5"))
+    lp3 = db(v(raw, "lout3") / v(raw, "lin3"))
+    rc = db(v(raw, "oout") / v(raw, "oin"))
+
+    r = {}
+    r["RFI_fc_Hz"] = coupures(f, rfi_a)[2]
+    r["RFI_elec_fc_Hz"] = coupures(f, rfi_b)[2]
+    r["RFI_prec_elec_fc_Hz"] = coupures(f, rfi_c)[2]
+    r["RFI_elec_dB_150Hz"] = valeur_a(f, rfi_b, 150.0)
+    r["RFI_prec_elec_dB_150Hz"] = valeur_a(f, rfi_c, 150.0)
+    r["HP_fL_Hz"] = coupures(f, hp)[1]
+    g5, _, fh5 = coupures(f, lp5)
+    r["LP5_gain_dB"], r["LP5_fH_Hz"] = g5, fh5
+    r["LP5_plancher_dB"] = valeur_a(f, lp5, 1e5)
+    r["LP3_gain_dB_10Hz"] = valeur_a(f, lp3, 10.0)
+    r["RC_fc_Hz"] = coupures(f, rc)[2]
+    res["filtres"] = r
+
+    fig, (a1, a2) = plt.subplots(2, 1, figsize=(7.0, 6.0), sharex=True)
+    a1.plot(f, rfi_a, color=BLEU, label=f"RFI retenu, source idéale ($f_c$ = {fmt_hz(r['RFI_fc_Hz'])})")
+    a1.plot(f, rfi_b, color=ORANGE, label=f"RFI retenu, à travers les électrodes ($f_c$ = {fmt_hz(r['RFI_elec_fc_Hz'])})")
+    a1.plot(f, rfi_c, color=GRIS, ls="--",
+            label=f"RFI précédent (1 nF / 10 nF), électrodes ($f_c$ = {fmt_hz(r['RFI_prec_elec_fc_Hz'])})")
+    a1.axhline(-3, color=ENCRE2, lw=0.8, ls=":")
+    a1.axvspan(0.5, 150, color=AQUA, alpha=0.07, lw=0)
+    a1.text(9, -9, "bande ECG", color=ENCRE2, fontsize=8.5, ha="center")
+    a1.set_ylim(-30, 3)
+    a1.set_ylabel("Gain (dB)")
+    a1.set_title("(a) Filtre RFI différentiel")
+    axes_freq(a1)
+    a1.legend(loc="lower left")
+
+    a2.plot(f, hp, color=BLEU, label=f"Passe-haut $R_H C_H$ ($f_L$ = {fmt_hz(r['HP_fL_Hz'])})")
+    a2.plot(f, lp5 - db(G2_THEO), color=ORANGE,
+            label=f"Passe-bas et gain, TL082 ±5 V, normalisé ($f_H$ = {fmt_hz(fh5)})")
+    a2.plot(f, rc, color=AQUA, label=f"RC de sortie 1 kΩ / 100 nF ($f_c$ = {fmt_hz(r['RC_fc_Hz'])})")
+    a2.plot(f, lp3 - db(G2_THEO), color=GRIS, ls="--", label="Passe-bas et gain, TL082 sur 3,3 V, normalisé")
+    a2.axhline(-3, color=ENCRE2, lw=0.8, ls=":")
+    a2.set_ylim(-84, 6)
+    a2.set_ylabel("Gain normalisé (dB)")
+    a2.set_xlabel("Fréquence (Hz)")
+    a2.set_title("(b) Passe-haut, passe-bas et gain, RC de sortie")
+    axes_freq(a2)
+    a2.legend(loc="lower left", fontsize=8)
+    fig.tight_layout()
+    fig.savefig(DOSSIER_FIG / "fig_6_2b_bode_filtres.png")
+    plt.close(fig)
+
+
+def fig_bode_global(res):
+    raw = lire_raw(DOSSIER_SPICE / "bioampli_ac.raw")
+    f = raw["_x"]
+    ha = v(raw, "outa") / (v(raw, "inpa") - v(raw, "inna"))
+    hpeau = v(raw, "outa") / v(raw, "vecg")
+    hb = v(raw, "outb") / (v(raw, "inpb") - v(raw, "innb"))
+    ha_db, hpeau_db, hb_db = db(ha), db(hpeau), db(hb)
+    gmax, fl, fh = coupures(f, ha_db)
+    gp, flp, fhp = coupures(f, hpeau_db)
+    phase = np.degrees(np.angle(ha))
+    r = {"gain_max_dB": gmax, "gain_max_VV": 10 ** (gmax / 20), "fL_Hz": fl, "fH_Hz": fh,
+         "peau_gain_max_dB": gp, "peau_fL_Hz": flp, "peau_fH_Hz": fhp,
+         "phase_fL": valeur_a(f, phase, fl), "phase_fH": valeur_a(f, phase, fh),
+         "phase_20Hz": valeur_a(f, phase, 20.0),
+         "B33_gain_dB_10Hz": valeur_a(f, hb_db, 10.0),
+         "gain_dB_1kHz": valeur_a(f, ha_db, 1e3), "gain_dB_10kHz": valeur_a(f, ha_db, 1e4)}
+    res["global"] = r
+
+    fig, (a1, a2) = plt.subplots(2, 1, figsize=(7.0, 5.4), sharex=True,
+                                 gridspec_kw={"height_ratios": [1.6, 1]})
+    a1.plot(f, ha_db, color=BLEU, label=r"TL082 en ±5 V : $V(OUT)/(V(POS)-V(NEG))$")
+    a1.plot(f, hpeau_db, color=ORANGE, ls="--", label=r"TL082 en ±5 V, vu de la peau : $V(OUT)/V_{ECG}$")
+    a1.plot(f, hb_db, color=GRIS, label="Tout sur 3,3 V (TL082 hors plage)")
+    a1.axhline(gmax - 3, color=ENCRE2, lw=0.8, ls=":")
+    marquer(a1, fl, gmax - 3, f"$f_L$ = {fmt_hz(fl)}", dx=0.12, dy=-9, ha="right")
+    marquer(a1, fh, gmax - 3, f"$f_H$ = {fmt_hz(fh)}", dx=4.0, dy=-9)
+    a1.text(3.0, gmax + 3.5, f"Gain max {virgule(gmax)} dB ({10 ** (gmax / 20):.0f} V/V)",
+            color=ENCRE, fontsize=8.5, ha="center")
+    a1.set_ylim(-40, 72)
+    a1.set_ylabel("Gain (dB)")
+    a1.set_title("Bioamplificateur complet (modèles TI, LTspice)")
+    axes_freq(a1)
+    a1.legend(loc="lower center")
+    a2.plot(f, phase, color=BLEU)
+    a2.axvline(fl, color=ENCRE2, lw=0.8, ls=":")
+    a2.axvline(fh, color=ENCRE2, lw=0.8, ls=":")
+    a2.set_ylim(-200, 200)
+    a2.set_yticks([-180, -90, 0, 90, 180])
+    a2.set_ylabel("Phase (°)")
+    a2.set_xlabel("Fréquence (Hz)")
+    axes_freq(a2)
+    fig.tight_layout()
+    fig.savefig(DOSSIER_FIG / "fig_6_2c_bode_global.png")
+    plt.close(fig)
+
+
+def marge_drl(f, z_drl, ro=100e3, cbody=200e-12, ccm=100e-12, rrfi=1e3):
+    """Gain de boucle du DRL extrait de la simulation LTspice.
+
+    z_drl est l'impedance du corps (V_corps / i_d) avec le DRL actif. Avec l'AOP
+    du DRL inactif (sortie a la masse AC), le corps ne voit que des elements
+    passifs (memes valeurs que PATIENT et BIOAMPLI) : Z_p. On a alors
+    Z_drl = Z_p / (1 + L), d'ou L = Z_p / Z_drl - 1.
+    """
+    s = 2j * np.pi * f
+
+    def ze(rd, cd=47e-9, rs=200.0):
+        return rs + rd / (1 + s * rd * cd)
+
+    y = (1 / (ro + ze(51e3)) + s * cbody
+         + 1 / (ze(51e3) + rrfi + 1 / (s * ccm)) + 1 / (ze(40.8e3) + rrfi + 1 / (s * ccm)))
+    boucle = (1 / y) / z_drl - 1
+    k = int(np.where(np.abs(boucle) < 1)[0][0])
+    return {"L_dB_60Hz": valeur_a(f, db(boucle), 60.0), "f_unite_Hz": float(f[k]),
+            "marge_phase_deg": float(180 + np.degrees(np.angle(boucle[k]))),
+            "S_max": float(np.max(np.abs(1 / (1 + boucle))))}
+
+
+def fig_drl(res):
+    raw = lire_raw(DOSSIER_SPICE / "drl_ac.raw")
+    f = raw["_x"]
+    # V(VID) = 0,2 V correspond a i_d = 0,2 uA ; la reponse AC est deja a l'echelle
+    vcm_a = np.abs(v(raw, "bodya")) * 1e3
+    vcm_b = np.abs(v(raw, "bodyb")) * 1e3
+    out_a = np.abs(v(raw, "outa")) * 1e3
+    out_b = np.abs(v(raw, "outb")) * 1e3
+    out_c = np.abs(v(raw, "outc")) * 1e3
+    r = {"Vcm_DRL_mV_60": valeur_a(f, vcm_a, 60.0), "Vcm_sans_mV_60": valeur_a(f, vcm_b, 60.0),
+         "Vout_DRL_mV_60": valeur_a(f, out_a, 60.0), "Vout_sans_mV_60": valeur_a(f, out_b, 60.0),
+         "Vout_DRL_RFIprec_mV_60": valeur_a(f, out_c, 60.0),
+         "pic_Vcm_DRL_mV": float(vcm_a.max()), "f_pic_Vcm_DRL_Hz": float(f[np.argmax(vcm_a)])}
+    r["attenuation_Vcm_dB_60"] = 20 * np.log10(r["Vcm_sans_mV_60"] / r["Vcm_DRL_mV_60"])
+    r["attenuation_Vout_dB_60"] = 20 * np.log10(r["Vout_sans_mV_60"] / r["Vout_DRL_mV_60"])
+    r.update(marge_drl(f, v(raw, "bodya") / 0.2e-6))
+    res["drl"] = r
+
+    fig, (a1, a2) = plt.subplots(2, 1, figsize=(7.0, 5.4), sharex=True)
+    a1.plot(f, vcm_b, color=ORANGE, label="Sans DRL (jambe droite reliée à REF)")
+    a1.plot(f, vcm_a, color=BLEU, label="Avec DRL")
+    a1.axvline(60, color=ENCRE2, lw=0.8, ls=":")
+    marquer(a1, 60, r["Vcm_sans_mV_60"], f"{virgule(r['Vcm_sans_mV_60'])} mV", dx=2.2)
+    marquer(a1, 60, r["Vcm_DRL_mV_60"], f"{virgule(r['Vcm_DRL_mV_60'])} mV", dx=2.2)
+    a1.set_yscale("log")
+    a1.set_ylabel("$|V_{cm}|$ du corps (mV)")
+    a1.set_title("Courant de déplacement $i_d$ = 0,2 µA, électrodes déséquilibrées de 20 %")
+    axes_freq(a1)
+    a1.legend(loc="lower left")
+    a2.plot(f, out_b, color=ORANGE, label="Sans DRL")
+    a2.plot(f, out_a, color=BLEU, label="Avec DRL")
+    a2.plot(f, out_c, color=GRIS, ls="--", label="Avec DRL, filtre RFI précédent (1 nF / 10 nF)")
+    a2.axvline(60, color=ENCRE2, lw=0.8, ls=":")
+    marquer(a2, 60, r["Vout_sans_mV_60"], f"{virgule(r['Vout_sans_mV_60'])} mV", dx=2.2)
+    marquer(a2, 60, r["Vout_DRL_mV_60"], f"{virgule(r['Vout_DRL_mV_60'])} mV", dx=2.2)
+    a2.set_yscale("log")
+    a2.set_ylabel("$|V_{OUT}|$ parasite (mV)")
+    a2.set_xlabel("Fréquence (Hz)")
+    axes_freq(a2)
+    a2.legend(loc="lower left")
+    fig.tight_layout()
+    fig.savefig(DOSSIER_FIG / "fig_6_2d_drl.png")
+    plt.close(fig)
+
+
+def fig_temporel(res):
+    raw = lire_raw(DOSSIER_SPICE / "bioampli_tran.raw")
+    t = raw["_x"]
+    m = (t >= 1.0) & (t <= 4.0)
+    tt = t[m] - 1.0
+    vecg = np.real(v(raw, "vecg"))[m] * 1e3
+    ina = np.real(v(raw, "inaa"))[m]
+    outa = np.real(v(raw, "outa"))[m]
+    outb = np.real(v(raw, "outb"))[m]
+    body = np.real(v(raw, "bodya"))[m]
+    r = {"INA_moy_V": float(ina.mean()), "INA_min_V": float(ina.min()), "INA_max_V": float(ina.max()),
+         "OUTA_min_V": float(outa.min()), "OUTA_max_V": float(outa.max()), "OUTA_moy_V": float(outa.mean()),
+         "OUTB_min_V": float(outb.min()), "OUTB_max_V": float(outb.max()),
+         "BODYA_moy_V": float(body.mean())}
+    res["temporel"] = r
+
+    fig, (a1, a2, a3) = plt.subplots(3, 1, figsize=(7.0, 6.4), sharex=True,
+                                      gridspec_kw={"height_ratios": [1, 1, 1.4]})
+    a1.plot(tt, vecg, color=ENCRE, lw=1.0)
+    a1.set_ylabel("$V_{ECG}$ (mV)")
+    a1.set_title("Entrée différentielle à la peau : ECG + offset de 50 mV + respiration")
+    a1.grid(True)
+    a2.plot(tt, ina, color=BLEU, lw=1.0)
+    a2.set_ylim(ina.mean() - 0.04, ina.mean() + 0.04)
+    a2.text(0.01, 0.12, f"Moyenne {virgule(ina.mean())} V = 1,65 V + 9,93 × 50 mV",
+            transform=a2.transAxes, color=ENCRE, fontsize=8.5)
+    a2.set_ylabel("$V_{INA}$ (V)")
+    a2.set_title("Sortie de l'INA823 ($G_1$ = 9,93) : offset amplifié, sans saturation")
+    a2.grid(True)
+    a3.plot(tt, outb, color=GRIS, lw=1.2, label="Tout sur 3,3 V : TL082 bloqué")
+    a3.plot(tt, outa, color=BLEU, lw=1.2, label="TL082 en ±5 V (montage proposé)")
+    for yv in (0, VDD):
+        a3.axhline(yv, color=ORANGE, lw=0.9, ls=":")
+    a3.axhline(VREF, color=ENCRE2, lw=0.8, ls="--")
+    a3.text(2.98, VDD - 0.05, "Pleine échelle ADC 3,3 V", color=ENCRE2, fontsize=8, ha="right", va="top")
+    a3.set_ylim(-0.2, 3.6)
+    a3.set_ylabel("$V_{OUT}$ (V)")
+    a3.set_xlabel("Temps (s), après 1 s de simulation")
+    a3.set_title("Sortie vers l'ADC du BioBLU")
+    a3.grid(True)
+    a3.legend(loc="lower right")
+    fig.tight_layout()
+    fig.savefig(DOSSIER_FIG / "fig_6_2e_temporel.png")
+    plt.close(fig)
+
+
+def fig_schema():
+    fig, ax = plt.subplots(figsize=(9.0, 4.0))
+    ax.axis("off")
+
+    def bloc(x, y, w, h, titre, sous_titre, fond, bord):
+        ax.add_patch(FancyBboxPatch((x, y), w, h, boxstyle="round,pad=0.01,rounding_size=0.03",
+                                    fc=fond, ec=bord, lw=1.3))
+        ax.text(x + w / 2, y + h * 0.74, titre, ha="center", va="center", weight="bold",
+                fontsize=8.4, color=ENCRE)
+        ax.text(x + w / 2, y + h * 0.30, sous_titre, ha="center", va="center", fontsize=7.2,
+                color=ENCRE2)
+
+    def fleche(x1, y1, x2, y2, style="-|>", ls="-"):
+        ax.annotate("", xy=(x2, y2), xytext=(x1, y1),
+                    arrowprops=dict(arrowstyle=style, color=ENCRE2, lw=1.2, ls=ls))
+
+    bw, bh, y = 0.15, 0.34, 0.52
+    xs = [0.03, 0.225, 0.42, 0.615, 0.81]
+    fond_bio, bord_bio = "#e8f1fb", BLEU
+    fond_op, bord_op = "#fdeee7", ORANGE
+    bloc(xs[0], y, bw, bh, "1. Filtre RFI", "1 kΩ, 100 pF / 1 nF\n$f_{c,diff}$ ≈ 76 kHz", fond_bio, bord_bio)
+    bloc(xs[1], y, bw, bh, "2. INA823", "$R_G$ = 2 × 5,6 kΩ\n$G_1$ = 9,93 V/V", fond_bio, bord_bio)
+    bloc(xs[2], y, bw, bh, "3. Passe-haut", "330 kΩ, 1 µF\n$f_L$ = 0,48 Hz", fond_bio, bord_bio)
+    bloc(xs[3], y, bw, bh, "4. Passe-bas\net gain", "TL082, $G_2$ = 101\n$f_H$ = 159 Hz", fond_op, bord_op)
+    bloc(xs[4], y, bw, bh, "5. Sortie ADC", "1 kΩ, 100 nF\ndiodes vers 0 / 3,3 V", fond_bio, bord_bio)
+    bloc(0.20, 0.06, 0.42, 0.27, "6. Driven-Right-Leg (TL082)",
+         "point milieu de $R_G$, inverseur $A$ = 100 (pôle 48 Hz)\n$R_o$ = 100 kΩ vers l'électrode de jambe droite",
+         fond_op, bord_op)
+    yc = y + bh / 2
+    fleche(-0.03, yc, xs[0], yc)
+    ax.text(-0.03, yc + 0.04, "POS\nNEG", fontsize=7.5, color=ENCRE, ha="left", va="bottom")
+    for a, b in zip(xs[:-1], xs[1:]):
+        fleche(a + bw, yc, b, yc)
+    fleche(xs[4] + bw, yc, 1.02, yc)
+    ax.text(1.0, yc + 0.04, "ADC", fontsize=7.5, color=ENCRE, ha="right", va="bottom")
+    fleche(xs[1] + bw / 2, y, xs[1] + bw / 2, 0.33, ls="--")
+    fleche(0.20, 0.195, -0.03, 0.195, ls="--")
+    ax.text(0.085, 0.215, "jambe droite", fontsize=7.5, color=ENCRE2, ha="center")
+    ax.text(0.83, 0.20, "Bleu : BioBLU, AVCC = 3,3 V, REF = 1,65 V\nOrange : TL082 en ±5 V (labo)",
+            fontsize=7.6, color=ENCRE, ha="center", va="center")
+    ax.set_xlim(-0.05, 1.05)
+    ax.set_ylim(0, 0.95)
+    fig.savefig(DOSSIER_FIG / "fig_6_schema_bioampli.png")
+    plt.close(fig)
+
+
+def main():
+    p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    p.add_argument("--no-run", action="store_true", help="ne pas relancer LTspice")
+    args = p.parse_args()
+    DOSSIER_FIG.mkdir(exist_ok=True)
+    ecrire_pwl()
+    if not args.no_run:
+        exe = trouver_ltspice()
+        if not exe:
+            sys.exit("LTspice introuvable : installez-le ou definissez LTSPICE=/chemin/vers/LTspice")
+        lancer_ltspice(exe)
+    res = {}
+    fig_schema()
+    fig_offset(res)
+    fig_bode_ina(res)
+    fig_bode_filtres(res)
+    fig_bode_global(res)
+    fig_drl(res)
+    fig_temporel(res)
+    with open(DOSSIER_SPICE / "resultats_simulation.json", "w") as f:
+        json.dump(res, f, indent=2, ensure_ascii=False, default=float)
+    print(json.dumps(res, indent=2, ensure_ascii=False, default=float))
+
+
+if __name__ == "__main__":
+    main()

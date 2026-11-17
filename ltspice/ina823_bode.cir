@@ -1,83 +1,30 @@
-* GEL-7072 / GEL-4072 - Laboratoire 4 : Bioelectronique
-* Simulation AC de l'INA823 selon l'approche systemique (Question 6.2)
-* Equation mode differentiel : V(OUT_D)/(V(POS_D) - V(NEG_D))
-* Equation mode commun : V(OUT_CM)/((V(POS_CM) + V(NEG_CM))/2)
+* GEL-7072 Laboratoire 4 - Question 6.2
+* Diagramme de Bode de l'INA823 (modele TI) selon l'approche systemique
+*   Mode differentiel : V(OUT_D) / (V(POS_D) - V(NEG_D))
+*   Mode commun      : V(OUT_C) / ((V(POS_C) + V(NEG_C)) / 2)
+*   TRMC (dB)        : 20*log10(abs(Ad/Acm))
+* Alimentation BioBLU : AVCC = 3,3 V, AGND = 0 V, REF = 1,65 V
+* RG = 2 x 5,6 k = 11,2 k  ->  G1 = 1 + 100k/11,2k = 9,93 V/V
 
-.title INA823 Systemic Bode Simulation
+.lib modeles/INA823.LIB
 
-* Alimentations unipolaires
-Vdd VDD 0 DC 3.3
-Vref VREF 0 DC 1.65
+V_AVCC AVCC 0 3.3
+V_REF REF 0 1.65
 
-* -------------------------------------------------------------
-* SOURCE 1 : MODE DIFFERENTIEL (Entree purement differentielle)
-* -------------------------------------------------------------
-* Amplitude differentielle 1V AC (symetrique autour de VREF)
-Vpos_d POS_D VREF AC 0.5 0
-Vneg_d NEG_D VREF AC -0.5 0
+* Mode differentiel : +0,5 V et -0,5 V AC autour de REF
+V_PD POS_D REF AC 0.5 0
+V_ND NEG_D REF AC 0.5 180
+XU_D POS_D NEG_D AVCC 0 OUT_D REF RGP_D RGN_D INA823
+R_GD1 RGP_D RGM_D 5.6k
+R_GD2 RGM_D RGN_D 5.6k
 
-* INA823 - Branche Differentielle
-* Broches INA823 : 1:RG1, 2:IN-, 3:IN+, 4:V-, 5:REF, 6:OUT, 7:V+, 8:RG2
-X_ina_d RG1_D NEG_D POS_D 0 VREF OUT_D VDD RG2_D INA823_MACRO
-* Resistance de gain pour G = 10 : RG = 100k / (G-1) = 11.111k
-Rg_d RG1_D RG2_D 11.111k
+* Mode commun : 1 V AC sur les deux entrees
+V_CM POS_C REF AC 1 0
+V_NC NEG_C POS_C 0
+XU_C POS_C NEG_C AVCC 0 OUT_C REF RGP_C RGN_C INA823
+R_GC1 RGP_C RGM_C 5.6k
+R_GC2 RGM_C RGN_C 5.6k
 
-* -------------------------------------------------------------
-* SOURCE 2 : MODE COMMUN (Entree purement mode commun)
-* -------------------------------------------------------------
-* Amplitude mode commun 1V AC sur les deux entrees
-Vcm_src CM_IN VREF AC 1.0 0
-Rpos_cm CM_IN POS_CM 0.001
-Rneg_cm CM_IN NEG_CM 0.001
-
-* INA823 - Branche Mode Commun
-X_ina_cm RG1_CM NEG_CM POS_CM 0 VREF OUT_CM VDD RG2_CM INA823_MACRO
-Rg_cm RG1_CM RG2_CM 11.111k
-
-* -------------------------------------------------------------
-* MACRO-MODELE INA823 (Comportemental conforme fiche technique TI)
-* Broches : RG1 IN- IN+ V- REF OUT V+ RG2
-* -------------------------------------------------------------
-.subckt INA823_MACRO RG1 INM INP VM REF OUT VP RG2
-* Impedance d'entree elevee
-Rin_diff INP INM 1e12
-Rin_cm1  INP VM  1e12
-Rin_cm2  INM VM  1e12
-
-* Etage differentiel : Gain G = 1 + 100k/RG
-* Mesure du courant a travers RG via source nulle Vsens
-Vsens RG1 RG1_int 0
-* Calcul du gain dynamique G = 1 + 100k / R(RG1,RG2)
-* Amplification differentielle de base (G=10)
-E_diff N_diff 0 INP INM 10.0
-* Pole dominant de bande passante INA823 a G=10 (fc = 380 kHz)
-R_bw N_diff N_bw 1k
-C_bw N_bw 0 4.188e-10
-
-* Mode commun avec TRMC = 115 dB a DC, pole CMRR a 1 kHz (roll-off 20 dB/dec)
-E_cm_sense N_cm 0 INP VM 0.5
-E_cm_sense2 N_cm2 N_cm INM VM 0.5
-* Attenuation de mode commun (Acm_dc = 10 / 10^(115/20) = 1.78e-5 V/V = -95 dB)
-E_cm_att N_cm_raw 0 N_cm2 0 1.778e-5
-* Zero / Pole de degradation CMRR a haute frequence
-R_cm1 N_cm_raw N_cm_out 1k
-L_cm1 N_cm_raw N_cm_out 159mH
-
-* Sommation Differentiel + Mode Commun + Tension de reference REF
-E_out OUT_raw 0 Value = { V(REF) + (V(N_bw) - V(REF))*1.0 + V(N_cm_out) }
-* Resistance de sortie
-R_out OUT_raw OUT 10
-.ends INA823_MACRO
-
-* -------------------------------------------------------------
-* DIRECTIVES DE SIMULATION AC
-* -------------------------------------------------------------
-.ac dec 100 0.01 1Meg
-
-* Notes pour affichage dans LTspice :
-* 1) Gain Differentiel : V(OUT_D)/(V(POS_D)-V(NEG_D))
-* 2) Gain Mode Commun : V(OUT_CM)/((V(POS_CM)+V(NEG_CM))/2)
-* 3) TRMC (dB) : 20*log10(abs((V(OUT_D)/(V(POS_D)-V(NEG_D))) / (V(OUT_CM)/((V(POS_CM)+V(NEG_CM))/2))))
-
+.save V(POS_D) V(NEG_D) V(OUT_D) V(POS_C) V(NEG_C) V(OUT_C)
+.ac dec 50 0.01 1Meg
 .end
-
