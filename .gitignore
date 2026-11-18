@@ -23,3 +23,6 @@ Thumbs.db
 
 # Resultats LTspice (regeneres par LTspice)
 ltspice/*.raw
+
+# Captures brutes de l oscilloscope (120 Mo, non versionnees)
+Data_et_notes/*.bin
