@@ -175,7 +175,7 @@ with schemdraw.Drawing(show=False) as d:
     d.add(elm.Dot(open=True, radius=0.18).at((0, yrl)).label("RL\n(jambe droite)", loc="left", fontsize=8.5))
     d.add(elm.Label().at((xo2 + 0.5, pt(u2b.out)[1] - 0.9)).label("Driven-Right-Leg\nA = 100, pôle 48 Hz", fontsize=8.5, color=ORANGE, halign="left"))
     d.add(elm.Label().at((5.2, yrl - 1.5)).label(
-        "Sans DRL (question 7.7) : débrancher la résistance de 100 kΩ et relier l'électrode RL à REF.",
+        "Sans DRL : débrancher la résistance de 100 kΩ et relier l'électrode RL à REF.",
         fontsize=8, color=GRIS))
 
     # ------------------------------------------------------------------ Alimentations
@@ -218,8 +218,7 @@ with schemdraw.Drawing(show=False) as d:
         "   U2 : broche 8 (+5 V) et broche 4 (−5 V) vers COM\n"
         "• COM de l'alimentation du labo relié à AGND du BioBLU\n"
         "• Les noeuds de même nom sont reliés\n"
-        "• U2A et U2B : même boîtier TL082 (U2, DIP-8)\n"
-        "• Brochage INA823 = boîtier SOIC-8 : vérifier l'adaptateur du labo",
+        "• U2A et U2B : même boîtier TL082 (U2, DIP-8)",
         fontsize=8, halign="left"))
 
     d.save(str(SORTIE) + ".png", dpi=220)
